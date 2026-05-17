@@ -1,0 +1,1224 @@
+<!-- LANDINGPAGE -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eksperika — Virtual Science Lab</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/landingpage.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/boxicons.min.css" />
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">
+          <i class="bx bxs-flask"></i>
+        </div>
+        EKSPERIKA
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#physics">Simulations</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+      </ul>
+      <a href="dashboard.html" class="btn-nav">
+        <i class="bx bx-test-tube"></i>
+        Start Experiment</a
+      >
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <canvas id="heroParticles"></canvas>
+
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          AI-Powered Lab — Now Live
+        </div>
+        <h1>
+          INTERACTIVE<br />
+          <span class="line-highlight">CHEMISTRY</span><br />
+          <span class="line-scratch">REACTION</span><br />
+          LABORATORY
+        </h1>
+        <p>
+          Explore immersive virtual experiments with realtime chemical
+          simulations, scientific visualization, and interactive laboratory
+          controls.
+        </p>
+        <div class="hero-btns">
+          <a href="dashboard.html" class="btn btn-primary">
+            <i class="bx bxs-flask"></i> Start Experiment
+          </a>
+          <a href="dashboard.html" class="btn btn-ghost">
+            <i class="bx bx-play"></i>
+            Watch Demo
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="float-chem-card c1">
+          <i class="bx bxs-flask"></i> H₂SO₄ Reaction
+        </div>
+        <div class="float-chem-card c2">
+          <i class="bx bx-dna"></i> NaCl + H₂O
+        </div>
+        <div class="float-chem-card c3">
+          <i class="bx bxs-bolt"></i> Exothermic!
+        </div>
+
+        <div class="chem-lab-frame">
+          <div class="chem-lab-header">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <span>CHEMISTRY_LAB — SIMULATION</span>
+          </div>
+          <div class="chem-lab-body">
+            <canvas id="molCanvas"></canvas>
+
+            <div class="tubes-row">
+              <div class="tube-wrap">
+                <div class="tube" id="tubeA">
+                  <div
+                    class="tube-liquid"
+                    id="liquidA"
+                    style="
+                      height: 65%;
+                      background: linear-gradient(to top, #0ea5e9, #38bdf8);
+                    "
+                  ></div>
+                  <div class="tube-bubbles" id="bubblesA"></div>
+                </div>
+                <div
+                  class="tube-glow"
+                  style="background: rgba(14, 165, 233, 0.8)"
+                ></div>
+                <span class="tube-label">Tube A — H₂SO₄</span>
+              </div>
+              <div class="tube-wrap">
+                <div class="tube" id="tubeB">
+                  <div
+                    class="tube-liquid"
+                    id="liquidB"
+                    style="
+                      height: 55%;
+                      background: linear-gradient(to top, #10b981, #34d399);
+                    "
+                  ></div>
+                  <div class="tube-bubbles" id="bubblesB"></div>
+                </div>
+                <div
+                  class="tube-glow"
+                  style="background: rgba(16, 185, 129, 0.8)"
+                ></div>
+                <span class="tube-label">Tube B — NaOH</span>
+              </div>
+              <div class="tube-wrap">
+                <div class="tube" id="tubeC">
+                  <div
+                    class="tube-liquid"
+                    id="liquidC"
+                    style="
+                      height: 70%;
+                      background: linear-gradient(to top, #8b5cf6, #a78bfa);
+                    "
+                  ></div>
+                  <div class="tube-bubbles" id="bubblesC"></div>
+                </div>
+                <div
+                  class="tube-glow"
+                  style="background: rgba(139, 92, 246, 0.8)"
+                ></div>
+                <span class="tube-label">Tube C — KMnO₄</span>
+              </div>
+            </div>
+
+            <div class="mixer-area">
+              <div class="beaker" id="beaker" onclick="triggerMix()">
+                <div class="beaker-lip"></div>
+                <div class="beaker-body">
+                  <div
+                    class="beaker-mix"
+                    id="beakerMix"
+                    style="
+                      background: linear-gradient(to top, #0ea5e9, #10b981);
+                    "
+                  ></div>
+                  <div class="mix-sparks" id="mixSparks"></div>
+                </div>
+              </div>
+              <span class="reaction-label">— TAP BEAKER TO MIX —</span>
+              <span class="chem-formula" id="chemFormula"
+                >H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O</span
+              >
+            </div>
+          </div>
+
+          <div class="chem-controls">
+            <div class="chem-ctrl-item">
+              <label>Temperature (°C)</label>
+              <input
+                type="range"
+                class="neo-slider"
+                min="0"
+                max="200"
+                value="25"
+                id="tempSlider"
+                oninput="updateTemp(this.value)"
+              />
+            </div>
+            <div class="chem-ctrl-item">
+              <label>Concentration (mol/L)</label>
+              <input
+                type="range"
+                class="neo-slider"
+                min="1"
+                max="10"
+                value="3"
+                id="concSlider"
+              />
+            </div>
+            <button class="chem-mix-btn" id="mixBtn" onclick="triggerMix()">
+              <i class="bx bxs-play"></i> REACT & MIX
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="ticker-strip">
+      <div class="ticker-inner" id="ticker"></div>
+    </div>
+
+    <!-- STATS -->
+    <section class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <div class="stat-icon"><i class="bx bxs-flask"></i></div>
+          <span class="stat-number" data-target="100">0</span
+          ><span class="stat-plus">+</span>
+          <div class="stat-label">Virtual Experiments</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-icon"><i class="bx bxs-book-open"></i></div>
+          <span class="stat-number" data-target="3">0</span>
+          <div class="stat-label">Science Categories</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-icon"><i class="bx bxs-graduation"></i></div>
+          <span class="stat-number" data-target="10">0</span
+          ><span class="stat-plus">K+</span>
+          <div class="stat-label">Students Worldwide</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-icon"><i class="bx bx-globe"></i></div>
+          <span class="stat-number" data-target="100">0</span
+          ><span class="stat-plus">%</span>
+          <div class="stat-label">Browser Based</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHYSICS -->
+    <section class="physics-section" id="physics">
+      <div class="physics-inner">
+        <div class="reveal">
+          <div
+            class="section-tag"
+            style="background: var(--primary); color: var(--white)"
+          >
+            <i class="bx bxs-bolt"></i> Physics Lab
+          </div>
+          <h2 class="section-title">
+            PHYSICS<br />ELECTRICITY<br />SIMULATION
+          </h2>
+          <p class="section-desc">
+            Understand circuits, voltage, and energy flow through immersive
+            realtime simulations. Visualize electric particles flowing through
+            wires in realtime.
+          </p>
+          <div style="margin-top: 2rem">
+            <a href="#" class="btn btn-primary">Open Circuit Lab</a>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="elec-frame">
+            <div class="elec-header">
+              <div class="sdot" style="background: #ff5f56"></div>
+              <div class="sdot" style="background: #ffbd2e"></div>
+              <div class="sdot" style="background: #27c93f"></div>
+              <span class="elec-title">CIRCUIT SIMULATOR - REALTIME</span>
+            </div>
+            <div class="elec-canvas-wrap">
+              <canvas id="elecCanvas" width="450" height="280"></canvas>
+            </div>
+            <div class="elec-controls">
+              <div class="elec-ctrl">
+                <label>Voltage (V)</label>
+                <div class="elec-val" id="voltVal">12V</div>
+                <input
+                  type="range"
+                  class="neo-slider"
+                  min="1"
+                  max="24"
+                  value="12"
+                  oninput="updateElec('volt', this.value)"
+                />
+                <div class="elec-meter">
+                  <div
+                    class="elec-meter-fill"
+                    id="voltMeter"
+                    style="width: 50%"
+                  ></div>
+                </div>
+              </div>
+              <div class="elec-ctrl">
+                <label>Resistance (Ω)</label>
+                <div class="elec-val" id="resVal">4Ω</div>
+                <input
+                  type="range"
+                  class="neo-slider"
+                  min="1"
+                  max="20"
+                  value="4"
+                  oninput="updateElec('res', this.value)"
+                />
+                <div class="elec-meter">
+                  <div
+                    class="elec-meter-fill"
+                    id="resMeter"
+                    style="
+                      width: 20%;
+                      background: linear-gradient(
+                        90deg,
+                        var(--green),
+                        var(--cyan)
+                      );
+                    "
+                  ></div>
+                </div>
+              </div>
+              <div class="elec-ctrl">
+                <label>Current (A)</label>
+                <div class="elec-val" id="currVal">3.0A</div>
+                <div class="elec-meter" style="margin-top: 14px">
+                  <div
+                    class="elec-meter-fill"
+                    id="currMeter"
+                    style="
+                      width: 60%;
+                      background: linear-gradient(
+                        90deg,
+                        var(--yellow),
+                        var(--red)
+                      );
+                    "
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIOLOGY -->
+    <section class="bio-section" id="biology">
+      <div class="bio-inner">
+        <div class="reveal">
+          <div class="bio-frame">
+            <div class="bio-header">
+              <div class="bdot"></div>
+              <div class="bdot"></div>
+              <div class="bdot"></div>
+              <span class="bio-header-title">ANATOMY EXPLORER - MONITOR</span>
+            </div>
+            <div class="bio-body">
+              <div class="anatomy-canvas-wrap">
+                <canvas id="bioParticles"></canvas>
+                <div class="bio-scanline"></div>
+                <svg
+                  id="anatomySVG"
+                  viewBox="0 0 200 420"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <filter id="bioGlow">
+                      <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                      <feMerge>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                    <filter id="bioGlowStrong">
+                      <feGaussianBlur stdDeviation="5" result="coloredBlur" />
+                      <feMerge>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                    <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(16,185,129,0.15)" />
+                      <stop offset="100%" stop-color="rgba(16,185,129,0.03)" />
+                    </linearGradient>
+                  </defs>
+                  <ellipse
+                    cx="100"
+                    cy="38"
+                    rx="30"
+                    ry="36"
+                    fill="url(#bodyGrad)"
+                    stroke="rgba(16,185,129,0.5)"
+                    stroke-width="1.2"
+                    filter="url(#bioGlow)"
+                  />
+                  <rect
+                    x="88"
+                    y="70"
+                    width="24"
+                    height="20"
+                    rx="4"
+                    fill="url(#bodyGrad)"
+                    stroke="rgba(16,185,129,0.4)"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M62 90 Q58 100 58 140 L58 220 Q58 232 70 234 L90 234 L90 310 L110 310 L110 234 L130 234 Q142 232 142 220 L142 140 Q142 100 138 90 Q120 96 100 96 Q80 96 62 90Z"
+                    fill="url(#bodyGrad)"
+                    stroke="rgba(16,185,129,0.45)"
+                    stroke-width="1.2"
+                    filter="url(#bioGlow)"
+                  />
+                  <path
+                    d="M62 95 Q44 110 40 160 Q38 180 42 195 Q46 200 50 195 Q52 175 54 155 L62 140Z"
+                    fill="url(#bodyGrad)"
+                    stroke="rgba(16,185,129,0.35)"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M138 95 Q156 110 160 160 Q162 180 158 195 Q154 200 150 195 Q148 175 146 155 L138 140Z"
+                    fill="url(#bodyGrad)"
+                    stroke="rgba(16,185,129,0.35)"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M72 234 L68 310 L64 370 Q64 380 72 382 L78 382 L82 310 L90 234Z"
+                    fill="url(#bodyGrad)"
+                    stroke="rgba(16,185,129,0.35)"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M128 234 L132 310 L136 370 Q136 380 128 382 L122 382 L118 310 L110 234Z"
+                    fill="url(#bodyGrad)"
+                    stroke="rgba(16,185,129,0.35)"
+                    stroke-width="1"
+                  />
+                  <line
+                    x1="60"
+                    y1="115"
+                    x2="140"
+                    y2="115"
+                    stroke="rgba(16,185,129,0.06)"
+                    stroke-width="0.5"
+                  />
+                  <line
+                    x1="60"
+                    y1="130"
+                    x2="140"
+                    y2="130"
+                    stroke="rgba(16,185,129,0.06)"
+                    stroke-width="0.5"
+                  />
+                  <line
+                    x1="60"
+                    y1="150"
+                    x2="140"
+                    y2="150"
+                    stroke="rgba(16,185,129,0.06)"
+                    stroke-width="0.5"
+                  />
+                  <line
+                    x1="60"
+                    y1="170"
+                    x2="140"
+                    y2="170"
+                    stroke="rgba(16,185,129,0.06)"
+                    stroke-width="0.5"
+                  />
+                  <line
+                    x1="60"
+                    y1="190"
+                    x2="140"
+                    y2="190"
+                    stroke="rgba(16,185,129,0.06)"
+                    stroke-width="0.5"
+                  />
+                  <line
+                    x1="60"
+                    y1="210"
+                    x2="140"
+                    y2="210"
+                    stroke="rgba(16,185,129,0.06)"
+                    stroke-width="0.5"
+                  />
+                  <line
+                    x1="85"
+                    y1="100"
+                    x2="85"
+                    y2="234"
+                    stroke="rgba(16,185,129,0.06)"
+                    stroke-width="0.5"
+                  />
+                  <line
+                    x1="100"
+                    y1="100"
+                    x2="100"
+                    y2="234"
+                    stroke="rgba(16,185,129,0.06)"
+                    stroke-width="0.5"
+                  />
+                  <line
+                    x1="115"
+                    y1="100"
+                    x2="115"
+                    y2="234"
+                    stroke="rgba(16,185,129,0.06)"
+                    stroke-width="0.5"
+                  />
+                  <ellipse
+                    cx="100"
+                    cy="30"
+                    rx="20"
+                    ry="16"
+                    fill="rgba(16,185,129,0.12)"
+                    stroke="#10B981"
+                    stroke-width="1"
+                    stroke-dasharray="3,2"
+                    filter="url(#bioGlow)"
+                  />
+                  <path
+                    d="M86 26 Q90 20 100 22 Q110 20 114 26 Q114 36 100 40 Q86 36 86 26Z"
+                    fill="rgba(16,185,129,0.15)"
+                    stroke="rgba(52,211,153,0.6)"
+                    stroke-width="0.8"
+                  >
+                    <animate
+                      attributeName="opacity"
+                      values="0.6;1;0.6"
+                      dur="3s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                  <path
+                    d="M94 128 Q94 120 100 122 Q106 120 106 128 Q106 136 100 142 Q94 136 94 128Z"
+                    fill="rgba(16,185,129,0.25)"
+                    stroke="#10B981"
+                    stroke-width="1"
+                    filter="url(#bioGlowStrong)"
+                  >
+                    <animate
+                      attributeName="opacity"
+                      values="0.5;1;0.5"
+                      dur="0.9s"
+                      repeatCount="indefinite"
+                    />
+                    <animateTransform
+                      attributeName="transform"
+                      type="scale"
+                      values="1;1.08;1"
+                      dur="0.9s"
+                      additive="sum"
+                      repeatCount="indefinite"
+                      transformOrigin="100 130"
+                    />
+                  </path>
+                  <ellipse
+                    cx="83"
+                    cy="150"
+                    rx="13"
+                    ry="20"
+                    fill="rgba(16,185,129,0.1)"
+                    stroke="rgba(52,211,153,0.5)"
+                    stroke-width="0.8"
+                    stroke-dasharray="2,2"
+                  >
+                    <animate
+                      attributeName="ry"
+                      values="20;22;20"
+                      dur="3.5s"
+                      repeatCount="indefinite"
+                    />
+                  </ellipse>
+                  <ellipse
+                    cx="117"
+                    cy="150"
+                    rx="13"
+                    ry="20"
+                    fill="rgba(16,185,129,0.1)"
+                    stroke="rgba(52,211,153,0.5)"
+                    stroke-width="0.8"
+                    stroke-dasharray="2,2"
+                  >
+                    <animate
+                      attributeName="ry"
+                      values="20;22;20"
+                      dur="3.5s"
+                      repeatCount="indefinite"
+                    />
+                  </ellipse>
+                  <ellipse
+                    cx="100"
+                    cy="192"
+                    rx="18"
+                    ry="13"
+                    fill="rgba(16,185,129,0.08)"
+                    stroke="rgba(52,211,153,0.4)"
+                    stroke-width="0.8"
+                    stroke-dasharray="3,2"
+                  >
+                    <animate
+                      attributeName="opacity"
+                      values="0.4;0.8;0.4"
+                      dur="5s"
+                      repeatCount="indefinite"
+                    />
+                  </ellipse>
+                  <path
+                    d="M100 46 L100 120"
+                    stroke="rgba(16,185,129,0.2)"
+                    stroke-width="0.8"
+                    stroke-dasharray="3,3"
+                  >
+                    <animate
+                      attributeName="stroke-dashoffset"
+                      values="0;-12"
+                      dur="1s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                  <path
+                    d="M100 143 L100 179"
+                    stroke="rgba(16,185,129,0.15)"
+                    stroke-width="0.8"
+                    stroke-dasharray="3,3"
+                  >
+                    <animate
+                      attributeName="stroke-dashoffset"
+                      values="0;-12"
+                      dur="1.5s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                </svg>
+
+                <div
+                  class="organ-node"
+                  style="top: 5%; left: -10px"
+                  data-system="nervous"
+                >
+                  <div class="organ-node-dot" style="animation-delay: 0s"></div>
+                  <div class="organ-node-line"></div>
+                  <div class="organ-node-label">Brain</div>
+                </div>
+                <div
+                  class="organ-node"
+                  style="top: 30%; left: -10px"
+                  data-system="circulatory"
+                >
+                  <div
+                    class="organ-node-dot"
+                    style="animation-delay: 0.4s"
+                  ></div>
+                  <div class="organ-node-line"></div>
+                  <div class="organ-node-label">Heart</div>
+                </div>
+                <div
+                  class="organ-node"
+                  style="top: 37%; right: -10px; flex-direction: row-reverse"
+                  data-system="respiratory"
+                >
+                  <div
+                    class="organ-node-dot"
+                    style="animation-delay: 0.8s"
+                  ></div>
+                  <div
+                    class="organ-node-line"
+                    style="
+                      background: linear-gradient(
+                        270deg,
+                        var(--green),
+                        transparent
+                      );
+                    "
+                  ></div>
+                  <div class="organ-node-label">Lungs</div>
+                </div>
+                <div
+                  class="organ-node"
+                  style="top: 47%; right: -10px; flex-direction: row-reverse"
+                  data-system="digestive"
+                >
+                  <div
+                    class="organ-node-dot"
+                    style="animation-delay: 1.2s"
+                  ></div>
+                  <div
+                    class="organ-node-line"
+                    style="
+                      background: linear-gradient(
+                        270deg,
+                        var(--green),
+                        transparent
+                      );
+                    "
+                  ></div>
+                  <div class="organ-node-label">Stomach</div>
+                </div>
+              </div>
+
+              <div class="bio-side-panel">
+                <div
+                  class="bio-sys-tab active"
+                  onclick="setBioSys(this, 'nervous')"
+                  data-system="nervous"
+                >
+                  <div class="bio-sys-tab-head">
+                    <span class="bio-sys-icon"
+                      ><i class="bx bxs-brain"></i
+                    ></span>
+                    <span class="bio-sys-name">Nervous System</span>
+                    <span class="bio-sys-badge">CNS</span>
+                  </div>
+                  <div class="bio-sys-desc">
+                    Controls body functions via electrical signals through 86B
+                    neurons.
+                  </div>
+                  <div class="bio-sys-progress">
+                    <div class="bio-sys-bar" style="width: 88%"></div>
+                  </div>
+                </div>
+                <div
+                  class="bio-sys-tab"
+                  onclick="setBioSys(this, 'respiratory')"
+                  data-system="respiratory"
+                >
+                  <div class="bio-sys-tab-head">
+                    <span class="bio-sys-icon"><i class="bx bx-wind"></i></span>
+                    <span class="bio-sys-name">Respiratory System</span>
+                    <span class="bio-sys-badge">O₂ / CO₂</span>
+                  </div>
+                  <div class="bio-sys-desc">
+                    Gas exchange system — lungs process 500L of air per hour.
+                  </div>
+                  <div class="bio-sys-progress">
+                    <div class="bio-sys-bar" style="width: 72%"></div>
+                  </div>
+                </div>
+                <div
+                  class="bio-sys-tab"
+                  onclick="setBioSys(this, 'circulatory')"
+                  data-system="circulatory"
+                >
+                  <div class="bio-sys-tab-head">
+                    <span class="bio-sys-icon"
+                      ><i class="bx bxs-heart"></i
+                    ></span>
+                    <span class="bio-sys-name">Circulatory System</span>
+                    <span class="bio-sys-badge">72 BPM</span>
+                  </div>
+                  <div class="bio-sys-desc">
+                    Heart pumps 5L of blood per minute through 60,000 miles of
+                    vessels.
+                  </div>
+                  <div class="bio-sys-progress">
+                    <div class="bio-sys-bar" style="width: 65%"></div>
+                  </div>
+                </div>
+                <div
+                  class="bio-sys-tab"
+                  onclick="setBioSys(this, 'digestive')"
+                  data-system="digestive"
+                >
+                  <div class="bio-sys-tab-head">
+                    <span class="bio-sys-icon"
+                      ><i class="bx bxs-capsule"></i
+                    ></span>
+                    <span class="bio-sys-name">Digestive System</span>
+                    <span class="bio-sys-badge">pH 2.0</span>
+                  </div>
+                  <div class="bio-sys-desc">
+                    Breaks down nutrients through a 9-meter long digestive
+                    tract.
+                  </div>
+                  <div class="bio-sys-progress">
+                    <div class="bio-sys-bar" style="width: 54%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bio-status-row">
+              <div class="bio-status-item">
+                <div class="bio-status-dot"></div>
+                <span class="bio-status-text">Simulation</span>
+              </div>
+              <div class="bio-status-item">
+                <div class="bio-status-dot" style="animation-delay: 0.5s"></div>
+                <span class="bio-status-text">4 Systems Mapped</span>
+              </div>
+              <div class="bio-status-item" style="margin-left: auto">
+                <span class="bio-status-text" id="bioSysLabel"
+                  >NERVOUS SYSTEM SELECTED</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="section-tag">
+            <i class="bx bxs-flask"></i> Biology Lab
+          </div>
+          <h2 class="section-title">
+            INTERACTIVE<br />HUMAN BODY<br />EXPLORER
+          </h2>
+          <p class="section-desc">
+            Discover human anatomy through immersive scientific visualization
+            and interactive biology exploration.
+          </p>
+          <p class="section-desc-2">
+            Explore organs, body systems, and biological structures through
+            futuristic educational simulations.
+          </p>
+          <div>
+            <a href="#" class="btn btn-green">
+              Explore Anatomy
+              <i class="bx bxs-right-arrow-alt"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section" id="features">
+      <div class="features-header">
+        <div>
+          <div class="section-tag reveal">
+            <i class="bx bxs-star"></i> Platform Features
+          </div>
+          <h2 class="section-title reveal">
+            EVERYTHING<br />YOU NEED TO<br />LEARN SCIENCE
+          </h2>
+        </div>
+        <p class="section-desc reveal">
+          Advanced tools and features designed to make science education more
+          engaging, interactive, and effective — in any browser.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <span class="feature-card-tag">Core</span>
+          <div class="feature-icon-wrap"><i class="bx bxs-flask"></i></div>
+          <h3>Interactive Virtual Laboratory</h3>
+          <p>
+            Run real experiments in a full simulation environment. Manipulate
+            variables and observe outcomes instantly and safely.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-card-tag">Real-time</span>
+          <div class="feature-icon-wrap">
+            <i class="bx bxs-bar-chart-alt-2"></i>
+          </div>
+          <h3>Dynamic Science Visualization</h3>
+          <p>
+            Watch data come alive with realtime graphs, 3D molecule models, and
+            physics animations that respond to your input.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-card-tag">Mobile</span>
+          <div class="feature-icon-wrap"><i class="bx bxs-mobile"></i></div>
+          <h3>Responsive & Lightweight</h3>
+          <p>
+            Access the full lab from any device — desktop, tablet, or mobile. No
+            download needed. Runs in your browser.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-card-tag">Control</span>
+          <div class="feature-icon-wrap"><i class="bx bxs-joystick"></i></div>
+          <h3>Experiment Parameter Control</h3>
+          <p>
+            Adjust every experiment variable with intuitive sliders. Observe
+            cause-and-effect relationships instantly.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="hiw-section">
+      <div style="text-align: center; position: relative; z-index: 1">
+        <div class="section-tag reveal">
+          <i class="bx bx-refresh"></i> Process
+        </div>
+        <h2 class="section-title reveal" style="color: var(--white)">
+          HOW EKSPERIKA<br />WORKS
+        </h2>
+        <p
+          style="
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.45);
+            margin: 0 auto;
+            max-width: 480px;
+          "
+          class="reveal"
+        >
+          Five easy steps to start your science journey.
+        </p>
+      </div>
+      <div
+        class="steps-grid reveal"
+        style="margin-top: 4rem; position: relative; z-index: 1"
+      >
+        <div class="step-item">
+          <div class="step-num-wrap">
+            <div class="step-num">01</div>
+            <div class="step-icon"><i class="bx bxs-book"></i></div>
+          </div>
+          <h4>Choose Subject</h4>
+          <p>
+            Select from Physics, Chemistry, or Biology based on your curriculum.
+          </p>
+        </div>
+        <div class="step-item">
+          <div class="step-num-wrap">
+            <div class="step-num">02</div>
+            <div class="step-icon"><i class="bx bxs-book-open"></i></div>
+          </div>
+          <h4>Read Material</h4>
+          <p>Review conceptual background and experiment objectives.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num-wrap">
+            <div class="step-num">03</div>
+            <div class="step-icon"><i class="bx bxs-flask"></i></div>
+          </div>
+          <h4>Start Experiment</h4>
+          <p>Run the interactive simulation and adjust your parameters.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num-wrap">
+            <div class="step-num">04</div>
+            <div class="step-icon"><i class="bx bxs-bar-chart-alt-2"></i></div>
+          </div>
+          <h4>Observe Results</h4>
+          <p>Watch data visualized in realtime and record your findings.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num-wrap">
+            <div class="step-num">05</div>
+            <div class="step-icon"><i class="bx bxs-trophy"></i></div>
+          </div>
+          <h4>Complete Quiz</h4>
+          <p>Test your understanding and earn badges for achievements.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIM PREVIEW -->
+    <section class="sim-section" id="simulations">
+      <div class="sim-inner">
+        <div class="reveal">
+          <div class="section-tag">
+            <i class="bx bxs-bolt"></i> Live Preview
+          </div>
+          <h2 class="section-title">
+            A REAL LAB<br />EXPERIENCE IN<br />YOUR BROWSER
+          </h2>
+          <p class="section-desc" style="margin-bottom: 2rem">
+            Interact with a live simulation dashboard. Adjust parameters, run
+            experiments, and see results — just like a real laboratory.
+          </p>
+          <ul class="sim-checklist">
+            <li>
+              <div class="check"><i class="bx bx-check"></i></div>
+              Adjustable experiment parameters
+            </li>
+            <li>
+              <div class="check"><i class="bx bx-check"></i></div>
+              Animated realtime data output
+            </li>
+            <li>
+              <div class="check"><i class="bx bx-check"></i></div>
+              Step-by-step instructions
+            </li>
+            <li>
+              <div class="check"><i class="bx bx-check"></i></div>
+              Automatic quiz after completion
+            </li>
+          </ul>
+          <div style="margin-top: 2rem">
+            <a href="#" class="btn btn-yellow">
+              Open Full Simulation <i class="bx bxs-right-arrow"></i>
+            </a>
+          </div>
+        </div>
+        <div class="sim-dashboard reveal">
+          <div class="sim-topbar">
+            <div class="sdot"></div>
+            <div class="sdot"></div>
+            <div class="sdot"></div>
+            <span
+              ><i class="bx bxs-flask"></i> Pendulum Motion — Physics Sim
+              v2.1</span
+            >
+          </div>
+          <div class="sim-body">
+            <div class="sim-main">
+              <div class="sim-main-title">Oscillation Graph — Live</div>
+              <div class="sim-graph">
+                <svg viewBox="0 0 280 110" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="simWave" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="#0EA5E9" />
+                      <stop offset="50%" stop-color="#22D3EE" />
+                      <stop offset="100%" stop-color="#10B981" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    id="simWavePath"
+                    d=""
+                    fill="none"
+                    stroke="url(#simWave)"
+                    stroke-width="2.5"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div class="sim-right">
+              <div class="sim-ctrl-box">
+                <label>String Length</label>
+                <input
+                  type="range"
+                  class="neo-slider-dark"
+                  min="10"
+                  max="100"
+                  value="60"
+                />
+              </div>
+              <div class="sim-ctrl-box">
+                <label>Mass (g)</label>
+                <input
+                  type="range"
+                  class="neo-slider-dark"
+                  min="10"
+                  max="500"
+                  value="200"
+                />
+              </div>
+              <div class="sim-ctrl-box">
+                <label>Angle (°)</label>
+                <input
+                  type="range"
+                  class="neo-slider-dark"
+                  min="5"
+                  max="90"
+                  value="30"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="sim-bottom">
+            <div class="sim-metric">
+              <div class="smv">1.55s</div>
+              <div class="sml">Period</div>
+            </div>
+            <div class="sim-metric">
+              <div class="smv">9.81</div>
+              <div class="sml">Gravity</div>
+            </div>
+            <div class="sim-metric">
+              <div class="smv">0.62Hz</div>
+              <div class="sml">Frequency</div>
+            </div>
+          </div>
+          <button class="sim-run-btn" id="simBtn" onclick="toggleSim()">
+            <i class="bx bxs-play"></i> RUN SIMULATION
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testi-section" id="testimonials">
+      <div style="text-align: center">
+        <div class="section-tag reveal">
+          <i class="bx bxs-chat"></i> Testimonials
+        </div>
+        <h2 class="section-title reveal">LOVED BY STUDENTS<br />& TEACHERS</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="testi-q">"</div>
+          <p class="testi-text">
+            Eksperika changed the way I study physics. The pendulum simulation
+            helped me finally understand oscillation. far better than any
+            textbook.
+          </p>
+          <div class="testi-footer">
+            <div class="testi-avatar"><i class="bx bxs-user"></i></div>
+            <div>
+              <div class="testi-name">Desta Mpruy</div>
+              <div class="testi-role">High School Student, Jakarta</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-q">"</div>
+          <p class="testi-text">
+            As a teacher, this platform saves me hours every week. Students are
+            more engaged than ever thanks to the gamification and live
+            experiments.
+          </p>
+          <div class="testi-footer">
+            <div class="testi-avatar"><i class="bx bxs-user"></i></div>
+            <div>
+              <div class="testi-name">Nauval Raditya</div>
+              <div class="testi-role">Science Teacher, Flores</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-q">"</div>
+          <p class="testi-text">
+            I used the chemistry titration simulation to prepare for national
+            exams. I scored 95. Eksperika made a huge difference to my
+            preparation.
+          </p>
+          <div class="testi-footer">
+            <div class="testi-avatar"><i class="bx bxs-user"></i></div>
+            <div>
+              <div class="testi-name">Kevyn Pradika</div>
+              <div class="testi-role">University Student, Denpasar</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <canvas id="ctaParticles"></canvas>
+      <h2 class="reveal">
+        BRING SCIENCE INTO<br />THE <span>DIGITAL ERA</span>
+      </h2>
+      <p class="reveal">
+        Experience immersive virtual laboratories designed for the next
+        generation of STEM education.
+      </p>
+      <div class="cta-btns reveal">
+        <a href="#" class="btn-cta-white"
+          ><i class="bx bxs-flask"></i> Start Learning</a
+        >
+        <a href="#" class="btn-cta-ghost"
+          >Explore Simulations <i class="bx bxs-right-arrow-alt"></i
+        ></a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">
+            <div class="footer-logo-icon"><i class="bx bxs-flask"></i></div>
+            EKSPERIKA
+          </a>
+          <p>
+            The next-generation virtual science laboratory platform for
+            students, educators, and the curious.
+          </p>
+          <div class="footer-socials">
+            <a class="social-btn" href="#"><i class="bx bxl-twitter"></i></a>
+            <a class="social-btn" href="#"><i class="bx bxl-linkedin"></i></a>
+            <a class="social-btn" href="#"><i class="bx bxl-facebook"></i></a>
+            <a class="social-btn" href="#"><i class="bx bxl-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Platform</h5>
+          <ul>
+            <li><a href="#">Simulations</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">For Schools</a></li>
+            <li><a href="#">API Access</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Science Labs</h5>
+          <ul>
+            <li><a href="#">Physics Lab</a></li>
+            <li><a href="#">Chemistry Lab</a></li>
+            <li><a href="#">Biology Lab</a></li>
+            <li><a href="#">All Experiments</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <p
+            style="
+              font-size: 0.83rem;
+              margin-bottom: 8px;
+              color: rgba(255, 255, 255, 0.4);
+            "
+          >
+            hello@eksperika.id
+          </p>
+          <p
+            style="
+              font-size: 0.83rem;
+              margin-bottom: 8px;
+              color: rgba(255, 255, 255, 0.4);
+            "
+          >
+            Jakarta, Indonesia
+          </p>
+          <p style="font-size: 0.83rem; color: rgba(255, 255, 255, 0.4)">
+            Mon–Fri, 09.00–17.00 WIB
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Eksperika. All rights reserved.</span>
+        <span
+          ><a href="#">Privacy Policy</a> ·
+          <a href="#">Terms of Service</a></span
+        >
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/landingpage.js"></script>
+  </body>
+</html>

@@ -1,0 +1,647 @@
+<!-- PHYSIC -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eksperika — Physics Lab</title>
+    <link rel="stylesheet" href="css/boxicons.min.css" />
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/physic.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="grid-bg"></div>
+
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <a href="dashboard.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">
+            <i class="bx bxs-flask nav-icon"></i>
+          </div>
+          <div class="sidebar-logo-text">
+            EKSPERIKA
+            <span>Lab OS v3.0</span>
+          </div>
+        </a>
+
+        <div class="sidebar-section-label">Navigation</div>
+
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <i class="bx bxs-home nav-icon"></i>
+            <span>Home</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="bx bxs-flask nav-icon"></i>
+            <span>Chemistry Lab</span>
+          </a>
+          <a href="physic.html" class="nav-item active">
+            <i class="bx bxs-bolt-circle nav-icon"></i>
+            <span>Physics Lab</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="bx bx-dna nav-icon"></i>
+            <span>Biology Lab</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="bx bxs-book-open nav-icon"></i>
+            <span>Challenge</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="sidebar-user">
+            <div class="sidebar-avatar">👩‍🔬</div>
+            <div class="sidebar-user-info">
+              <div class="sidebar-user-name">Aisyah Rahma</div>
+              <div class="sidebar-user-role">Researcher · Lv.12</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ══ MAIN ══ -->
+      <div class="main">
+        <!-- TOP BAR -->
+        <header class="topbar">
+          <div>
+            <div class="topbar-title">PHYSICS LAB</div>
+            <div class="topbar-breadcrumb">
+              <a href="dashboard.html">HOME /</a>
+              <a href="physic.html">PHYSICS</a> / ELECTRIC SIMULATION
+            </div>
+          </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <div class="page-tag">
+                <span class="wdot"></span> Physics Module · Electric Circuits
+              </div>
+              <div class="page-title">ELECTRIC <span>SIMULATION</span></div>
+              <div class="page-sub">
+                Realtime circuit simulation · Ohm's Law · Series &amp; Parallel
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <button class="btn btn-yellow btn-sm" onclick="loadChallenge()">
+                🏆 Challenge Mode
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                id="runBtnTop"
+                onclick="toggleRun()"
+              >
+                ▶ Run Simulation
+              </button>
+            </div>
+          </div>
+
+          <!-- Main Lab Grid -->
+          <div class="lab-layout">
+            <!-- ── LEFT CONTROLS ── -->
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <!-- Circuit Type -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <div class="panel-header-icon">⚡</div>
+                  <span class="panel-header-title">Circuit Type</span>
+                </div>
+                <div class="panel-body" style="padding-bottom: 10px">
+                  <div class="tab-row">
+                    <button
+                      class="tab-btn active"
+                      onclick="setCircuit('series', this)"
+                    >
+                      Series
+                    </button>
+                    <button
+                      class="tab-btn"
+                      onclick="setCircuit('parallel', this)"
+                    >
+                      Parallel
+                    </button>
+                    <button class="tab-btn" onclick="setCircuit('mixed', this)">
+                      Mixed
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Power Source -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <div class="panel-header-icon">🔋</div>
+                  <span class="panel-header-title">Power Source</span>
+                  <span class="panel-header-badge" id="srcType">DC</span>
+                </div>
+                <div class="panel-body">
+                  <div class="ctrl-group">
+                    <div class="ctrl-row-label">
+                      <span>EMF Voltage</span
+                      ><span class="val val-cyan" id="vDisp">12.0 V</span>
+                    </div>
+                    <input
+                      type="range"
+                      class="neo-slider sl-cyan"
+                      min="1"
+                      max="24"
+                      value="12"
+                      step="0.5"
+                      id="voltSlider"
+                      oninput="sync()"
+                    />
+                  </div>
+                  <div class="ctrl-group">
+                    <div class="ctrl-row-label">
+                      <span>Int. Resistance</span
+                      ><span class="val val-yellow" id="rIntDisp">0.5 Ω</span>
+                    </div>
+                    <input
+                      type="range"
+                      class="neo-slider sl-yellow"
+                      min="0"
+                      max="5"
+                      value="0.5"
+                      step="0.1"
+                      id="intResSlider"
+                      oninput="sync()"
+                    />
+                  </div>
+                  <div class="divider"></div>
+                  <div class="tab-row">
+                    <button class="tab-btn active" onclick="setSrc('DC', this)">
+                      DC
+                    </button>
+                    <button class="tab-btn" onclick="setSrc('AC', this)">
+                      AC 50Hz
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Resistors -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <div class="panel-header-icon">🔌</div>
+                  <span class="panel-header-title">Resistors</span>
+                </div>
+                <div class="panel-body">
+                  <div class="ctrl-group">
+                    <div class="ctrl-row-label">
+                      <span>R1</span
+                      ><span class="val val-cyan" id="r1Disp">4.0 Ω</span>
+                    </div>
+                    <input
+                      type="range"
+                      class="neo-slider sl-cyan"
+                      min="1"
+                      max="20"
+                      value="4"
+                      step="0.5"
+                      id="r1"
+                      oninput="sync()"
+                    />
+                  </div>
+                  <div class="ctrl-group">
+                    <div class="ctrl-row-label">
+                      <span>R2</span
+                      ><span class="val val-green" id="r2Disp">8.0 Ω</span>
+                    </div>
+                    <input
+                      type="range"
+                      class="neo-slider sl-green"
+                      min="1"
+                      max="20"
+                      value="8"
+                      step="0.5"
+                      id="r2"
+                      oninput="sync()"
+                    />
+                  </div>
+                  <div class="ctrl-group">
+                    <div class="ctrl-row-label">
+                      <span>R3</span
+                      ><span class="val val-yellow" id="r3Disp">6.0 Ω</span>
+                    </div>
+                    <input
+                      type="range"
+                      class="neo-slider sl-yellow"
+                      min="1"
+                      max="20"
+                      value="6"
+                      step="0.5"
+                      id="r3"
+                      oninput="sync()"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Components -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <div class="panel-header-icon">🔧</div>
+                  <span class="panel-header-title">Components</span>
+                </div>
+                <div class="panel-body">
+                  <div class="comp-grid">
+                    <div
+                      class="comp-btn active"
+                      onclick="this.classList.toggle('active')"
+                    >
+                      <span class="comp-icon">💡</span
+                      ><span class="comp-label">Bulb</span>
+                    </div>
+                    <div
+                      class="comp-btn active"
+                      onclick="this.classList.toggle('active')"
+                    >
+                      <span class="comp-icon">🟡</span
+                      ><span class="comp-label">Voltmeter</span>
+                    </div>
+                    <div
+                      class="comp-btn"
+                      onclick="this.classList.toggle('active')"
+                    >
+                      <span class="comp-icon">🔵</span
+                      ><span class="comp-label">Ammeter</span>
+                    </div>
+                    <div
+                      class="comp-btn"
+                      onclick="this.classList.toggle('active')"
+                    >
+                      <span class="comp-icon">⚡</span
+                      ><span class="comp-label">Capacitor</span>
+                    </div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="ctrl-row-label" style="margin-bottom: 6px">
+                    <span
+                      style="
+                        font-family: var(--font-mono);
+                        font-size: 0.52rem;
+                        color: var(--text-dim);
+                        text-transform: uppercase;
+                      "
+                      >Electron Color</span
+                    >
+                  </div>
+                  <div class="color-row">
+                    <div
+                      class="clr-dot active"
+                      style="
+                        background: #22d3ee;
+                        box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+                      "
+                      onclick="setColor('#22D3EE', this)"
+                    ></div>
+                    <div
+                      class="clr-dot"
+                      style="
+                        background: #fff;
+                        box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+                      "
+                      onclick="setColor('#ffffff', this)"
+                    ></div>
+                    <div
+                      class="clr-dot"
+                      style="
+                        background: #fbbf24;
+                        box-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+                      "
+                      onclick="setColor('#FBBF24', this)"
+                    ></div>
+                    <div
+                      class="clr-dot"
+                      style="
+                        background: #10b981;
+                        box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+                      "
+                      onclick="setColor('#10B981', this)"
+                    ></div>
+                    <div
+                      class="clr-dot"
+                      style="
+                        background: #ef4444;
+                        box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+                      "
+                      onclick="setColor('#EF4444', this)"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reset -->
+              <div class="panel-card">
+                <div
+                  class="panel-body"
+                  style="display: flex; flex-direction: column; gap: 6px"
+                >
+                  <button
+                    class="action-btn ab-challenge"
+                    onclick="loadChallenge()"
+                  >
+                    🏆 Challenge Mode
+                  </button>
+                  <button class="action-btn ab-reset" onclick="resetLab()">
+                    ↺ Reset Circuit
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── CENTER SIMULATION ── -->
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <div class="sim-wrap">
+                <div class="sim-topbar">
+                  <div class="sdot"></div>
+                  <div class="sdot"></div>
+                  <div class="sdot"></div>
+                  <span class="sim-label"
+                    >⚡ Electric Circuit Simulator — Realtime</span
+                  >
+                  <div
+                    class="sim-running-badge"
+                    id="runBadge"
+                    style="display: none"
+                  >
+                    <div class="sim-running-dot"></div>
+                    Running
+                  </div>
+                </div>
+                <canvas id="mainCanvas" height="420"></canvas>
+                <div class="mode-strip">
+                  <div class="mode-item">
+                    Circuit: <span class="mi-val" id="modeCircuit">Series</span>
+                  </div>
+                  <div class="mode-sep"></div>
+                  <div class="mode-item">
+                    Source: <span class="mi-val" id="modeSrc">DC</span>
+                  </div>
+                  <div class="mode-sep"></div>
+                  <div class="mode-item">
+                    Rtotal: <span class="mi-val" id="modeRt">18.5 Ω</span>
+                  </div>
+                  <div class="mode-sep"></div>
+                  <div class="mode-item">
+                    I: <span class="mi-val" id="modeI">0.649 A</span>
+                  </div>
+                  <div class="mode-sep"></div>
+                  <div class="mode-item">
+                    P: <span class="mi-val" id="modeP">7.78 W</span>
+                  </div>
+                </div>
+                <div class="oscillo-wrap">
+                  <div class="oscillo-head">
+                    <span>⚡ Oscilloscope — Voltage / Time</span>
+                    <span id="oscLabel">DC Signal</span>
+                  </div>
+                  <canvas id="oscilloCanvas"></canvas>
+                </div>
+              </div>
+
+              <!-- Formula row -->
+              <div class="formula-row">
+                <div class="formula-mini">
+                  <span class="fm-icon">⚡</span>
+                  <div class="fm-name">Ohm's Law</div>
+                  <div class="fm-eq"><span>V</span> = IR</div>
+                  <div class="fm-desc">Current ∝ Voltage, ∝ 1/Resistance</div>
+                </div>
+                <div class="formula-mini">
+                  <span class="fm-icon">💡</span>
+                  <div class="fm-name">Power</div>
+                  <div class="fm-eq">P = <span>VI</span></div>
+                  <div class="fm-desc">Energy per unit time in Watts</div>
+                </div>
+                <div class="formula-mini">
+                  <span class="fm-icon">🔌</span>
+                  <div class="fm-name">Series R</div>
+                  <div class="fm-eq"><span>R</span>t = ΣR</div>
+                  <div class="fm-desc">Resistors add up in series circuits</div>
+                </div>
+                <div class="formula-mini">
+                  <span class="fm-icon">🔀</span>
+                  <div class="fm-name">Parallel R</div>
+                  <div class="fm-eq">1/<span>R</span>t = Σ1/R</div>
+                  <div class="fm-desc">
+                    Reciprocals sum in parallel branches
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── RIGHT INFO ── -->
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <!-- Live Meters -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <div class="panel-header-icon">📊</div>
+                  <span class="panel-header-title">Live Meters</span>
+                  <span class="panel-header-badge">Realtime</span>
+                </div>
+                <div class="panel-body">
+                  <div class="meter-card">
+                    <div class="meter-head">
+                      <span class="meter-name">Voltage (V)</span>
+                      <div>
+                        <span
+                          class="meter-big"
+                          id="mv"
+                          style="color: var(--cyan)"
+                          >12.0</span
+                        ><span class="meter-unit">V</span>
+                      </div>
+                    </div>
+                    <div class="meter-bar">
+                      <div
+                        class="meter-fill"
+                        id="mvb"
+                        style="
+                          width: 50%;
+                          background: linear-gradient(
+                            90deg,
+                            var(--primary),
+                            var(--cyan)
+                          );
+                          box-shadow: 0 0 6px var(--primary);
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="meter-card">
+                    <div class="meter-head">
+                      <span class="meter-name">Current (A)</span>
+                      <div>
+                        <span
+                          class="meter-big"
+                          id="mi"
+                          style="color: var(--yellow)"
+                          >0.649</span
+                        ><span class="meter-unit">A</span>
+                      </div>
+                    </div>
+                    <div class="meter-bar">
+                      <div
+                        class="meter-fill"
+                        id="mib"
+                        style="
+                          width: 33%;
+                          background: linear-gradient(
+                            90deg,
+                            var(--yellow),
+                            var(--orange)
+                          );
+                          box-shadow: 0 0 6px var(--yellow);
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="meter-card">
+                    <div class="meter-head">
+                      <span class="meter-name">Resistance (Ω)</span>
+                      <div>
+                        <span
+                          class="meter-big"
+                          id="mr"
+                          style="color: var(--green)"
+                          >18.5</span
+                        ><span class="meter-unit">Ω</span>
+                      </div>
+                    </div>
+                    <div class="meter-bar">
+                      <div
+                        class="meter-fill"
+                        id="mrb"
+                        style="
+                          width: 28%;
+                          background: linear-gradient(
+                            90deg,
+                            var(--green),
+                            #34d399
+                          );
+                          box-shadow: 0 0 6px var(--green);
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="meter-card">
+                    <div class="meter-head">
+                      <span class="meter-name">Power (W)</span>
+                      <div>
+                        <span
+                          class="meter-big"
+                          id="mp"
+                          style="color: var(--red)"
+                          >7.78</span
+                        ><span class="meter-unit">W</span>
+                      </div>
+                    </div>
+                    <div class="meter-bar">
+                      <div
+                        class="meter-fill"
+                        id="mpb"
+                        style="
+                          width: 16%;
+                          background: linear-gradient(
+                            90deg,
+                            var(--red),
+                            var(--orange)
+                          );
+                          box-shadow: 0 0 6px var(--red);
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="ohm-box">
+                    <div class="ohm-eq">
+                      <span id="ov">V</span> = <span id="oi">I</span> ×
+                      <span id="or">R</span>
+                    </div>
+                    <div class="ohm-nums" id="ohnums">12.0 = 0.649 × 18.5</div>
+                    <div class="ohm-label">Ohm's Law</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Observation Log -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <div class="panel-header-icon">📋</div>
+                  <span class="panel-header-title">Observations</span>
+                  <span class="panel-header-badge">LIVE</span>
+                </div>
+                <div class="panel-body" style="padding-top: 10px">
+                  <div class="obs-log" id="obsLog">
+                    <div class="obs-item ok">
+                      <div class="obs-time">00:00</div>
+                      <div class="obs-text">
+                        Circuit initialized. Ready to run.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Experiment Steps -->
+              <div class="panel-card">
+                <div class="panel-header">
+                  <div class="panel-header-icon">📌</div>
+                  <span class="panel-header-title">Experiment Steps</span>
+                </div>
+                <div class="panel-body">
+                  <div class="step-row active" id="s1">
+                    <div class="step-num" id="sn1">1</div>
+                    <div class="step-txt">
+                      Choose circuit type and source voltage
+                    </div>
+                  </div>
+                  <div class="step-row" id="s2">
+                    <div class="step-num" id="sn2">2</div>
+                    <div class="step-txt">
+                      Adjust resistor values (R1, R2, R3)
+                    </div>
+                  </div>
+                  <div class="step-row" id="s3">
+                    <div class="step-num" id="sn3">3</div>
+                    <div class="step-txt">
+                      Run simulation — observe electron flow
+                    </div>
+                  </div>
+                  <div class="step-row" id="s4">
+                    <div class="step-num" id="sn4">4</div>
+                    <div class="step-txt">
+                      Read oscilloscope &amp; live measurements
+                    </div>
+                  </div>
+                  <div class="step-row" id="s5">
+                    <div class="step-num" id="sn5">5</div>
+                    <div class="step-txt">Verify Ohm's Law: V = I × R</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end lab-layout -->
+        </div>
+        <!-- end content -->
+      </div>
+      <!-- end main -->
+    </div>
+    <!-- end app -->
+
+    <script src="js/main.js"></script>
+    <script src="js/physic.js"></script>
+  </body>
+</html>
