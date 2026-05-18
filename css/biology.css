@@ -538,3 +538,839 @@ input[type="range"]::-webkit-slider-thumb {
 .c4 { color: #f472b6; }
 .stat-bar-fill.c4 { background: #f472b6; box-shadow: 0 0 8px #f472b6; }
 .c5 { color: #fb923c; font-size: 1.4rem; }
+
+/* ============================================================
+   NEXT-GEN BIOLOGY HUD EVOLUTION
+   ============================================================ */
+
+.biology-page {
+  background:
+    radial-gradient(circle at 50% 10%, rgba(139, 92, 246, 0.12), transparent 30rem),
+    radial-gradient(circle at 82% 40%, rgba(34, 211, 238, 0.08), transparent 24rem),
+    #020617;
+}
+
+.biology-page .sidebar {
+  background: linear-gradient(180deg, rgba(6, 15, 28, 0.96), rgba(3, 7, 18, 0.98));
+}
+
+.biology-page .nav-item {
+  overflow: hidden;
+}
+
+.biology-page .nav-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.16), rgba(34, 211, 238, 0.05));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.biology-page .nav-item:hover::after,
+.biology-page .nav-item.active::after {
+  opacity: 1;
+}
+
+.biology-page .nav-item .nav-icon,
+.biology-page .nav-item span {
+  position: relative;
+  z-index: 1;
+}
+
+.bio-top-monitor {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 12px;
+  border: 1px solid rgba(34, 211, 238, 0.24);
+  border-radius: var(--radius);
+  background: rgba(34, 211, 238, 0.06);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  color: rgba(226, 232, 240, 0.55);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.bio-top-monitor strong {
+  color: var(--cyan);
+  letter-spacing: 1.5px;
+}
+
+.bio-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: blink 1s infinite;
+}
+
+.system-orbit-status {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.system-orbit-status div {
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: rgba(139, 92, 246, 0.06);
+  border-radius: var(--radius);
+  padding: 8px;
+}
+
+.system-orbit-status span,
+.wave-head span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  color: rgba(148, 163, 184, 0.75);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.system-orbit-status strong {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+  color: #22d3ee;
+}
+
+.sim-card {
+  background:
+    linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(34, 211, 238, 0.035)),
+    rgba(2, 6, 23, 0.62);
+  border-color: rgba(139, 92, 246, 0.24);
+  box-shadow: 0 0 28px rgba(2, 6, 23, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.sim-card:hover {
+  border-color: rgba(34, 211, 238, 0.32);
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.sim-view {
+  --mx: 50%;
+  --my: 50%;
+  background:
+    radial-gradient(circle at var(--mx) var(--my), rgba(34, 211, 238, 0.14), transparent 16rem),
+    radial-gradient(circle at center, #081826 0%, #020617 74%);
+  border-color: rgba(139, 92, 246, 0.34);
+  box-shadow:
+    inset 0 0 58px rgba(34, 211, 238, 0.06),
+    0 0 34px rgba(139, 92, 246, 0.1);
+}
+
+.sim-view::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(circle at center, black, transparent 78%);
+  pointer-events: none;
+}
+
+.viewport-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx) var(--my), rgba(236, 72, 153, 0.12), transparent 14rem);
+  mix-blend-mode: screen;
+}
+
+.holo-depth-ring {
+  position: absolute;
+  width: min(62%, 440px);
+  aspect-ratio: 1;
+  border: 1px dashed rgba(34, 211, 238, 0.2);
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.08);
+  animation: holoRotate 18s linear infinite;
+}
+
+@keyframes holoRotate {
+  to { transform: rotate(360deg); }
+}
+
+.scan-hud {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 210px;
+  padding: 7px 10px;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  border-radius: var(--radius);
+  background: rgba(2, 6, 23, 0.62);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: rgba(226, 232, 240, 0.58);
+  letter-spacing: 1px;
+}
+
+.scan-hud strong {
+  color: #22d3ee;
+}
+
+.scan-hud-top { top: 14px; left: 14px; }
+.scan-hud-bottom { right: 14px; bottom: 14px; }
+
+.scanner-line {
+  background: linear-gradient(180deg, transparent, rgba(34, 211, 238, 0.8), transparent);
+  opacity: var(--scan-alpha, 0.72);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.6);
+}
+
+.neural-signal {
+  position: absolute;
+  width: 160px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px #22d3ee);
+}
+
+.neural-signal-a {
+  top: 32%;
+  left: 22%;
+  transform: rotate(22deg);
+  animation: neuralArc 2.8s ease-in-out infinite;
+}
+
+.neural-signal-b {
+  top: 58%;
+  right: 18%;
+  transform: rotate(-28deg);
+  animation: neuralArc 3.4s ease-in-out infinite 0.7s;
+}
+
+@keyframes neuralArc {
+  0%, 100% { opacity: 0; transform: translateX(-24px) rotate(var(--r, 22deg)); }
+  40%, 60% { opacity: 0.8; }
+}
+
+.human-body-svg {
+  transform-origin: center;
+  animation: bodyBreath 5s ease-in-out infinite;
+}
+
+@keyframes bodyBreath {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.008); }
+}
+
+#organ-lungs-l,
+#organ-lungs-r {
+  transform-origin: 100px 152px;
+  animation: lungBreath 3.8s ease-in-out infinite;
+}
+
+@keyframes lungBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+}
+
+.organ-group.hovered .organ,
+.organ.clickable:hover {
+  filter: drop-shadow(0 0 12px rgba(236, 72, 153, 0.75));
+}
+
+.sim-view.heatmap-mode .organ {
+  fill: rgba(236, 72, 153, 0.35);
+}
+
+.sim-view.heatmap-mode #organ-heart {
+  fill: rgba(239, 68, 68, 0.75);
+}
+
+.sim-view.heatmap-mode #organ-brain {
+  fill: rgba(236, 72, 153, 0.65);
+}
+
+.sim-view.guided-mode {
+  border-color: rgba(236, 72, 153, 0.55);
+  box-shadow: 0 0 38px rgba(236, 72, 153, 0.14), inset 0 0 64px rgba(139, 92, 246, 0.08);
+}
+
+.wave-card {
+  margin-top: 12px;
+  border: 1px solid rgba(34, 211, 238, 0.16);
+  background: rgba(2, 6, 23, 0.42);
+  border-radius: var(--radius);
+  padding: 10px;
+}
+
+.wave-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.wave-head strong {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: #10b981;
+  letter-spacing: 1px;
+}
+
+#heartbeatCanvas {
+  width: 100%;
+  height: 74px;
+  display: block;
+}
+
+.radial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.radial-meter {
+  --size: 74px;
+  width: var(--size);
+  height: var(--size);
+  margin: 0 auto;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background:
+    radial-gradient(circle, #06111f 54%, transparent 56%),
+    conic-gradient(#22d3ee calc(var(--pct) * 1%), rgba(148, 163, 184, 0.12) 0);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.12);
+}
+
+.radial-meter span {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: #e2e8f0;
+}
+
+.radial-meter small {
+  position: absolute;
+  bottom: -16px;
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  color: rgba(148, 163, 184, 0.72);
+  text-transform: uppercase;
+}
+
+.radial-card {
+  padding-bottom: 28px;
+}
+
+.bio-fact,
+.quiz-question,
+.quiz-feedback {
+  color: rgba(226, 232, 240, 0.72);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.quiz-choices {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.quiz-choice {
+  border: 1px solid rgba(139, 92, 246, 0.18);
+  border-radius: var(--radius);
+  background: rgba(139, 92, 246, 0.08);
+  color: rgba(226, 232, 240, 0.72);
+  padding: 7px 8px;
+  cursor: none;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.quiz-choice:hover {
+  border-color: rgba(34, 211, 238, 0.45);
+  color: #22d3ee;
+}
+
+.quiz-choice.correct {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+}
+
+.quiz-choice.wrong {
+  border-color: rgba(236, 72, 153, 0.5);
+  background: rgba(236, 72, 153, 0.12);
+  color: #ec4899;
+}
+
+.quiz-card.active {
+  border-color: rgba(236, 72, 153, 0.42);
+}
+
+
+/* Biology shell polish */
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 14px 16px;
+  border-top: 1px solid var(--border-c);
+  background: rgba(2, 6, 23, 0.42);
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  border-radius: var(--radius);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.sidebar-user-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.sidebar-user-role {
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  color: rgba(34, 211, 238, 0.48);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.scanner-line {
+  position: absolute;
+  top: -25%;
+  left: 0;
+  right: 0;
+  height: 120px;
+  pointer-events: none;
+  animation: bioScan 4.8s ease-in-out infinite;
+  z-index: 3;
+}
+
+@keyframes bioScan {
+  0%, 100% { transform: translateY(0); opacity: 0; }
+  15%, 85% { opacity: var(--scan-alpha, 0.72); }
+  50% { transform: translateY(680px); }
+}
+
+.organ-tooltip {
+  position: fixed;
+  z-index: 10000;
+  min-width: 140px;
+  max-width: 230px;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: var(--radius);
+  background: rgba(2, 6, 23, 0.88);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.14);
+  color: rgba(226, 232, 240, 0.86);
+  padding: 9px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.organ-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.organ-tooltip-tag {
+  color: #22d3ee;
+  margin-right: 5px;
+}
+
+/* ============================================================
+   SVG ANATOMY MANNEQUIN UPGRADE
+   ============================================================ */
+
+.body-container {
+  will-change: transform;
+}
+
+.human-body-svg {
+  max-height: 720px;
+  overflow: visible;
+}
+
+.anatomy-layer,
+.anatomy-organ-layer {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.body-outline {
+  fill: rgba(34, 211, 238, 0.025);
+  stroke: rgba(34, 211, 238, 0.38);
+  stroke-width: 1.35;
+  filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.28));
+}
+
+.organ-group {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.organ-group .organ {
+  paint-order: stroke fill;
+}
+
+.organ-group:hover .organ,
+.organ-group.hovered .organ {
+  stroke: rgba(255, 255, 255, 0.92);
+  stroke-width: 1.8;
+  filter:
+    drop-shadow(0 0 7px rgba(34, 211, 238, 0.7))
+    drop-shadow(0 0 16px rgba(236, 72, 153, 0.42));
+}
+
+.organ-group.active .organ,
+.organ.selected {
+  stroke: #ffffff;
+  stroke-width: 2;
+  filter:
+    drop-shadow(0 0 8px rgba(255, 255, 255, 0.72))
+    drop-shadow(0 0 24px rgba(139, 92, 246, 0.82))
+    drop-shadow(0 0 38px rgba(34, 211, 238, 0.34));
+}
+
+.organ-group.active .organ-label,
+.organ-group.active .label-line {
+  opacity: 1;
+}
+
+.label-line {
+  fill: none;
+  stroke: rgba(34, 211, 238, 0.54);
+  stroke-width: 0.75;
+  stroke-dasharray: 2 2;
+  pointer-events: none;
+  opacity: 0.55;
+  animation: labelTrace 2.8s ease-in-out infinite;
+}
+
+@keyframes labelTrace {
+  0%, 100% { stroke-dashoffset: 0; opacity: 0.38; }
+  50% { stroke-dashoffset: 8; opacity: 0.92; }
+}
+
+#anatomy-layer-heart {
+  animation: heartLayerBeat 1.05s ease-in-out infinite;
+}
+
+@keyframes heartLayerBeat {
+  0%, 100% { transform: scale(1); }
+  16% { transform: scale(1.08); }
+  32% { transform: scale(0.98); }
+  48% { transform: scale(1.045); }
+}
+
+#anatomy-layer-left-lung,
+#anatomy-layer-right-lung {
+  animation: anatomyBreath 4s ease-in-out infinite;
+}
+
+@keyframes anatomyBreath {
+  0%, 100% { transform: scale(1); opacity: 0.86; }
+  50% { transform: scale(1.045); opacity: 1; }
+}
+
+#anatomy-layer-brain {
+  animation: neuralPulse 2.4s ease-in-out infinite;
+}
+
+.neural-fold {
+  stroke-dasharray: 4 5;
+  animation: neuralFold 2.8s linear infinite;
+}
+
+@keyframes neuralPulse {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.28)); }
+  50% { filter: drop-shadow(0 0 19px rgba(244, 114, 182, 0.68)); }
+}
+
+@keyframes neuralFold {
+  to { stroke-dashoffset: -18; }
+}
+
+.vessel-map {
+  fill: none !important;
+  stroke: url(#vesselGradient);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 5 4;
+  animation: vesselFlow 1.8s linear infinite;
+}
+
+@keyframes vesselFlow {
+  to { stroke-dashoffset: -28; }
+}
+
+.sim-view.heatmap-mode .anatomy-organ-layer .organ {
+  filter: saturate(1.35) drop-shadow(0 0 15px rgba(236, 72, 153, 0.42));
+}
+
+.sim-view.guided-mode .organ-group.active .organ {
+  filter:
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))
+    drop-shadow(0 0 30px rgba(236, 72, 153, 0.9));
+}
+
+.selected-organ-card {
+  min-height: 150px;
+}
+
+.selected-organ-empty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(226, 232, 240, 0.48);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+}
+
+.selected-organ-empty i {
+  color: #22d3ee;
+  font-size: 1.25rem;
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.5));
+}
+
+.selected-organ-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: #f8fafc;
+  letter-spacing: 1.5px;
+}
+
+.selected-organ-name i {
+  color: #ec4899;
+  filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.6));
+}
+
+.selected-organ-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0 10px;
+  padding: 4px 8px;
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.08);
+  color: #34d399;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.mini-vitals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.mini-vital {
+  padding: 7px;
+  border: 1px solid rgba(34, 211, 238, 0.12);
+  border-radius: 6px;
+  background: rgba(2, 6, 23, 0.35);
+}
+
+.mini-vital span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  color: rgba(148, 163, 184, 0.72);
+  text-transform: uppercase;
+}
+
+.mini-vital strong {
+  color: #e2e8f0;
+  font-size: 0.72rem;
+}
+
+.deep-scan-btn {
+  width: 100%;
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.guided-card {
+  overflow: hidden;
+}
+
+.organGuideSwiper {
+  min-height: 138px;
+  padding-bottom: 22px;
+}
+
+.guide-slide {
+  min-height: 110px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: var(--radius);
+  padding: 10px;
+  background: rgba(2, 6, 23, 0.45);
+}
+
+.guide-slide strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #22d3ee;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.guide-slide p {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.66);
+  font-size: 0.66rem;
+  line-height: 1.45;
+}
+
+.swiper-pagination-bullet {
+  background: rgba(34, 211, 238, 0.55);
+}
+
+.organ-modal {
+  width: min(720px, 92vw);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(236, 72, 153, 0.14), transparent 20rem),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(2, 6, 23, 0.98));
+  border: 1px solid rgba(34, 211, 238, 0.26);
+  color: #e2e8f0;
+  padding: 22px;
+  box-shadow: 0 0 50px rgba(34, 211, 238, 0.12);
+}
+
+.modal-organ-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: rgba(148, 163, 184, 0.72);
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.modal-organ-head span,
+.modal-organ-head strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.modal-organ-head strong {
+  color: #22d3ee;
+}
+
+.modal-organ-title {
+  margin: 10px 0 14px;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.modal-organ-body {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.modal-organ-icon {
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(236, 72, 153, 0.28);
+  border-radius: var(--radius);
+  background: rgba(236, 72, 153, 0.08);
+  color: #ec4899;
+  font-size: 2rem;
+  filter: drop-shadow(0 0 16px rgba(236, 72, 153, 0.32));
+}
+
+.modal-organ-body p {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.72);
+  line-height: 1.6;
+  font-size: 0.86rem;
+}
+
+.organDetailSwiper {
+  margin-top: 18px;
+  padding-bottom: 26px;
+}
+
+.detail-slide {
+  border: 1px solid rgba(34, 211, 238, 0.16);
+  border-radius: var(--radius);
+  padding: 14px;
+  background: rgba(34, 211, 238, 0.05);
+}
+
+.detail-slide span {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  color: #22d3ee;
+  font-size: 0.55rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.detail-slide p {
+  margin: 0;
+  font-size: 0.76rem;
+}
+
+@media (max-width: 1000px) {
+  .human-body-svg {
+    max-height: 560px;
+  }
+
+  .modal-organ-body {
+    grid-template-columns: 1fr;
+  }
+}

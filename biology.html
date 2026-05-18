@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eksperika — Biology Lab</title>
     <link rel="stylesheet" href="css/boxicons.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.5/swiper-bundle.min.css" />
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/biology.css">
     <link
@@ -13,7 +15,7 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body class="biology-page">
     <div class="cursor" id="cursor"></div>
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="grid-bg"></div>
@@ -77,6 +79,11 @@
               <a href="dashboard.html">HOME /</a>
               <a href="biology.html">BIOLOGY</a> / HUMAN ANATOMY
             </div>
+          <div class="bio-top-monitor">
+            <span class="bio-live-dot"></span>
+            <span>LIVE BIOSCAN</span>
+            <strong id="bioClock">00:00:00</strong>
+          </div>
           </div>
         </header>
 
@@ -93,12 +100,15 @@
                 14-organ model · Histology metrics · System overlays · Live vitals
               </div>
             </div>
-            <div style="display: flex; gap: 8px; align-items: center">
-              <button class="btn btn-yellow btn-sm">
-                🏆 Quiz Mode
+            <div class="page-actions">
+              <button class="btn btn-yellow btn-sm" id="quizBtn">
+                <i class="bx bxs-brain"></i> Quiz Mode
+              </button>
+              <button class="btn btn-ghost btn-sm" id="guideBtn">
+                <i class="bx bx-target-lock"></i> Guided Scan
               </button>
               <button class="btn btn-primary btn-sm" id="resetBtn">
-                🔄 Reset View
+                <i class="bx bx-reset"></i> Reset View
               </button>
             </div>
           </div>
@@ -117,22 +127,34 @@
                   <button class="tab-btn" onclick="setSystem('circulatory', this)">Blood</button>
                 </div>
 
+                <div class="system-orbit-status">
+                  <div><span>SCAN MODE</span><strong id="activeSystemLabel">ORGANS</strong></div>
+                  <div><span>FOCUS</span><strong id="focusLabel">STANDBY</strong></div>
+                </div>
+
                 <div class="control-group">
-                  <label>Body Outline Opacity</label>
+                  <label>Organ Opacity</label>
                   <input type="range" id="opacitySlider" min="20" max="100" value="80" oninput="updateOpacity()">
                 </div>
                 <div class="control-group">
-                  <label>3D Rotation</label>
+                  <label>Body Rotation</label>
                   <input type="range" id="rotateSlider" min="0" max="360" value="0" oninput="updateRotation()">
                 </div>
                 <div class="control-group">
                   <label>Zoom</label>
                   <input type="range" id="zoomSlider" min="70" max="130" value="100" oninput="updateZoom()">
                 </div>
+                <div class="control-group">
+                  <label>Holographic Scan Intensity</label>
+                  <input type="range" id="scanSlider" min="20" max="100" value="72">
+                </div>
                 <div class="layer-toggles">
                   <label class="layer-check"><input type="checkbox" checked onchange="toggleLayer('outline', this.checked)"> Skin outline</label>
                   <label class="layer-check"><input type="checkbox" checked onchange="toggleLayer('organs', this.checked)"> Organs</label>
                   <label class="layer-check"><input type="checkbox" checked onchange="toggleLayer('labels', this.checked)"> Labels</label>
+                
+                  <label class="layer-check"><input type="checkbox" id="heatmapToggle"> Organ heatmap</label>
+                  <label class="layer-check"><input type="checkbox" id="guidedToggle"> Guided exploration</label>
                 </div>
               </div>
 
@@ -150,7 +172,13 @@
             </div>
 
             <!-- Middle: Body Visualization -->
-            <div class="sim-view">
+            <div class="sim-view" id="simView">
+              <div class="scan-hud scan-hud-top">
+                <span id="typedScanStatus">ANATOMY MATRIX</span>
+                <strong id="scanReadout">72%</strong>
+              </div>
+              <div class="holo-depth-ring"></div>
+              <div class="viewport-light"></div>
               <div class="body-viewport">
                 <div class="body-container" id="bodyContainer">
                   <svg viewBox="0 0 200 520" class="human-body-svg" id="humanSvg">
@@ -174,6 +202,11 @@
                       <linearGradient id="gradLiver" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stop-color="#b45309" stop-opacity="0.55"/>
                         <stop offset="100%" stop-color="#78350f" stop-opacity="0.3"/>
+                      </linearGradient>
+                      <linearGradient id="vesselGradient" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#ef4444"/>
+                        <stop offset="48%" stop-color="#ec4899"/>
+                        <stop offset="100%" stop-color="#22d3ee"/>
                       </linearGradient>
                       <filter id="organGlow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
                     </defs>
@@ -201,7 +234,7 @@
                     </g>
 
                     <!-- CIRCULATORY -->
-                    <g id="system-circulatory" class="body-system hidden">
+                    <g id="system-circulatory" class="body-system hidden anatomy-layer" data-layer="blood-vessels">
                       <path class="vessel artery" d="M100,155 L100,210 L95,250"/>
                       <path class="vessel artery" d="M100,155 L85,200 L75,230"/>
                       <path class="vessel artery" d="M100,155 L115,200 L125,230"/>
@@ -228,41 +261,56 @@
                     </g>
 
                     <!-- ORGANS -->
-                    <g id="system-organs" class="body-system">
-                      <g class="organ-group" data-target="organ-brain">
+                    <g id="system-organs" class="body-system anatomy-layer" data-layer="organs">
+                      <g id="anatomy-layer-brain" class="organ-group anatomy-organ-layer" data-target="organ-brain" data-layer="brain">
                         <path id="organ-brain" class="organ clickable" filter="url(#organGlow)"
                           d="M100,32 C118,32 128,44 128,58 C128,72 118,82 100,84 C82,82 72,72 72,58 C72,44 82,32 100,32
                              M88,55 Q100,48 112,55 M92,48 Q100,42 108,48 M92,68 Q100,74 108,68 M95,62 L105,62"/>
-                        <path class="organ-detail" d="M95,40 Q100,36 105,40" opacity="0.4"/>
+                        <path class="organ-detail neural-fold" d="M95,40 Q100,36 105,40" opacity="0.4"/>
+                        <path class="organ-detail neural-fold" d="M83,58 Q92,50 101,58 T119,58" opacity="0.35"/>
+                        <path class="label-line" d="M125,58 L131,58"/>
                         <text x="132" y="58" class="organ-label">BRAIN</text>
                       </g>
-                      <g class="organ-group" data-target="organ-trachea">
+                      <g id="anatomy-layer-trachea" class="organ-group anatomy-organ-layer" data-target="organ-trachea" data-layer="trachea">
                         <path id="organ-trachea" class="organ clickable"
                           d="M97,88 L97,118 L103,118 L103,88 Z M94,92 L94,96 M106,92 L106,96 M94,108 L94,112 M106,108 L106,112"/>
+                        <path class="label-line" d="M104,104 L107,104"/>
                         <text x="108" y="105" class="organ-label">TRACHEA</text>
                       </g>
-                      <g class="organ-group" data-target="organ-lungs-l">
+                      <g id="anatomy-layer-left-lung" class="organ-group anatomy-organ-layer" data-target="organ-lungs-l" data-layer="left-lung">
                         <path id="organ-lungs-l" class="organ clickable" fill="url(#gradLung)"
                           d="M92,108 C76,108 60,122 58,148 C56,172 68,192 90,196 L92,108
                              M70,135 Q82,128 88,140 M65,160 Q78,152 86,165"/>
+                        <path class="label-line" d="M61,158 L49,158"/>
                         <text x="48" y="158" class="organ-label align-right">LUNG L</text>
                       </g>
-                      <g class="organ-group" data-target="organ-lungs-r">
+                      <g id="anatomy-layer-right-lung" class="organ-group anatomy-organ-layer" data-target="organ-lungs-r" data-layer="right-lung">
                         <path id="organ-lungs-r" class="organ clickable" fill="url(#gradLung)"
                           d="M108,108 C124,108 140,122 142,148 C144,172 132,192 110,196 L108,108
                              M130,135 Q118,128 112,140 M135,160 Q122,152 114,165"/>
+                        <path class="label-line" d="M139,158 L151,158"/>
                         <text x="152" y="158" class="organ-label">LUNG R</text>
                       </g>
-                      <g class="organ-group" data-target="organ-heart">
+                      <g id="anatomy-layer-blood-vessels" class="organ-group anatomy-organ-layer vessel-organ" data-target="organ-blood-vessels" data-layer="blood-vessels">
+                        <path id="organ-blood-vessels" class="organ clickable vessel-map" d="M100,82 C98,106 101,126 100,144 M100,144 C88,164 82,188 78,225 M100,144 C112,164 118,188 122,225 M78,225 C72,266 72,315 77,365 M122,225 C128,266 128,315 123,365 M100,166 C96,206 94,244 92,286 M100,166 C104,206 106,244 108,286 M86,114 C70,124 60,144 50,174 M114,114 C130,124 140,144 150,174"/>
+                        <circle class="blood-flow" cx="100" cy="144" r="3"/>
+                        <circle class="blood-flow" cx="82" cy="204" r="2.5"/>
+                        <circle class="blood-flow" cx="118" cy="204" r="2.5"/>
+                        <path class="label-line" d="M124,214 L150,214"/>
+                        <text x="152" y="216" class="organ-label">VESSELS</text>
+                      </g>
+                      <g id="anatomy-layer-heart" class="organ-group anatomy-organ-layer" data-target="organ-heart" data-layer="heart">
                         <path id="organ-heart" class="organ clickable" fill="url(#gradHeart)"
                           d="M100,138 C94,128 84,132 84,144 C84,158 100,178 100,178 C100,178 116,158 116,144 C116,132 106,128 100,138
                              M96,132 L96,122 M104,132 L104,122 M100,148 L100,155"/>
+                        <path class="label-line" d="M112,134 L119,128"/>
                         <text x="120" y="128" class="organ-label">HEART</text>
                       </g>
-                      <g class="organ-group" data-target="organ-liver">
+                      <g id="anatomy-layer-liver" class="organ-group anatomy-organ-layer" data-target="organ-liver" data-layer="liver">
                         <path id="organ-liver" class="organ clickable" fill="url(#gradLiver)"
                           d="M72,198 L112,198 C120,198 126,208 122,222 C118,238 88,244 72,232 C66,222 68,208 72,198
                              M108,205 L118,210 L115,218"/>
+                        <path class="label-line" d="M72,222 L59,222"/>
                         <text x="58" y="222" class="organ-label align-right">LIVER</text>
                       </g>
                       <g class="organ-group" data-target="organ-gallbladder">
@@ -270,15 +318,17 @@
                           d="M118,218 C124,218 128,224 126,232 C124,238 118,240 114,234 C112,228 114,220 118,218"/>
                         <text x="132" y="232" class="organ-label">GALL</text>
                       </g>
-                      <g class="organ-group" data-target="organ-stomach">
+                      <g id="anatomy-layer-stomach" class="organ-group anatomy-organ-layer" data-target="organ-stomach" data-layer="stomach">
                         <path id="organ-stomach" class="organ clickable"
                           d="M104,208 C126,206 138,226 132,252 C126,278 104,282 94,268 C84,252 88,212 104,208
                              M110,220 Q118,235 115,250"/>
+                        <path class="label-line" d="M130,242 L137,242"/>
                         <text x="138" y="242" class="organ-label">STOMACH</text>
                       </g>
-                      <g class="organ-group" data-target="organ-pancreas">
+                      <g id="anatomy-layer-pancreas" class="organ-group anatomy-organ-layer" data-target="organ-pancreas" data-layer="pancreas">
                         <path id="organ-pancreas" class="organ clickable"
                           d="M78,248 L118,245 L120,252 L78,255 Z"/>
+                        <path class="label-line" d="M100,246 L100,242"/>
                         <text x="100" y="243" class="organ-label align-center">PANCREAS</text>
                       </g>
                       <g class="organ-group" data-target="organ-spleen">
@@ -321,7 +371,7 @@
                       <!-- labels are inside organ groups -->
                     </g>
 
-                    <path id="layer-outline" class="body-outline"
+                    <path id="layer-outline" class="body-outline anatomy-layer" data-layer="body-outline"
                       d="M100,18 C78,18 66,38 66,58 C66,78 76,98 100,98 C124,98 134,78 134,58 C134,38 122,18 100,18
                          M66,78 L36,148 L26,248 L48,248 L58,148 L66,148
                          M134,78 L164,148 L174,248 L152,248 L142,148 L134,148
@@ -332,6 +382,12 @@
               
               <!-- Scanning Effect -->
               <div class="scanner-line"></div>
+              <div class="neural-signal neural-signal-a"></div>
+              <div class="neural-signal neural-signal-b"></div>
+              <div class="scan-hud scan-hud-bottom">
+                <span>SCAN DEPTH</span>
+                <strong id="depthReadout">DERMAL + ORGAN</strong>
+              </div>
               
               <!-- Tooltips Overlay -->
               <div id="organTooltip" class="organ-tooltip"></div>
@@ -339,6 +395,14 @@
 
             <!-- Right: Stats & Logs -->
             <div class="sim-sidebar">
+              <div class="sim-card selected-organ-card" id="organStatusPanel">
+                <div class="card-title">SELECTED ORGAN</div>
+                <div class="selected-organ-empty">
+                  <i class="bx bx-radar"></i>
+                  <span>Awaiting organ lock.</span>
+                </div>
+              </div>
+
               <div class="sim-card">
                 <div class="card-title">VITAL SIGNS</div>
                 <div class="stat-item">
@@ -380,6 +444,40 @@
                     <div class="stat-unit">mmHg</div>
                   </div>
                 </div>
+
+              <div class="wave-card">
+                <div class="wave-head"><span>ECG WAVEFORM</span><strong id="waveStatus">STABLE</strong></div>
+                <canvas id="heartbeatCanvas" width="260" height="74"></canvas>
+              </div>
+              </div>
+
+              <div class="sim-card radial-card">
+                <div class="card-title">SYSTEM BALANCE</div>
+                <div class="radial-grid">
+                  <div class="radial-meter" style="--pct: 82"><span id="neuralPct">82%</span><small>Neural</small></div>
+                  <div class="radial-meter" style="--pct: 96"><span id="oxygenPct">96%</span><small>Oxygen</small></div>
+                  <div class="radial-meter" style="--pct: 74"><span id="metabolicPct">74%</span><small>Metabolic</small></div>
+                </div>
+              </div>
+
+              <div class="sim-card fact-card">
+                <div class="card-title">DID YOU KNOW?</div>
+                <div id="bioFact" class="bio-fact">The heart can beat over 100,000 times per day while coordinating electrical signals through the SA node.</div>
+              </div>
+
+              <div class="sim-card guided-card">
+                <div class="card-title">GUIDED EXPLORATION</div>
+                <div class="swiper organGuideSwiper">
+                  <div class="swiper-wrapper" id="organGuideSlides"></div>
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+
+              <div class="sim-card quiz-card" id="quizCard">
+                <div class="card-title">ANATOMY QUIZ</div>
+                <div id="quizQuestion" class="quiz-question">Select Quiz Mode to generate a question.</div>
+                <div id="quizChoices" class="quiz-choices"></div>
+                <div id="quizFeedback" class="quiz-feedback"></div>
               </div>
 
               <div class="sim-card">
@@ -398,6 +496,29 @@
       </div>
     </div>
 
+    <div id="organModal" class="organ-modal" style="display:none;">
+      <div class="modal-organ-head">
+        <span><i class="bx bx-scan"></i> Deep Organ Scan</span>
+        <strong id="modalOrganSystem">SYSTEM</strong>
+      </div>
+      <div class="modal-organ-title" id="modalOrganName">Organ</div>
+      <div class="modal-organ-body">
+        <div class="modal-organ-icon"><i class="bx bxs-heart-circle"></i></div>
+        <div>
+          <p id="modalOrganDesc">Select an organ to inspect detailed biology data.</p>
+          <div class="bio-metrics modal-metrics" id="modalOrganMetrics"></div>
+        </div>
+      </div>
+      <div class="swiper organDetailSwiper">
+        <div class="swiper-wrapper" id="organDetailSlides"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.5/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script src="js/main.js"></script>
     <script src="js/biology.js"></script>
   </body>
