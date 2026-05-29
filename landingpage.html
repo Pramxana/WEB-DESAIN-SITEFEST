@@ -1,27 +1,31 @@
-<!-- LANDINGPAGE -->
+<!-- --------------------------------------------------
+     LANDINGPAGE
+-------------------------------------------------- -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eksperika — Virtual Science Lab</title>
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/landingpage.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/landingpage.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/boxicons.min.css" />
+    <link rel="stylesheet" href="assets/css/boxicons.min.css" />
   </head>
   <body>
     <div class="cursor" id="cursor"></div>
     <div class="cursor-dot" id="cursorDot"></div>
 
-    <!-- NAVBAR -->
+    <!-- --------------------------------------------------
+         NAVBAR
+    -------------------------------------------------- -->
     <nav id="navbar">
       <a href="#" class="nav-logo">
         <div class="nav-logo-icon">
-          <i class="bx bxs-flask"></i>
+          <i class="bx bx-test-tube"></i>
         </div>
         EKSPERIKA
       </a>
@@ -37,7 +41,9 @@
       >
     </nav>
 
-    <!-- HERO -->
+    <!-- --------------------------------------------------
+         HERO
+    -------------------------------------------------- -->
     <section class="hero" id="hero">
       <canvas id="heroParticles"></canvas>
 
@@ -59,7 +65,7 @@
         </p>
         <div class="hero-btns">
           <a href="dashboard.html" class="btn btn-primary">
-            <i class="bx bxs-flask"></i> Start Experiment
+            <i class="bx bx-test-tube"></i> Start Experiment
           </a>
           <a href="dashboard.html" class="btn btn-ghost">
             <i class="bx bx-play"></i>
@@ -70,13 +76,13 @@
 
       <div class="hero-visual">
         <div class="float-chem-card c1">
-          <i class="bx bxs-flask"></i> H₂SO₄ Reaction
+          <i class="bx bx-test-tube"></i> H₂SO₄ Reaction
         </div>
         <div class="float-chem-card c2">
           <i class="bx bx-dna"></i> NaCl + H₂O
         </div>
         <div class="float-chem-card c3">
-          <i class="bx bxs-bolt"></i> Exothermic!
+          <i class="bx bx-bolt-circle"></i> Exothermic!
         </div>
 
         <div class="chem-lab-frame">
@@ -192,34 +198,38 @@
               />
             </div>
             <button class="chem-mix-btn" id="mixBtn" onclick="triggerMix()">
-              <i class="bx bxs-play"></i> REACT & MIX
+              <i class="bx bx-play"></i> REACT & MIX
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TICKER -->
+    <!-- --------------------------------------------------
+         TICKER
+    -------------------------------------------------- -->
     <div class="ticker-strip">
       <div class="ticker-inner" id="ticker"></div>
     </div>
 
-    <!-- STATS -->
+    <!-- --------------------------------------------------
+         STATS
+    -------------------------------------------------- -->
     <section class="stats-section">
       <div class="stats-grid">
         <div class="stat-card reveal">
-          <div class="stat-icon"><i class="bx bxs-flask"></i></div>
+          <div class="stat-icon"><i class="bx bx-test-tube"></i></div>
           <span class="stat-number" data-target="100">0</span
           ><span class="stat-plus">+</span>
           <div class="stat-label">Virtual Experiments</div>
         </div>
         <div class="stat-card reveal">
-          <div class="stat-icon"><i class="bx bxs-book-open"></i></div>
+          <div class="stat-icon"><i class="bx bx-book-open"></i></div>
           <span class="stat-number" data-target="3">0</span>
           <div class="stat-label">Science Categories</div>
         </div>
         <div class="stat-card reveal">
-          <div class="stat-icon"><i class="bx bxs-graduation"></i></div>
+          <div class="stat-icon"><i class="bx bx-book-reader"></i></div>
           <span class="stat-number" data-target="10">0</span
           ><span class="stat-plus">K+</span>
           <div class="stat-label">Students Worldwide</div>
@@ -233,7 +243,9 @@
       </div>
     </section>
 
-    <!-- PHYSICS -->
+    <!-- --------------------------------------------------
+         PHYSICS
+    -------------------------------------------------- -->
     <section class="physics-section" id="physics">
       <div class="physics-inner">
         <div class="reveal">
@@ -241,7 +253,7 @@
             class="section-tag"
             style="background: var(--primary); color: var(--white)"
           >
-            <i class="bx bxs-bolt"></i> Physics Lab
+            <i class="bx bx-bolt-circle"></i> Physics Lab
           </div>
           <h2 class="section-title">
             PHYSICS<br />ELECTRICITY<br />SIMULATION
@@ -336,7 +348,9 @@
       </div>
     </section>
 
-    <!-- BIOLOGY -->
+    <!-- --------------------------------------------------
+         BIOLOGY
+    -------------------------------------------------- -->
     <section class="bio-section" id="biology">
       <div class="bio-inner">
         <div class="reveal">
@@ -698,7 +712,7 @@
                 >
                   <div class="bio-sys-tab-head">
                     <span class="bio-sys-icon"
-                      ><i class="bx bxs-brain"></i
+                      ><i class="bx bx-brain"></i
                     ></span>
                     <span class="bio-sys-name">Nervous System</span>
                     <span class="bio-sys-badge">CNS</span>
@@ -735,7 +749,7 @@
                 >
                   <div class="bio-sys-tab-head">
                     <span class="bio-sys-icon"
-                      ><i class="bx bxs-heart"></i
+                      ><i class="bx bx-heart"></i
                     ></span>
                     <span class="bio-sys-name">Circulatory System</span>
                     <span class="bio-sys-badge">72 BPM</span>
@@ -755,7 +769,7 @@
                 >
                   <div class="bio-sys-tab-head">
                     <span class="bio-sys-icon"
-                      ><i class="bx bxs-capsule"></i
+                      ><i class="bx bx-capsule"></i
                     ></span>
                     <span class="bio-sys-name">Digestive System</span>
                     <span class="bio-sys-badge">pH 2.0</span>
@@ -791,7 +805,7 @@
 
         <div class="reveal">
           <div class="section-tag">
-            <i class="bx bxs-flask"></i> Biology Lab
+            <i class="bx bx-test-tube"></i> Biology Lab
           </div>
           <h2 class="section-title">
             INTERACTIVE<br />HUMAN BODY<br />EXPLORER
@@ -807,19 +821,21 @@
           <div>
             <a href="#" class="btn btn-green">
               Explore Anatomy
-              <i class="bx bxs-right-arrow-alt"></i>
+              <i class="bx bx-right-arrow-alt"></i>
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FEATURES -->
+    <!-- --------------------------------------------------
+         FEATURES
+    -------------------------------------------------- -->
     <section class="features-section" id="features">
       <div class="features-header">
         <div>
           <div class="section-tag reveal">
-            <i class="bx bxs-star"></i> Platform Features
+            <i class="bx bx-star"></i> Platform Features
           </div>
           <h2 class="section-title reveal">
             EVERYTHING<br />YOU NEED TO<br />LEARN SCIENCE
@@ -833,7 +849,7 @@
       <div class="features-grid">
         <div class="feature-card reveal">
           <span class="feature-card-tag">Core</span>
-          <div class="feature-icon-wrap"><i class="bx bxs-flask"></i></div>
+          <div class="feature-icon-wrap"><i class="bx bx-test-tube"></i></div>
           <h3>Interactive Virtual Laboratory</h3>
           <p>
             Run real experiments in a full simulation environment. Manipulate
@@ -843,7 +859,7 @@
         <div class="feature-card reveal">
           <span class="feature-card-tag">Real-time</span>
           <div class="feature-icon-wrap">
-            <i class="bx bxs-bar-chart-alt-2"></i>
+            <i class="bx bx-bar-chart-alt-2"></i>
           </div>
           <h3>Dynamic Science Visualization</h3>
           <p>
@@ -853,7 +869,7 @@
         </div>
         <div class="feature-card reveal">
           <span class="feature-card-tag">Mobile</span>
-          <div class="feature-icon-wrap"><i class="bx bxs-mobile"></i></div>
+          <div class="feature-icon-wrap"><i class="bx bx-mobile"></i></div>
           <h3>Responsive & Lightweight</h3>
           <p>
             Access the full lab from any device — desktop, tablet, or mobile. No
@@ -862,7 +878,7 @@
         </div>
         <div class="feature-card reveal">
           <span class="feature-card-tag">Control</span>
-          <div class="feature-icon-wrap"><i class="bx bxs-joystick"></i></div>
+          <div class="feature-icon-wrap"><i class="bx bx-joystick"></i></div>
           <h3>Experiment Parameter Control</h3>
           <p>
             Adjust every experiment variable with intuitive sliders. Observe
@@ -872,7 +888,9 @@
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
+    <!-- --------------------------------------------------
+         HOW IT WORKS
+    -------------------------------------------------- -->
     <section class="hiw-section">
       <div style="text-align: center; position: relative; z-index: 1">
         <div class="section-tag reveal">
@@ -900,7 +918,7 @@
         <div class="step-item">
           <div class="step-num-wrap">
             <div class="step-num">01</div>
-            <div class="step-icon"><i class="bx bxs-book"></i></div>
+            <div class="step-icon"><i class="bx bx-book"></i></div>
           </div>
           <h4>Choose Subject</h4>
           <p>
@@ -910,7 +928,7 @@
         <div class="step-item">
           <div class="step-num-wrap">
             <div class="step-num">02</div>
-            <div class="step-icon"><i class="bx bxs-book-open"></i></div>
+            <div class="step-icon"><i class="bx bx-book-open"></i></div>
           </div>
           <h4>Read Material</h4>
           <p>Review conceptual background and experiment objectives.</p>
@@ -918,7 +936,7 @@
         <div class="step-item">
           <div class="step-num-wrap">
             <div class="step-num">03</div>
-            <div class="step-icon"><i class="bx bxs-flask"></i></div>
+            <div class="step-icon"><i class="bx bx-test-tube"></i></div>
           </div>
           <h4>Start Experiment</h4>
           <p>Run the interactive simulation and adjust your parameters.</p>
@@ -926,7 +944,7 @@
         <div class="step-item">
           <div class="step-num-wrap">
             <div class="step-num">04</div>
-            <div class="step-icon"><i class="bx bxs-bar-chart-alt-2"></i></div>
+            <div class="step-icon"><i class="bx bx-bar-chart-alt-2"></i></div>
           </div>
           <h4>Observe Results</h4>
           <p>Watch data visualized in realtime and record your findings.</p>
@@ -934,7 +952,7 @@
         <div class="step-item">
           <div class="step-num-wrap">
             <div class="step-num">05</div>
-            <div class="step-icon"><i class="bx bxs-trophy"></i></div>
+            <div class="step-icon"><i class="bx bx-trophy"></i></div>
           </div>
           <h4>Complete Quiz</h4>
           <p>Test your understanding and earn badges for achievements.</p>
@@ -942,12 +960,14 @@
       </div>
     </section>
 
-    <!-- SIM PREVIEW -->
+    <!-- --------------------------------------------------
+         SIM PREVIEW
+    -------------------------------------------------- -->
     <section class="sim-section" id="simulations">
       <div class="sim-inner">
         <div class="reveal">
           <div class="section-tag">
-            <i class="bx bxs-bolt"></i> Live Preview
+            <i class="bx bx-bolt-circle"></i> Live Preview
           </div>
           <h2 class="section-title">
             A REAL LAB<br />EXPERIENCE IN<br />YOUR BROWSER
@@ -976,7 +996,7 @@
           </ul>
           <div style="margin-top: 2rem">
             <a href="#" class="btn btn-yellow">
-              Open Full Simulation <i class="bx bxs-right-arrow"></i>
+              Open Full Simulation <i class="bx bx-right-arrow"></i>
             </a>
           </div>
         </div>
@@ -986,7 +1006,7 @@
             <div class="sdot"></div>
             <div class="sdot"></div>
             <span
-              ><i class="bx bxs-flask"></i> Pendulum Motion — Physics Sim
+              ><i class="bx bx-test-tube"></i> Pendulum Motion — Physics Sim
               v2.1</span
             >
           </div>
@@ -1060,17 +1080,19 @@
             </div>
           </div>
           <button class="sim-run-btn" id="simBtn" onclick="toggleSim()">
-            <i class="bx bxs-play"></i> RUN SIMULATION
+            <i class="bx bx-play"></i> RUN SIMULATION
           </button>
         </div>
       </div>
     </section>
 
-    <!-- TESTIMONIALS -->
+    <!-- --------------------------------------------------
+         TESTIMONIALS
+    -------------------------------------------------- -->
     <section class="testi-section" id="testimonials">
       <div style="text-align: center">
         <div class="section-tag reveal">
-          <i class="bx bxs-chat"></i> Testimonials
+          <i class="bx bx-chat"></i> Testimonials
         </div>
         <h2 class="section-title reveal">LOVED BY STUDENTS<br />& TEACHERS</h2>
       </div>
@@ -1083,11 +1105,11 @@
             textbook.
           </p>
           <div class="testi-footer">
-            <div class="testi-avatar"><i class="bx bxs-user"></i></div>
+            <div class="testi-avatar"><i class="bx bx-user"></i></div>
             <div>
               <div class="testi-name">Desta Mpruy</div>
               <div class="testi-role">High School Student, Jakarta</div>
-              <div class="stars">★★★★★</div>
+              <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
             </div>
           </div>
         </div>
@@ -1099,11 +1121,11 @@
             experiments.
           </p>
           <div class="testi-footer">
-            <div class="testi-avatar"><i class="bx bxs-user"></i></div>
+            <div class="testi-avatar"><i class="bx bx-user"></i></div>
             <div>
               <div class="testi-name">Nauval Raditya</div>
               <div class="testi-role">Science Teacher, Flores</div>
-              <div class="stars">★★★★★</div>
+              <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
             </div>
           </div>
         </div>
@@ -1115,18 +1137,20 @@
             preparation.
           </p>
           <div class="testi-footer">
-            <div class="testi-avatar"><i class="bx bxs-user"></i></div>
+            <div class="testi-avatar"><i class="bx bx-user"></i></div>
             <div>
               <div class="testi-name">Kevyn Pradika</div>
               <div class="testi-role">University Student, Denpasar</div>
-              <div class="stars">★★★★★</div>
+              <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
+    <!-- --------------------------------------------------
+         CTA
+    -------------------------------------------------- -->
     <section class="cta-section">
       <canvas id="ctaParticles"></canvas>
       <h2 class="reveal">
@@ -1138,20 +1162,22 @@
       </p>
       <div class="cta-btns reveal">
         <a href="#" class="btn-cta-white"
-          ><i class="bx bxs-flask"></i> Start Learning</a
+          ><i class="bx bx-test-tube"></i> Start Learning</a
         >
         <a href="#" class="btn-cta-ghost"
-          >Explore Simulations <i class="bx bxs-right-arrow-alt"></i
+          >Explore Simulations <i class="bx bx-right-arrow-alt"></i
         ></a>
       </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- --------------------------------------------------
+         FOOTER
+    -------------------------------------------------- -->
     <footer>
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="#" class="footer-logo">
-            <div class="footer-logo-icon"><i class="bx bxs-flask"></i></div>
+            <div class="footer-logo-icon"><i class="bx bx-test-tube"></i></div>
             EKSPERIKA
           </a>
           <p>
@@ -1218,7 +1244,7 @@
       </div>
     </footer>
 
-    <script src="js/main.js"></script>
-    <script src="js/landingpage.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/landingpage.js"></script>
   </body>
 </html>

@@ -1,8 +1,10 @@
-// ============================================================
-//  landingpage.js — index.html
-// ============================================================
+// --------------------------------------------------
+// landingpage.JS — index.html
+// --------------------------------------------------
 
-// ── HERO PARTICLES ──
+// --------------------------------------------------
+// HERO PARTICLES
+// --------------------------------------------------
 (function () {
   const canvas = document.getElementById("heroParticles");
   if (!canvas) return;
@@ -123,7 +125,9 @@
   frame();
 })();
 
-// ── MOLECULE CANVAS ──
+// --------------------------------------------------
+// MOLECULE CANVAS
+// --------------------------------------------------
 (function () {
   const canvas = document.getElementById("molCanvas");
   if (!canvas) return;
@@ -168,16 +172,18 @@
   frame();
 })();
 
-// ── TICKER ──
+// --------------------------------------------------
+// TICKER
+// --------------------------------------------------
 (function () {
   const tickerItems = [
-    '<i class="bx bxs-flask"></i> Chemistry Reaction Lab',
-    '<i class="bx bxs-bolt"></i> Physics Electricity Sim',
-    '<i class="bx bxs-dna"></i> Biology Body Explorer',
-    '<i class="bx bxs-trophy"></i> Gamified STEM Learning',
-    '<i class="bx bxs-bar-chart-alt-2"></i> Realtime Visualization',
-    '<i class="bx bxs-atom"></i> Molecular Structures',
-    '<i class="bx bxs-globe"></i> 100% Browser-Based',
+    '<i class="bx bx-test-tube"></i> Chemistry Reaction Lab',
+    '<i class="bx bx-bolt-circle"></i> Physics Electricity Sim',
+    '<i class="bx bx-dna"></i> Biology Body Explorer',
+    '<i class="bx bx-trophy"></i> Gamified STEM Learning',
+    '<i class="bx bx-bar-chart-alt-2"></i> Realtime Visualization',
+    '<i class="bx bx-atom"></i> Molecular Structures',
+    '<i class="bx bx-globe"></i> 100% Browser-Based',
   ];
   const ticker = document.getElementById("ticker");
   if (!ticker) return;
@@ -187,7 +193,9 @@
   ticker.innerHTML = html + html;
 })();
 
-// ── CHEMISTRY BUBBLES ──
+// --------------------------------------------------
+// CHEMISTRY BUBBLES
+// --------------------------------------------------
 function createBubbles(id, col) {
   const c = document.getElementById(id);
   if (!c) return;
@@ -257,16 +265,20 @@ function triggerMix() {
 
   setTimeout(() => {
     btn.classList.remove("mixing");
-    btn.innerHTML = '<i class="bx bxs-play"></i> REACT & MIX';
+    btn.innerHTML = '<i class="bx bx-play"></i> REACT & MIX';
   }, 2000);
 }
 
+// --------------------------------------------------
 // Init bubbles on load
+// --------------------------------------------------
 createBubbles("bubblesA", "rgba(34,211,238,0.5)");
 createBubbles("bubblesB", "rgba(16,185,129,0.5)");
 createBubbles("bubblesC", "rgba(139,92,246,0.5)");
 
-// ── ELECTRICITY CANVAS ──
+// --------------------------------------------------
+// ELECTRICITY CANVAS
+// --------------------------------------------------
 (function () {
   const canvas = document.getElementById("elecCanvas");
   if (!canvas) return;
@@ -375,7 +387,9 @@ createBubbles("bubblesC", "rgba(139,92,246,0.5)");
   };
 })();
 
-// ── BIOLOGY PARTICLES ──
+// --------------------------------------------------
+// BIOLOGY PARTICLES
+// --------------------------------------------------
 (function () {
   const canvas = document.getElementById("bioParticles");
   if (!canvas) return;
@@ -413,7 +427,9 @@ createBubbles("bubblesC", "rgba(139,92,246,0.5)");
   frame();
 })();
 
-// ── BIOLOGY SYSTEM TABS ──
+// --------------------------------------------------
+// BIOLOGY SYSTEM TABS
+// --------------------------------------------------
 function setBioSys(el, sys) {
   document.querySelectorAll(".bio-sys-tab").forEach((t) => t.classList.remove("active"));
   el.classList.add("active");
@@ -421,7 +437,9 @@ function setBioSys(el, sys) {
   if (label) label.textContent = sys.toUpperCase() + " SYSTEM SELECTED";
 }
 
-// ── SIMULATION WAVE (sim preview section) ──
+// --------------------------------------------------
+// SIMULATION WAVE (sim preview section)
+// --------------------------------------------------
 (function () {
   let wT = 0, simRunning = false;
   const simWavePath = document.getElementById("simWavePath");
@@ -444,8 +462,8 @@ function setBioSys(el, sys) {
     const btn = document.getElementById("simBtn");
     if (!btn) return;
     btn.innerHTML = simRunning
-      ? '<i class="bx bxs-pause"></i> PAUSE SIMULATION'
-      : '<i class="bx bxs-play"></i> RUN SIMULATION';
+      ? '<i class="bx bx-pause"></i> PAUSE SIMULATION'
+      : '<i class="bx bx-play"></i> RUN SIMULATION';
     btn.style.background = simRunning ? "#10B981" : "#0EA5E9";
     btn.style.boxShadow = simRunning
       ? "0 0 20px rgba(16,185,129,0.5)"
@@ -453,7 +471,9 @@ function setBioSys(el, sys) {
   };
 })();
 
-// ── CTA PARTICLES ──
+// --------------------------------------------------
+// CTA PARTICLES
+// --------------------------------------------------
 (function () {
   const canvas = document.getElementById("ctaParticles");
   if (!canvas) return;
@@ -492,7 +512,9 @@ function setBioSys(el, sys) {
   frame();
 })();
 
-// ── SCROLL REVEAL ──
+// --------------------------------------------------
+// SCROLL REVEAL
+// --------------------------------------------------
 (function () {
   const reveals = document.querySelectorAll(".reveal");
   const obs = new IntersectionObserver(
@@ -502,7 +524,9 @@ function setBioSys(el, sys) {
   reveals.forEach((el) => obs.observe(el));
 })();
 
-// ── COUNTER ANIMATION ──
+// --------------------------------------------------
+// COUNTER ANIMATION
+// --------------------------------------------------
 (function () {
   document.querySelectorAll(".stat-number").forEach((el) => {
     const cntObs = new IntersectionObserver((entries) => {
@@ -523,7 +547,9 @@ function setBioSys(el, sys) {
   });
 })();
 
-// ── SMOOTH SCROLL ──
+// --------------------------------------------------
+// SMOOTH SCROLL
+// --------------------------------------------------
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
   a.addEventListener("click", (e) => {
     const t = document.querySelector(a.getAttribute("href"));

@@ -1,8 +1,10 @@
-// ============================================================
-//  dashboard.js — dashboard.html
-// ============================================================
+// --------------------------------------------------
+// dashboard.JS — dashboard.html
+// --------------------------------------------------
 
-// ── WELCOME PARTICLES ──
+// --------------------------------------------------
+// WELCOME PARTICLES
+// --------------------------------------------------
 (function () {
   const c = document.getElementById("welcomeParticles");
   if (!c) return;
@@ -44,7 +46,9 @@
   frame();
 })();
 
-// ── WELCOME VIZ (orbiting atoms) ──
+// --------------------------------------------------
+// WELCOME VIZ (orbiting atoms)
+// --------------------------------------------------
 (function () {
   const c = document.getElementById("welcomeViz");
   if (!c) return;
@@ -89,7 +93,9 @@
   frame();
 })();
 
-// ── CHEMISTRY LAB PREVIEW ──
+// --------------------------------------------------
+// CHEMISTRY LAB PREVIEW
+// --------------------------------------------------
 (function () {
   const c = document.getElementById("chemCanvas");
   if (!c) return;
@@ -146,7 +152,9 @@
   frame();
 })();
 
-// ── PHYSICS LAB PREVIEW ──
+// --------------------------------------------------
+// PHYSICS LAB PREVIEW
+// --------------------------------------------------
 (function () {
   const c = document.getElementById("physCanvas");
   if (!c) return;
@@ -215,7 +223,9 @@
   frame();
 })();
 
-// ── BIOLOGY LAB PREVIEW ──
+// --------------------------------------------------
+// BIOLOGY LAB PREVIEW
+// --------------------------------------------------
 (function () {
   const c = document.getElementById("bioCanvas");
   if (!c) return;
@@ -268,7 +278,9 @@
   frame();
 })();
 
-// ── MINI SIMULATION WAVE ──
+// --------------------------------------------------
+// MINI SIMULATION WAVE
+// --------------------------------------------------
 let miniSimRunning = false, miniT = 0;
 let simFreq = 4, simAmp = 20, simDecay = 3;
 
@@ -315,7 +327,9 @@ function toggleMiniSim() {
   requestAnimationFrame(waveLoop);
 })();
 
-// ── SIDEBAR NAV ACTIVE ──
+// --------------------------------------------------
+// SIDEBAR NAV ACTIVE
+// --------------------------------------------------
 (function () {
   const currentPage = window.location.pathname.split("/").pop();
 

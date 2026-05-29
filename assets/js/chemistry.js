@@ -1,4 +1,6 @@
-/* ─── STATE ─── */
+// --------------------------------------------------
+// STATE
+// --------------------------------------------------
 const S = {
   rxnType:'acid-base', selChem:null,
   liquidLevel:0, liquidColor:'rgba(0,229,255,0.35)',
@@ -10,12 +12,16 @@ const S = {
 
 const $ = id => document.getElementById(id);
 
-/* ─── NAV ─── */
+// --------------------------------------------------
+// NAV
+// --------------------------------------------------
 function setNav(el, key) {
   addLog('Navigation target: ' + key.toUpperCase() + '. Chemistry Lab remains active.','info');
 }
 
-/* ─── FLOATING MOLECULES ─── */
+// --------------------------------------------------
+// FLOATING MOLECULES
+// --------------------------------------------------
 const mols=['H₂O','CO₂','OH⁻','H⁺','Na⁺','Cl⁻','O₂','HCl','NaOH'];
 const mf = $('mol-field');
 function spawnMol() {
@@ -30,7 +36,9 @@ function spawnMol() {
 setInterval(spawnMol,2800);
 for(let i=0;i<4;i++) spawnMol();
 
-/* ─── LOG ─── */
+// --------------------------------------------------
+// LOG
+// --------------------------------------------------
 function addLog(msg, type='') {
   if(msg===S.lastMsg) return; S.lastMsg=msg;
   const now=new Date().toTimeString().slice(0,8);
@@ -43,11 +51,15 @@ function addLog(msg, type='') {
 }
 addLog('Lab initialized. Ready to experiment.','info');
 
-/* ─── HINT ─── */
+// --------------------------------------------------
+// HINT
+// --------------------------------------------------
 const hints={idle:'Select a chemical source to begin.',selected:'Pour the selected chemical into the beaker.',poured:'Mix the reaction to analyze the result.',mixed:'Reset the chamber to start a new test.',indicator:'Add indicator to observe pH color change.'};
 const setHint = k => $('hint-body').textContent = hints[k]||hints.idle;
 
-/* ─── REACTION TYPE ─── */
+// --------------------------------------------------
+// REACTION TYPE
+// --------------------------------------------------
 const rxnFormulas = {
   'acid-base':'<div class="formula-head">▸ CONCEPT FORMULA</div><div class="formula-line"><span class="f-hl">Acid</span> <span class="f-eq">+</span> <span class="f-hl">Base</span> <span class="f-eq">→</span> Salt <span class="f-eq">+</span> H₂O</div><div class="formula-head" style="margin-top:5px">▸ ION REACTION</div><div class="formula-line"><span class="f-hl">H⁺</span> <span class="f-eq">+</span> <span class="f-hl">OH⁻</span> <span class="f-eq">→</span> H₂O</div>',
   'ph-test':'<div class="formula-head">▸ PH INDICATOR</div><div class="formula-line">Indicator detects <span class="f-hl">H⁺</span> / <span class="f-hl">OH⁻</span> concentration</div><div class="formula-head" style="margin-top:5px">▸ COLOR CHANGE</div><div class="formula-line"><span class="f-hl">pH &lt;7</span> <span class="f-eq">→</span> Red (Acidic)</div><div class="formula-line"><span class="f-hl">pH =7</span> <span class="f-eq">→</span> Green (Neutral)</div><div class="formula-line"><span class="f-hl">pH &gt;7</span> <span class="f-eq">→</span> Blue (Basic)</div>',
@@ -65,7 +77,9 @@ function setRxn(btn) {
   resetChamber(true); setHint('idle');
 }
 
-/* ─── CHEM SELECT ─── */
+// --------------------------------------------------
+// CHEM SELECT
+// --------------------------------------------------
 function selectChem(btn) {
   document.querySelectorAll('.reagent-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
@@ -92,7 +106,9 @@ function highlightBottle(chem) {
   });
 }
 
-/* ─── SLIDERS ─── */
+// --------------------------------------------------
+// SLIDERS
+// --------------------------------------------------
 function onConc(sl){
   S.conc=parseFloat((sl.value/10).toFixed(1));
   $('sv-conc').textContent=S.conc.toFixed(1)+' mol/L';
@@ -125,14 +141,18 @@ function updateBarTemp(v) {
   bar.style.background=v<30?'linear-gradient(90deg,var(--blue-accent),var(--cyan))':v<=60?'linear-gradient(90deg,var(--cyan-dim),var(--green))':'linear-gradient(90deg,var(--yellow),var(--orange))';
 }
 
-/* ─── VAPOR ─── */
+// --------------------------------------------------
+// VAPOR
+// --------------------------------------------------
 function showVapor(show,intense){
   const v=$('vapor-wrap');
   v.style.display=show?'block':'none';
   v.querySelectorAll('.vap').forEach(p=>p.style.background=intense?'rgba(180,220,255,0.14)':'rgba(180,220,255,0.06)');
 }
 
-/* ─── LIQUID ─── */
+// --------------------------------------------------
+// LIQUID
+// --------------------------------------------------
 let surfInt=null;
 function setLiquid(pct, color) {
   const h=(pct/100)*147, y=165-h;
@@ -149,7 +169,9 @@ function setLiquid(pct, color) {
   },50);
 }
 
-/* ─── BUBBLES ─── */
+// --------------------------------------------------
+// BUBBLES
+// --------------------------------------------------
 const canvas=$('bubble-canvas'), ctx=canvas.getContext('2d');
 let bubbles=[], bubbleInt=null;
 function spawnBubble(){
@@ -177,7 +199,9 @@ function stopBubbles(){
   if(bubbleInt){clearInterval(bubbleInt.s);clearInterval(bubbleInt.d);bubbleInt=null;ctx.clearRect(0,0,150,190);bubbles=[];}
 }
 
-/* ─── pH ─── */
+// --------------------------------------------------
+// pH
+// --------------------------------------------------
 function calcPH(){
   const fx={acid:-3.5,base:3.5,indicator:0,water:0};
   let d=0; S.chemAdded.forEach(c=>d+=fx[c]||0);
@@ -215,7 +239,9 @@ function getColorName(){
   if(S.chemAdded.includes('acid'))return'PALE RED';if(S.chemAdded.includes('base'))return'PALE VIOLET';if(S.chemAdded.includes('water'))return'CLEAR BLUE';return'CLEAR';
 }
 
-/* ─── RECALC ─── */
+// --------------------------------------------------
+// RECALC
+// --------------------------------------------------
 function recalc(){
   S.ph=calcPH();
   const tb=Math.max(1,S.temp/30), cb=S.conc/5;
@@ -236,10 +262,14 @@ function recalc(){
   $('r-col').textContent=getColorName();
 }
 
-/* ─── BEAKER GLOW ─── */
+// --------------------------------------------------
+// BEAKER GLOW
+// --------------------------------------------------
 const setGlow=on=>$('glow-ring').classList.toggle('on',on);
 
-/* ─── POUR ─── */
+// --------------------------------------------------
+// POUR
+// --------------------------------------------------
 function pourChem(){
   if(!S.selChem){addLog('Select a chemical source first.','warn');return;}
   if(S.liquidLevel>=90){addLog('Beaker is full.','warn');return;}
@@ -263,7 +293,9 @@ function pourChem(){
   setHint('poured');
 }
 
-/* ─── MIX ─── */
+// --------------------------------------------------
+// MIX
+// --------------------------------------------------
 function runMix(){
   if(!S.isPoured&&S.liquidLevel===0){addLog('Pour a chemical before mixing.','warn');return;}
   S.isMixing=true;
@@ -283,7 +315,9 @@ function runMix(){
   setTimeout(()=>$('rxn-badge').textContent='REACTION COMPLETE',1000);
 }
 
-/* ─── RESET ─── */
+// --------------------------------------------------
+// RESET
+// --------------------------------------------------
 function resetChamber(silent=false){
   S.selChem=null; S.liquidLevel=0; S.liquidColor='rgba(0,229,255,0.35)';
   S.ph=7.0; S.rate=0; S.gas=0; S.isMixing=false; S.isPoured=false;
@@ -304,7 +338,9 @@ function resetChamber(silent=false){
   setHint('idle');
 }
 
-/* ─── INIT ─── */
+// --------------------------------------------------
+// INIT
+// --------------------------------------------------
 setLiquid(0,S.liquidColor);
 updatePHDisplay(7.0);
 updateTempStatus(25);

@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eksperika - Chemistry Lab</title>
-    <link rel="stylesheet" href="css/boxicons.min.css" />
-    <link rel="stylesheet" href="css/global.css" />
-    <link rel="stylesheet" href="css/chemistry.css" />
+    <link rel="stylesheet" href="assets/css/boxicons.min.css" />
+    <link rel="stylesheet" href="assets/css/global.css" />
+    <link rel="stylesheet" href="assets/css/chemistry.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
@@ -22,7 +22,7 @@
       <aside class="sidebar">
         <a href="dashboard.html" class="sidebar-logo">
           <div class="sidebar-logo-icon">
-            <i class="bx bxs-flask nav-icon"></i>
+            <i class="bx bx-test-tube nav-icon"></i>
           </div>
           <div class="sidebar-logo-text">
             EKSPERIKA
@@ -34,23 +34,23 @@
 
         <nav class="sidebar-nav">
           <a href="dashboard.html" class="nav-item">
-            <i class="bx bxs-home nav-icon"></i>
+            <i class="bx bx-home nav-icon"></i>
             <span>Home</span>
           </a>
           <a class="nav-item active">
-            <i class="bx bxs-flask nav-icon"></i>
+            <i class="bx bx-test-tube nav-icon"></i>
             <span>Chemistry Lab</span>
           </a>
           <a href="physic.html" class="nav-item">
-            <i class="bx bxs-bolt-circle nav-icon"></i>
+            <i class="bx bx-bolt-circle nav-icon"></i>
             <span>Physics Lab</span>
           </a>
           <a href="biology.html" class="nav-item">
             <i class="bx bx-dna nav-icon"></i>
             <span>Biology Lab</span>
           </a>
-          <a href="#" class="nav-item">
-            <i class="bx bxs-book-open nav-icon"></i>
+          <a href="challenge.html" class="nav-item">
+            <i class="bx bx-book-open nav-icon"></i>
             <span>Challenge</span>
           </a>
         </nav>
@@ -79,7 +79,7 @@
                   </div>
                   <div class="page-actions">
                     <button class="btn btn-yellow btn-sm" type="button" onclick="addLog('Challenge mode coming soon!','warn')">
-                      <i class="bx bxs-trophy"></i>
+                      <i class="bx bx-trophy"></i>
                       Challenge Mode
                     </button>
                     <button class="btn btn-primary btn-sm" type="button" onclick="runMix()">
@@ -93,7 +93,7 @@
                   <div class="controls-panel">
                     <section class="panel-card ctrl-section">
                       <div class="ctrl-label">
-                        <span class="ctrl-label-icon"><i class="bx bxs-vial"></i></span>
+                        <span class="ctrl-label-icon"><i class="bx bx-vial"></i></span>
                         <span class="ctrl-title">Reaction Type</span>
                       </div>
                       <div class="ctrl-section-body">
@@ -107,19 +107,19 @@
           
                     <section class="panel-card ctrl-section">
                       <div class="ctrl-label">
-                        <span class="ctrl-label-icon"><i class="bx bxs-droplet-half"></i></span>
+                        <span class="ctrl-label-icon"><i class="bx bx-droplet"></i></span>
                         <span class="ctrl-title">Chemical Source</span>
                       </div>
                       <div class="ctrl-section-body">
                         <div class="reagent-grid">
                           <button class="reagent-btn" type="button" data-chem="acid" onclick="selectChem(this)">
-                            <span class="reagent-icon"><i class="bx bxs-vial"></i></span>Acid
+                            <span class="reagent-icon"><i class="bx bx-vial"></i></span>Acid
                           </button>
                           <button class="reagent-btn" type="button" data-chem="base" onclick="selectChem(this)">
                             <span class="reagent-icon"><i class="bx bx-test-tube"></i></span>Base
                           </button>
                           <button class="reagent-btn" type="button" data-chem="indicator" onclick="selectChem(this)">
-                            <span class="reagent-icon"><i class="bx bxs-eyedropper"></i></span>Indicator
+                            <span class="reagent-icon"><i class="bx bx-color-fill"></i></span>Indicator
                           </button>
                           <button class="reagent-btn" type="button" data-chem="water" onclick="selectChem(this)">
                             <span class="reagent-icon"><i class="bx bx-water"></i></span>Water
@@ -178,7 +178,7 @@
           
                     <section class="panel-card ctrl-section">
                       <div class="ctrl-label">
-                        <span class="ctrl-label-icon"><i class="bx bxs-bulb"></i></span>
+                        <span class="ctrl-label-icon"><i class="bx bx-bulb"></i></span>
                         <span class="ctrl-title">Guided Hint</span>
                       </div>
                       <div class="ctrl-section-body">
@@ -395,7 +395,7 @@
       </div>
     </div>
 
-    <script src="js/main.js"></script>
-    <script src="js/chemistry.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/chemistry.js"></script>
   </body>
 </html>

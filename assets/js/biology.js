@@ -1,6 +1,6 @@
-// ============================================================
-// biology.js - Biology Lab anatomy simulation
-// ============================================================
+// --------------------------------------------------
+// biology.JS - Biology Lab anatomy simulation
+// --------------------------------------------------
 
 const ORGAN_DATA = {
   "organ-brain": {
@@ -9,7 +9,7 @@ const ORGAN_DATA = {
     system: "Nervous System",
     type: "Neural command center",
     status: "Synaptic activity stable",
-    icon: "bx bxs-brain",
+    icon: "bx bx-brain",
     weight: "~1.4 kg",
     bloodFlow: "15% cardiac output",
     cells: "~86 billion neurons",
@@ -73,7 +73,7 @@ const ORGAN_DATA = {
     system: "Circulatory System",
     type: "Muscular pump",
     status: "Rhythm stable",
-    icon: "bx bxs-heart",
+    icon: "bx bx-heart",
     weight: "~300 g",
     bloodFlow: "Coronary arteries",
     cells: "~2 billion cardiomyocytes",
@@ -90,7 +90,7 @@ const ORGAN_DATA = {
     system: "Circulatory System",
     type: "Transport network",
     status: "Perfusion pathways open",
-    icon: "bx bxs-donate-blood",
+    icon: "bx bx-donate-blood",
     weight: "~100,000 km total length",
     bloodFlow: "~5 L/min at rest",
     cells: "Endothelium, smooth muscle, blood cells",
@@ -106,7 +106,7 @@ const ORGAN_DATA = {
     system: "Digestive and Metabolic System",
     type: "Metabolic processor",
     status: "Detox load optimal",
-    icon: "bx bxs-flask",
+    icon: "bx bx-test-tube",
     weight: "~1.5 kg",
     bloodFlow: "~1.4 L/min",
     cells: "~240 billion hepatocytes",
@@ -122,7 +122,7 @@ const ORGAN_DATA = {
     system: "Digestive System",
     type: "Digestive chamber",
     status: "Acid cycle regulated",
-    icon: "bx bxs-bowl-hot",
+    icon: "bx bx-bowl-hot",
     weight: "~150 g",
     bloodFlow: "Celiac trunk",
     cells: "Parietal, chief, and G cells",
@@ -154,7 +154,7 @@ const ORGAN_DATA = {
     system: "Digestive System",
     type: "Bile reservoir",
     status: "Bile storage nominal",
-    icon: "bx bxs-droplet-half",
+    icon: "bx bx-droplet",
     weight: "~50 g",
     bloodFlow: "Cystic artery",
     cells: "Simple columnar epithelium",
@@ -170,7 +170,7 @@ const ORGAN_DATA = {
     system: "Lymphatic System",
     type: "Immune filter",
     status: "Filtration stable",
-    icon: "bx bxs-shield-plus",
+    icon: "bx bx-shield-plus",
     weight: "~150 g",
     bloodFlow: "Splenic artery",
     cells: "Lymphocytes and macrophages",
@@ -250,7 +250,7 @@ const ORGAN_DATA = {
     system: "Urinary System",
     type: "Storage reservoir",
     status: "Storage capacity normal",
-    icon: "bx bxs-droplet",
+    icon: "bx bx-droplet",
     weight: "~50 g",
     bloodFlow: "Internal iliac arteries",
     cells: "Transitional epithelium",
@@ -433,7 +433,7 @@ let guideSwiper = null;
       $organStatusPanel.html(
         '<div class="card-title">SELECTED ORGAN</div>' +
         '<div class="selected-organ-name"><i class="' + data.icon + '"></i><span>' + data.name + "</span></div>" +
-        '<div class="selected-organ-status"><i class="bx bxs-check-shield"></i>' + data.status + "</div>" +
+        '<div class="selected-organ-status"><i class="bx bx-check-shield"></i>' + data.status + "</div>" +
         '<div class="organ-desc">' + data.type + " - " + data.functionShort + "</div>" +
         '<div class="mini-vitals">' +
           miniVital("HR", mini.hr + " BPM") +

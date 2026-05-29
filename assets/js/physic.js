@@ -1,8 +1,10 @@
-// ============================================================
-//  physic.js — physic.html
-// ============================================================
+// --------------------------------------------------
+// physic.JS — physic.html
+// --------------------------------------------------
 
-// ── SIMULATION STATE ──
+// --------------------------------------------------
+// SIMULATION STATE
+// --------------------------------------------------
 let running = false, circuitType = "series", srcType = "DC", eColor = "#22D3EE";
 let simT = 0, stepN = 1, obsT = 0;
 let particles = [];
@@ -131,10 +133,14 @@ function loadChallenge() {
   addObs("🏆 Challenge: R1=3Ω · R2=5Ω · R3=7Ω · 9V. Verify Ohm's Law!", "warn");
 }
 
+// --------------------------------------------------
 // Run initial sync on page load
+// --------------------------------------------------
 sync();
 
-// ── MAIN CANVAS ──
+// --------------------------------------------------
+// MAIN CANVAS
+// --------------------------------------------------
 const canvas = document.getElementById("mainCanvas");
 const ctx    = canvas.getContext("2d");
 
@@ -283,29 +289,39 @@ function drawCapacitor(ctx, x, y, V, I) {
   ctx.shadowBlur = 10;
   ctx.shadowColor = "rgba(34,211,238,0.5)";
   
+  // --------------------------------------------------
   // Plate kiri
+  // --------------------------------------------------
   ctx.strokeStyle = `rgba(34,211,238,${0.4 + charge * 0.5})`;
   ctx.lineWidth = 3;
   ctx.beginPath(); ctx.moveTo(x-6, y-20); ctx.lineTo(x-6, y+20); ctx.stroke();
   
+  // --------------------------------------------------
   // Plate kanan
+  // --------------------------------------------------
   ctx.beginPath(); ctx.moveTo(x+6, y-20); ctx.lineTo(x+6, y+20); ctx.stroke();
   
+  // --------------------------------------------------
   // Fill indikator muatan
+  // --------------------------------------------------
   if (running) {
     const fillH = charge * 36;
     ctx.fillStyle = `rgba(34,211,238,${0.08 + charge * 0.18})`;
     ctx.fillRect(x-5, y+18-fillH, 10, fillH);
   }
   
+  // --------------------------------------------------
   // Wire kiri-kanan
+  // --------------------------------------------------
   ctx.strokeStyle = "rgba(34,211,238,0.4)"; ctx.lineWidth = 1.5;
   ctx.beginPath(); ctx.moveTo(x-20, y); ctx.lineTo(x-6, y); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(x+6, y); ctx.lineTo(x+20, y); ctx.stroke();
   
   ctx.restore();
   
+  // --------------------------------------------------
   // Label
+  // --------------------------------------------------
   ctx.font = "8px Space Mono,monospace";
   ctx.fillStyle = "rgba(34,211,238,0.6)";
   ctx.textAlign = "center";
@@ -333,7 +349,9 @@ function drawMain() {
   const W = canvas.width, H = canvas.height, cx = W/2, cy = H/2;
   ctx.clearRect(0, 0, W, H);
 
+  // --------------------------------------------------
   // Grid
+  // --------------------------------------------------
   ctx.strokeStyle = "rgba(14,165,233,0.04)"; ctx.lineWidth = 1;
   for (let x = 0; x < W; x += 44) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
   for (let y = 0; y < H; y += 44) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
@@ -341,7 +359,9 @@ function drawMain() {
   const path = getPath();
   const { V, R1, R2, R3, Rt, I, P } = vals();
 
+  // --------------------------------------------------
   // Wire glow
+  // --------------------------------------------------
   ctx.save();
   ctx.shadowBlur = 10; ctx.shadowColor = "rgba(14,165,233,0.3)";
   ctx.strokeStyle = "rgba(14,165,233,0.25)"; ctx.lineWidth = 4;
@@ -349,7 +369,9 @@ function drawMain() {
   path.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
   ctx.stroke(); ctx.restore();
 
+  // --------------------------------------------------
   // Wire
+  // --------------------------------------------------
   ctx.strokeStyle = "rgba(14,165,233,0.6)"; ctx.lineWidth = 2;
   ctx.beginPath();
   path.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
@@ -384,22 +406,30 @@ function drawMain() {
     drawInfo(ctx, cx, cy+105, `Mixed · Total ${Rt.toFixed(1)}Ω · I=${I.toFixed(3)}A · P=${P.toFixed(2)}W`);
   }
 
+  // --------------------------------------------------
   // Voltmeter
+  // --------------------------------------------------
   if (document.querySelectorAll(".comp-btn")[1]?.classList.contains("active")) {
     drawMeter(ctx, cx+60, cy-50, "V", V.toFixed(1), "#FBBF24");
   }
 
-  //Ammeter
+  // --------------------------------------------------
+  // Ammeter
+  // --------------------------------------------------
   if  (document.querySelectorAll(".comp-btn")[2]?.classList.contains("active")) {
     drawMeter(ctx, cx-60, cy+50, "A", I.toFixed(3)+"A", "#0EA5E9");
   }
 
-  //Capacitor
+  // --------------------------------------------------
+  // Capacitor
+  // --------------------------------------------------
   if (document.querySelectorAll(".comp-btn")[3]?.classList.contains("active")) {
     drawCapacitor(ctx, cx+100, cy+50, V, I);
   }
 
+  // --------------------------------------------------
   // Electrons
+  // --------------------------------------------------
   if (running) {
     animT += 0.01;
     const spd = Math.min(0.009, 0.002 + I * 0.002);
@@ -414,7 +444,9 @@ function drawMain() {
     if (stepN < 4) setStep(4);
   }
 
+  // --------------------------------------------------
   // AC overlay
+  // --------------------------------------------------
   if (srcType === "AC" && running) {
     ctx.save();
     ctx.strokeStyle = "rgba(251,191,36,0.15)"; ctx.lineWidth = 1.5;
@@ -432,7 +464,9 @@ function drawMain() {
 
 drawMain();
 
-// ── OSCILLOSCOPE ──
+// --------------------------------------------------
+// OSCILLOSCOPE
+// --------------------------------------------------
 const osc  = document.getElementById("oscilloCanvas");
 const octx = osc.getContext("2d");
 let oscT2 = 0;
@@ -477,7 +511,9 @@ function drawOscillo() {
 }
 drawOscillo();
 
-// ── AUTO OBSERVATION LOG ──
+// --------------------------------------------------
+// AUTO OBSERVATION LOG
+// --------------------------------------------------
 setInterval(() => {
   if (!running) return;
   const { V, I, P, Rt } = vals();
@@ -493,7 +529,9 @@ setInterval(() => {
   if (stepN >= 3) setStep(5);
 }, 7000);
 
-// ── SIDEBAR NAV ACTIVE ──
+// --------------------------------------------------
+// SIDEBAR NAV ACTIVE
+// --------------------------------------------------
 document.querySelectorAll(".nav-item").forEach((item) => {
   item.addEventListener("click", (e) => {
     const href = item.getAttribute("href");

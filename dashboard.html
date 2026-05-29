@@ -1,13 +1,15 @@
-<!-- DASHBOARD -->
+<!-- --------------------------------------------------
+     DASHBOARD
+-------------------------------------------------- -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eksperika - Lab OS Dashboard</title>
-    <link rel="stylesheet" href="css/boxicons.min.css">
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/boxicons.min.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
@@ -19,11 +21,13 @@
     <div class="grid-bg"></div>
 
     <div class="app">
-      <!-- SIDEBAR -->
+      <!-- --------------------------------------------------
+           SIDEBAR
+      -------------------------------------------------- -->
       <aside class="sidebar">
         <a href="dashboard.html" class="sidebar-logo">
           <div class="sidebar-logo-icon">
-            <i class="bx bxs-flask nav-icon"></i>
+            <i class="bx bx-test-tube nav-icon"></i>
           </div>
           <div class="sidebar-logo-text">
             EKSPERIKA
@@ -35,31 +39,35 @@
 
         <nav class="sidebar-nav">
           <a class="nav-item active">
-            <i class="bx bxs-home nav-icon"></i>
+            <i class="bx bx-home nav-icon"></i>
             <span>Home</span>
           </a>
           <a href="chemistry.html" class="nav-item">
-            <i class="bx bxs-flask nav-icon"></i>
+            <i class="bx bx-test-tube nav-icon"></i>
             <span>Chemistry Lab</span>
           </a>
           <a href="physic.html" class="nav-item">
-            <i class="bx bxs-bolt-circle nav-icon"></i>
+            <i class="bx bx-bolt-circle nav-icon"></i>
             <span>Physics Lab</span>
           </a>
           <a href="biology.html" class="nav-item">
             <i class="bx bx-dna nav-icon"></i>
             <span>Biology Lab</span>
           </a>
-          <a href="#" class="nav-item">
-            <i class="bx bxs-book-open nav-icon"></i>
+          <a href="challenge.html" class="nav-item">
+            <i class="bx bx-book-open nav-icon"></i>
             <span>Challenge</span>
           </a>
         </nav>
       </aside>
 
-      <!-- ══ MAIN ══ -->
+      <!-- --------------------------------------------------
+           MAIN
+      -------------------------------------------------- -->
       <div class="main">
-        <!-- TOP BAR -->
+        <!-- --------------------------------------------------
+             TOP BAR
+        -------------------------------------------------- -->
         <header class="topbar">
           <div>
             <div class="topbar-title">DASHBOARD</div>
@@ -69,9 +77,13 @@
           </div>
         </header>
 
-        <!-- CONTENT -->
+        <!-- --------------------------------------------------
+             CONTENT
+        -------------------------------------------------- -->
         <div class="content">
-          <!-- WELCOME CARD -->
+          <!-- --------------------------------------------------
+               WELCOME CARD
+          -------------------------------------------------- -->
           <div class="welcome-card">
             <canvas id="welcomeParticles"></canvas>
             <div style="position: relative; z-index: 1">
@@ -107,12 +119,18 @@
             </div>
           </div>
 
-          <!-- LAB SECTION LABEL -->
+          <!-- --------------------------------------------------
+               LAB SECTION LABEL
+          -------------------------------------------------- -->
           <div class="section-label">Science Laboratories</div>
 
-          <!-- LAB CARDS -->
+          <!-- --------------------------------------------------
+               LAB CARDS
+          -------------------------------------------------- -->
           <div class="lab-grid">
-            <!-- CHEMISTRY -->
+            <!-- --------------------------------------------------
+                 CHEMISTRY
+            -------------------------------------------------- -->
             <div class="lab-card chem">
               <div class="lab-preview">
                 <canvas id="chemCanvas" width="300" height="140"></canvas>
@@ -121,7 +139,7 @@
               <div class="lab-body">
                 <div class="lab-tag">
                   <span class="tag tag-cyan">
-                    <i class="bx bxs-flask"></i>
+                    <i class="bx bx-test-tube"></i>
                     Chemistry
                   </span>
                 </div>
@@ -142,12 +160,14 @@
                       ></div>
                     </div>
                   </div>
-                  <a href="#" class="btn btn-ghost btn-sm">Open <i class="bx bxs-right-arrow-alt"></i></a>
+                  <a href="#" class="btn btn-ghost btn-sm">Open <i class="bx bx-right-arrow-alt"></i></a>
                 </div>
               </div>
             </div>
 
-            <!-- PHYSICS -->
+            <!-- --------------------------------------------------
+                 PHYSICS
+            -------------------------------------------------- -->
             <div class="lab-card phys">
               <div class="lab-preview">
                 <canvas id="physCanvas" width="300" height="140"></canvas>
@@ -177,12 +197,14 @@
                       ></div>
                     </div>
                   </div>
-                  <a href="physic.html" class="btn btn-ghost btn-sm">Open <i class="bx bxs-right-arrow-alt"></i></a>
+                  <a href="physic.html" class="btn btn-ghost btn-sm">Open <i class="bx bx-right-arrow-alt"></i></a>
                 </div>
               </div>
             </div>
 
-            <!-- BIOLOGY -->
+            <!-- --------------------------------------------------
+                 BIOLOGY
+            -------------------------------------------------- -->
             <div class="lab-card bio">
               <div class="lab-preview">
                 <canvas id="bioCanvas" width="300" height="140"></canvas>
@@ -212,16 +234,20 @@
                       ></div>
                     </div>
                   </div>
-                  <a href="#" class="btn btn-ghost btn-sm">Open <i class="bx bxs-right-arrow-alt"></i></a>
+                  <a href="#" class="btn btn-ghost btn-sm">Open <i class="bx bx-right-arrow-alt"></i></a>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- BOTTOM GRID -->
+          <!-- --------------------------------------------------
+               BOTTOM GRID
+          -------------------------------------------------- -->
           <div class="section-label">Lab Control Center</div>
           <div class="bottom-grid">
-            <!-- RECENT EXPERIMENTS -->
+            <!-- --------------------------------------------------
+                 RECENT EXPERIMENTS
+            -------------------------------------------------- -->
             <div class="fcard exp-card">
               <div class="panel-head">
                 <span style="font-size: 14px">
@@ -251,7 +277,7 @@
                 </div>
                 <div class="exp-item">
                   <div class="exp-icon p">
-                    <i class="bx bxs-zap"></i>
+                    <i class="bx bx-bolt-circle"></i>
                   </div>
                   <div class="exp-info">
                     <div class="exp-name">Voltage Circuit Simulation</div>
@@ -308,7 +334,9 @@
               </div>
             </div>
 
-            <!-- MINI SIMULATION -->
+            <!-- --------------------------------------------------
+                 MINI SIMULATION
+            -------------------------------------------------- -->
             <div class="fcard">
               <div class="panel-head">
                 <span style="font-size: 14px">
@@ -402,13 +430,17 @@
               </div>
             </div>
 
-            <!-- PROGRESS + ACTIVITY -->
+            <!-- --------------------------------------------------
+                 PROGRESS + ACTIVITY
+            -------------------------------------------------- -->
             <div style="display: flex; flex-direction: column; gap: 16px">
-              <!-- PROGRESS -->
+              <!-- --------------------------------------------------
+                   PROGRESS
+              -------------------------------------------------- -->
               <div class="fcard">
                 <div class="panel-head">
                   <span style="font-size: 14px">
-                    <i class="bx bxs-bar-chart-alt-2"></i>
+                    <i class="bx bx-bar-chart-alt-2"></i>
                   </span>
                   <span class="panel-head-title">PROGRESS</span>
                 </div>
@@ -455,7 +487,9 @@
                 </div>
               </div>
 
-              <!-- ACTIVITY FEED -->
+              <!-- --------------------------------------------------
+                   ACTIVITY FEED
+              -------------------------------------------------- -->
               <div class="fcard activity-feed">
                 <div class="panel-head">
                   <span style="font-size: 14px">
@@ -530,7 +564,7 @@
       </div>
     </div>
 
-    <script src="js/main.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/dashboard.js"></script>
   </body>
 </html>
