@@ -192,6 +192,20 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.body-viewport.zoom-scroll-enabled {
+  align-items: flex-start;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.body-viewport.zoom-scroll-enabled .body-container {
+  flex: 0 0 100%;
+  transform-origin: center top;
 }
 
 .body-container {
@@ -200,7 +214,7 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.25s ease, height 0.25s ease;
   transform-style: preserve-3d;
 }
 
@@ -648,6 +662,7 @@ input[type="range"]::-webkit-slider-thumb {
 .sim-view {
   --mx: 50%;
   --my: 50%;
+  --pointer-glow-alpha: 0;
   align-self: start;
   position: sticky;
   top: 74px;
@@ -655,12 +670,16 @@ input[type="range"]::-webkit-slider-thumb {
   max-height: 760px;
   min-height: 560px;
   background:
-    radial-gradient(circle at var(--mx) var(--my), rgba(var(--accent-rgb), 0.14), transparent 16rem),
+    radial-gradient(circle at var(--mx) var(--my), rgba(var(--accent-rgb), var(--pointer-glow-alpha)), transparent 16rem),
     radial-gradient(circle at center, #081826 0%, #020617 74%);
   border-color: rgba(var(--biology-theme-rgb), 0.34);
   box-shadow:
     inset 0 0 58px rgba(var(--accent-rgb), 0.06),
     0 0 34px rgba(var(--biology-theme-rgb), 0.1);
+}
+
+.sim-view.scan-cursor-active {
+  --pointer-glow-alpha: 0.14;
 }
 
 .sim-view::before {
@@ -681,6 +700,11 @@ input[type="range"]::-webkit-slider-thumb {
   pointer-events: none;
   background: radial-gradient(circle at var(--mx) var(--my), rgba(236, 72, 153, 0.12), transparent 14rem);
   mix-blend-mode: screen;
+  opacity: 0;
+}
+
+.sim-view.scan-cursor-active .viewport-light {
+  opacity: 1;
 }
 
 .holo-depth-ring {
@@ -885,19 +909,19 @@ input[type="range"]::-webkit-slider-thumb {
 
 .scanner-line {
   position: absolute;
-  top: -25%;
+  top: 0;
   left: 0;
   right: 0;
-  height: 120px;
+  height: 2px;
   pointer-events: none;
-  animation: bioScan 4.8s ease-in-out infinite;
+  animation: bioScan 7s ease-in-out infinite;
   z-index: 3;
 }
 
 @keyframes bioScan {
-  0%, 100% { transform: translateY(0); opacity: 0; }
+  0%, 100% { top: 0; opacity: 0; }
   15%, 85% { opacity: var(--scan-alpha, 0.72); }
-  50% { transform: translateY(680px); }
+  50% { top: calc(100% - 2px); }
 }
 
 .organ-tooltip {
