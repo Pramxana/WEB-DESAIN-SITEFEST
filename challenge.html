@@ -1,7 +1,7 @@
 <!-- --------------------------------------------------
      Challenge Mode Page
 -------------------------------------------------- -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -31,10 +31,14 @@
       <div class="challenge-success-modal">
         <div class="modal-icon"><i class="bx bx-trophy"></i></div>
         <div class="modal-title" id="successTitle">MISSION COMPLETE</div>
-        <div class="modal-sub" id="successSub">Congratulations! You have completed the mission.</div>
+        <div class="modal-sub" id="successSub">
+          Congratulations! You have completed the mission.
+        </div>
         <div class="badge-award" id="badgeAward">BADGE EARNED</div>
         <div class="modal-actions">
-          <button class="modal-btn primary" type="button" onclick="backToLab()">BACK TO LAB</button>
+          <button class="modal-btn primary" type="button" onclick="backToLab()">
+            BACK TO LAB
+          </button>
           <a class="modal-btn secondary" href="dashboard.html">DASHBOARD</a>
         </div>
       </div>
@@ -44,10 +48,27 @@
       <div class="challenge-failed-modal">
         <div class="modal-icon"><i class="bx bx-error-alt"></i></div>
         <div class="modal-title" id="failedTitle">MISSION FAILED</div>
-        <div class="modal-sub" id="failedSub">Experiment failed. Review the setup and try again.</div>
+        <div class="modal-sub" id="failedSub">
+          Experiment failed. Review the setup and try again.
+        </div>
         <div class="modal-actions">
-          <button class="modal-btn danger" type="button" onclick="closeModal('failedModal'); resetCurrentLab()">RETRY MISSION</button>
-          <button class="modal-btn secondary" type="button" onclick="closeModal('failedModal')">BACK TO MENU</button>
+          <button
+            class="modal-btn danger"
+            type="button"
+            onclick="
+              closeModal('failedModal');
+              resetCurrentLab();
+            "
+          >
+            RETRY MISSION
+          </button>
+          <button
+            class="modal-btn secondary"
+            type="button"
+            onclick="closeModal('failedModal')"
+          >
+            BACK TO MENU
+          </button>
         </div>
       </div>
     </div>
@@ -128,11 +149,20 @@
                 <span class="module-dot"></span>
                 CYBER SCIENCE LAB &middot; MISSION ARENA
               </div>
-              <div class="page-title">SCIENCE <span class="t-cyan">CHALLENGE ARENA</span></div>
-              <div class="page-sub">Chemistry &middot; Physics &middot; Biology &middot; Realtime mission simulation</div>
+              <div class="page-title">
+                SCIENCE <span class="t-cyan">CHALLENGE ARENA</span>
+              </div>
+              <div class="page-sub">
+                Chemistry &middot; Physics &middot; Biology &middot; Realtime
+                mission simulation
+              </div>
             </div>
             <div class="page-actions">
-              <button class="btn btn-primary btn-sm" type="button" onclick="startChallenge()">
+              <button
+                class="btn btn-primary btn-sm"
+                type="button"
+                onclick="startChallenge()"
+              >
                 <i class="bx bx-play"></i>
                 Start Challenge
               </button>
@@ -145,21 +175,66 @@
             -------------------------------------------------- -->
             <aside class="challenge-selector-panel panel-card">
               <div class="panel-header">
-                <span class="panel-header-icon"><i class="bx bx-book-open"></i></span>
+                <span class="panel-header-icon"
+                  ><i class="bx bx-book-open"></i
+                ></span>
                 <span class="panel-header-title">Available Challenges</span>
               </div>
-              <div class="panel-body challenge-tabs" role="tablist" aria-label="Challenge category selector">
-                <button class="tab-btn challenge-select-card active" type="button" data-tab="chem" onclick="switchTab('chem')">
-                  <span class="challenge-select-icon"><i class="bx bx-test-tube"></i></span>
-                  <span><span class="challenge-select-title">Chemistry Challenge</span><span class="challenge-select-sub">Acid waste neutralization</span></span>
+              <div
+                class="panel-body challenge-tabs"
+                role="tablist"
+                aria-label="Challenge category selector"
+              >
+                <button
+                  class="tab-btn challenge-select-card active"
+                  type="button"
+                  data-tab="chem"
+                  onclick="switchTab('chem')"
+                >
+                  <span class="challenge-select-icon"
+                    ><i class="bx bx-test-tube"></i
+                  ></span>
+                  <span
+                    ><span class="challenge-select-title"
+                      >Chemistry Challenge</span
+                    ><span class="challenge-select-sub"
+                      >Acid waste neutralization</span
+                    ></span
+                  >
                 </button>
-                <button class="tab-btn challenge-select-card" type="button" data-tab="phys" onclick="switchTab('phys')">
-                  <span class="challenge-select-icon"><i class="bx bx-bolt-circle"></i></span>
-                  <span><span class="challenge-select-title">Physics Challenge</span><span class="challenge-select-sub">Short circuit solver</span></span>
+                <button
+                  class="tab-btn challenge-select-card"
+                  type="button"
+                  data-tab="phys"
+                  onclick="switchTab('phys')"
+                >
+                  <span class="challenge-select-icon"
+                    ><i class="bx bx-bolt-circle"></i
+                  ></span>
+                  <span
+                    ><span class="challenge-select-title"
+                      >Physics Challenge</span
+                    ><span class="challenge-select-sub"
+                      >Short circuit solver</span
+                    ></span
+                  >
                 </button>
-                <button class="tab-btn challenge-select-card" type="button" data-tab="bio" onclick="switchTab('bio')">
-                  <span class="challenge-select-icon"><i class="bx bx-dna"></i></span>
-                  <span><span class="challenge-select-title">Biology Challenge</span><span class="challenge-select-sub">Anatomy detective</span></span>
+                <button
+                  class="tab-btn challenge-select-card"
+                  type="button"
+                  data-tab="bio"
+                  onclick="switchTab('bio')"
+                >
+                  <span class="challenge-select-icon"
+                    ><i class="bx bx-dna"></i
+                  ></span>
+                  <span
+                    ><span class="challenge-select-title"
+                      >Biology Challenge</span
+                    ><span class="challenge-select-sub"
+                      >Anatomy detective</span
+                    ></span
+                  >
                 </button>
               </div>
             </aside>
@@ -168,10 +243,14 @@
                  Active Challenge Arena
             -------------------------------------------------- -->
             <section class="challenge-arena">
-              <div class="panel-card" style="margin-bottom:16px;">
+              <div class="panel-card" style="margin-bottom: 16px">
                 <div class="panel-header">
-                  <span class="panel-header-icon"><i class="bx bx-pulse"></i></span>
-                  <span class="panel-header-title" id="activeChallengeLabel">Chemistry Challenge</span>
+                  <span class="panel-header-icon"
+                    ><i class="bx bx-pulse"></i
+                  ></span>
+                  <span class="panel-header-title" id="activeChallengeLabel"
+                    >Chemistry Challenge</span
+                  >
                   <span class="panel-header-badge">Mission Online</span>
                 </div>
               </div>
@@ -180,497 +259,1370 @@
                    Challenge Lab Panels
               -------------------------------------------------- -->
               <div class="challenge-stage">
-<!-- --------------------------------------------------
+                <!-- --------------------------------------------------
      LAB 1: CHEMISTRY
 -------------------------------------------------- -->
-<div class="lab-panel active" id="lab-chem" data-lab="chem">
-
-  <!-- --------------------------------------------------
+                <div class="lab-panel active" id="lab-chem" data-lab="chem">
+                  <!-- --------------------------------------------------
        Mission Header
   -------------------------------------------------- -->
-  <div class="mission-header">
-    <div class="mission-icon"><i class="bx bx-test-tube" aria-hidden="true"></i></div>
-    <div>
-      <div class="mission-title">THE CHEMICAL MASTERMIND — ACID WASTE NEUTRALIZATION</div>
-      <div class="mission-desc">// OBJECTIVE: Neutralize the waste solution to pH = 7.0 before time runs out</div>
-    </div>
-    <div class="mission-spacer"></div>
-    <div>
-      <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:2px;margin-bottom:4px;">TIME REMAINING</div>
-      <div class="mission-timer" id="chem-timer">03:00</div>
-    </div>
-  </div>
+                  <div class="mission-header">
+                    <div class="mission-icon">
+                      <i class="bx bx-test-tube" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                      <div class="mission-title">
+                        THE CHEMICAL MASTERMIND — ACID WASTE NEUTRALIZATION
+                      </div>
+                      <div class="mission-desc">
+                        // OBJECTIVE: Neutralize the waste solution to pH = 7.0
+                        before time runs out
+                      </div>
+                    </div>
+                    <div class="mission-spacer"></div>
+                    <div>
+                      <div
+                        style="
+                          font-family: &quot;Space Mono&quot;, monospace;
+                          font-size: 9px;
+                          color: var(--text-dim);
+                          letter-spacing: 2px;
+                          margin-bottom: 4px;
+                        "
+                      >
+                        TIME REMAINING
+                      </div>
+                      <div class="mission-timer" id="chem-timer">03:00</div>
+                    </div>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        Compounds Panel
   -------------------------------------------------- -->
-  <div class="card compounds-panel">
-    <div class="card-title"><div class="dot"></div>AVAILABLE COMPOUNDS</div>
+                  <div class="card compounds-panel">
+                    <div class="card-title">
+                      <div class="dot"></div>
+                      AVAILABLE COMPOUNDS
+                    </div>
 
-    <div class="compound-item" id="comp-hcl" onclick="selectCompound('HCl')">
-      <div class="compound-icon"><i class="bx bx-test-tube" aria-hidden="true"></i></div>
-      <div class="compound-info">
-        <div class="compound-name">HCl</div>
-        <div class="compound-ph">Strong Acid — pH <span>1.0</span></div>
-      </div>
-      <button class="add-btn" onclick="addCompoundToQueue('HCl',1.0,'acid');event.stopPropagation()">+ ADD</button>
-    </div>
+                    <div
+                      class="compound-item"
+                      id="comp-hcl"
+                      onclick="selectCompound('HCl')"
+                    >
+                      <div class="compound-icon">
+                        <i class="bx bx-test-tube" aria-hidden="true"></i>
+                      </div>
+                      <div class="compound-info">
+                        <div class="compound-name">HCl</div>
+                        <div class="compound-ph">
+                          Strong Acid — pH <span>1.0</span>
+                        </div>
+                      </div>
+                      <button
+                        class="add-btn"
+                        onclick="
+                          addCompoundToQueue('HCl', 1.0, 'acid');
+                          event.stopPropagation();
+                        "
+                      >
+                        + ADD
+                      </button>
+                    </div>
 
-    <div class="compound-item" id="comp-h2so4" onclick="selectCompound('H₂SO₄')">
-      <div class="compound-icon"><i class="bx bx-droplet icon-acid" aria-hidden="true"></i></div>
-      <div class="compound-info">
-        <div class="compound-name">H₂SO₄</div>
-        <div class="compound-ph">Strong Acid — pH <span>0.5</span></div>
-      </div>
-      <button class="add-btn" onclick="addCompoundToQueue('H₂SO₄',0.5,'acid');event.stopPropagation()">+ ADD</button>
-    </div>
+                    <div
+                      class="compound-item"
+                      id="comp-h2so4"
+                      onclick="selectCompound('H₂SO₄')"
+                    >
+                      <div class="compound-icon">
+                        <i
+                          class="bx bx-droplet icon-acid"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                      <div class="compound-info">
+                        <div class="compound-name">H₂SO₄</div>
+                        <div class="compound-ph">
+                          Strong Acid — pH <span>0.5</span>
+                        </div>
+                      </div>
+                      <button
+                        class="add-btn"
+                        onclick="
+                          addCompoundToQueue('H₂SO₄', 0.5, 'acid');
+                          event.stopPropagation();
+                        "
+                      >
+                        + ADD
+                      </button>
+                    </div>
 
-    <div class="compound-item" id="comp-naoh" onclick="selectCompound('NaOH')">
-      <div class="compound-icon"><i class="bx bx-droplet icon-base" aria-hidden="true"></i></div>
-      <div class="compound-info">
-        <div class="compound-name">NaOH</div>
-        <div class="compound-ph">Strong Base — pH <span>13.0</span></div>
-      </div>
-      <button class="add-btn" onclick="addCompoundToQueue('NaOH',13.0,'base');event.stopPropagation()">+ ADD</button>
-    </div>
+                    <div
+                      class="compound-item"
+                      id="comp-naoh"
+                      onclick="selectCompound('NaOH')"
+                    >
+                      <div class="compound-icon">
+                        <i
+                          class="bx bx-droplet icon-base"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                      <div class="compound-info">
+                        <div class="compound-name">NaOH</div>
+                        <div class="compound-ph">
+                          Strong Base — pH <span>13.0</span>
+                        </div>
+                      </div>
+                      <button
+                        class="add-btn"
+                        onclick="
+                          addCompoundToQueue('NaOH', 13.0, 'base');
+                          event.stopPropagation();
+                        "
+                      >
+                        + ADD
+                      </button>
+                    </div>
 
-    <div class="compound-item" id="comp-nh3" onclick="selectCompound('NH₃')">
-      <div class="compound-icon"><i class="bx bx-circle icon-weak-base" aria-hidden="true"></i></div>
-      <div class="compound-info">
-        <div class="compound-name">NH₃</div>
-        <div class="compound-ph">Weak Base — pH <span>11.0</span></div>
-      </div>
-      <button class="add-btn" onclick="addCompoundToQueue('NH₃',11.0,'base');event.stopPropagation()">+ ADD</button>
-    </div>
+                    <div
+                      class="compound-item"
+                      id="comp-nh3"
+                      onclick="selectCompound('NH₃')"
+                    >
+                      <div class="compound-icon">
+                        <i
+                          class="bx bx-circle icon-weak-base"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                      <div class="compound-info">
+                        <div class="compound-name">NH₃</div>
+                        <div class="compound-ph">
+                          Weak Base — pH <span>11.0</span>
+                        </div>
+                      </div>
+                      <button
+                        class="add-btn"
+                        onclick="
+                          addCompoundToQueue('NH₃', 11.0, 'base');
+                          event.stopPropagation();
+                        "
+                      >
+                        + ADD
+                      </button>
+                    </div>
 
-    <div class="compound-item" id="comp-ch3cooh" onclick="selectCompound('CH₃COOH')">
-      <div class="compound-icon"><i class="bx bx-circle icon-weak-acid" aria-hidden="true"></i></div>
-      <div class="compound-info">
-        <div class="compound-name">CH₃COOH</div>
-        <div class="compound-ph">Weak Acid — pH <span>3.0</span></div>
-      </div>
-      <button class="add-btn" onclick="addCompoundToQueue('CH₃COOH',3.0,'acid');event.stopPropagation()">+ ADD</button>
-    </div>
+                    <div
+                      class="compound-item"
+                      id="comp-ch3cooh"
+                      onclick="selectCompound('CH₃COOH')"
+                    >
+                      <div class="compound-icon">
+                        <i
+                          class="bx bx-circle icon-weak-acid"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                      <div class="compound-info">
+                        <div class="compound-name">CH₃COOH</div>
+                        <div class="compound-ph">
+                          Weak Acid — pH <span>3.0</span>
+                        </div>
+                      </div>
+                      <button
+                        class="add-btn"
+                        onclick="
+                          addCompoundToQueue('CH₃COOH', 3.0, 'acid');
+                          event.stopPropagation();
+                        "
+                      >
+                        + ADD
+                      </button>
+                    </div>
 
-    <div class="compound-item" id="comp-h2o" onclick="selectCompound('H₂O')">
-      <div class="compound-icon"><i class="bx bx-water" aria-hidden="true"></i></div>
-      <div class="compound-info">
-        <div class="compound-name">H₂O (Purified Water)</div>
-        <div class="compound-ph">Neutral — pH <span>7.0</span></div>
-      </div>
-      <button class="add-btn" onclick="addCompoundToQueue('H₂O',7.0,'neutral');event.stopPropagation()">+ ADD</button>
-    </div>
-  </div>
+                    <div
+                      class="compound-item"
+                      id="comp-h2o"
+                      onclick="selectCompound('H₂O')"
+                    >
+                      <div class="compound-icon">
+                        <i class="bx bx-water" aria-hidden="true"></i>
+                      </div>
+                      <div class="compound-info">
+                        <div class="compound-name">H₂O (Purified Water)</div>
+                        <div class="compound-ph">
+                          Neutral — pH <span>7.0</span>
+                        </div>
+                      </div>
+                      <button
+                        class="add-btn"
+                        onclick="
+                          addCompoundToQueue('H₂O', 7.0, 'neutral');
+                          event.stopPropagation();
+                        "
+                      >
+                        + ADD
+                      </button>
+                    </div>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        Reaction Chamber
   -------------------------------------------------- -->
-  <div class="reaction-chamber">
-    <div class="card beaker-area active-scan">
-      <div class="ph-display">
-        <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);margin-bottom:4px;">CURRENT pH</div>
-        <div class="ph-value" id="ph-display-val" style="color:var(--neon-red)">1.0</div>
-        <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);margin-top:6px;">COMPOUND</div>
-        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--neon-blue);margin-top:2px;" id="dominant-compound">HCl</div>
-        <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);margin-top:6px;">VOLUME</div>
-        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--neon-blue);margin-top:2px;" id="vol-display">50 mL</div>
-      </div>
+                  <div class="reaction-chamber">
+                    <div class="card beaker-area active-scan">
+                      <div class="ph-display">
+                        <div
+                          style="
+                            font-family: &quot;Space Mono&quot;, monospace;
+                            font-size: 9px;
+                            color: var(--text-dim);
+                            margin-bottom: 4px;
+                          "
+                        >
+                          CURRENT pH
+                        </div>
+                        <div
+                          class="ph-value"
+                          id="ph-display-val"
+                          style="color: var(--neon-red)"
+                        >
+                          1.0
+                        </div>
+                        <div
+                          style="
+                            font-family: &quot;Space Mono&quot;, monospace;
+                            font-size: 9px;
+                            color: var(--text-dim);
+                            margin-top: 6px;
+                          "
+                        >
+                          COMPOUND
+                        </div>
+                        <div
+                          style="
+                            font-family: &quot;Space Mono&quot;, monospace;
+                            font-size: 10px;
+                            color: var(--neon-blue);
+                            margin-top: 2px;
+                          "
+                          id="dominant-compound"
+                        >
+                          HCl
+                        </div>
+                        <div
+                          style="
+                            font-family: &quot;Space Mono&quot;, monospace;
+                            font-size: 9px;
+                            color: var(--text-dim);
+                            margin-top: 6px;
+                          "
+                        >
+                          VOLUME
+                        </div>
+                        <div
+                          style="
+                            font-family: &quot;Space Mono&quot;, monospace;
+                            font-size: 10px;
+                            color: var(--neon-blue);
+                            margin-top: 2px;
+                          "
+                          id="vol-display"
+                        >
+                          50 mL
+                        </div>
+                      </div>
 
-      <div class="beaker-container" id="beakerContainer">
-        <div class="beaker-glow" aria-hidden="true"></div>
-        <div class="beaker-glass">
-          <div class="liquid-fill" id="liquidFill" style="height:25%;background:rgba(255,48,96,0.6);">
-            <div class="liquid-wave" style="background:rgba(255,48,96,0.4);"></div>
-          </div>
-        </div>
-        <svg class="beaker-svg-el" viewBox="0 0 180 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M30 10 L30 200 Q30 226 56 226 L124 226 Q150 226 150 200 L150 10" stroke="rgba(34,211,238,0.7)" stroke-width="2.4" fill="rgba(6,15,28,0.18)"/>
-          <path d="M20 10 L160 10" stroke="rgba(34,211,238,0.78)" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M30 50 L20 50" stroke="rgba(34,211,238,0.36)" stroke-width="1.5"/>
-          <path d="M30 90 L20 90" stroke="rgba(34,211,238,0.36)" stroke-width="1.5"/>
-          <path d="M30 130 L20 130" stroke="rgba(34,211,238,0.36)" stroke-width="1.5"/>
-          <path d="M30 170 L20 170" stroke="rgba(34,211,238,0.36)" stroke-width="1.5"/>
-          <text x="12" y="54" fill="rgba(34,211,238,0.5)" font-size="9" font-family="monospace">200</text>
-          <text x="12" y="94" fill="rgba(34,211,238,0.5)" font-size="9" font-family="monospace">150</text>
-          <text x="12" y="134" fill="rgba(34,211,238,0.5)" font-size="9" font-family="monospace">100</text>
-          <text x="12" y="174" fill="rgba(34,211,238,0.5)" font-size="9" font-family="monospace">50</text>
-          <path d="M150 10 L160 10 L160 26 L152 30" stroke="rgba(34,211,238,0.54)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M38 22 L38 194 Q38 216 60 216 L120 216 Q142 216 142 194 L142 22" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
-        </svg>
-      </div>
-    </div>
+                      <div class="beaker-container" id="beakerContainer">
+                        <div class="beaker-glow" aria-hidden="true"></div>
+                        <div class="beaker-glass">
+                          <div
+                            class="liquid-fill"
+                            id="liquidFill"
+                            style="
+                              height: 25%;
+                              background: rgba(255, 48, 96, 0.6);
+                            "
+                          >
+                            <div
+                              class="liquid-wave"
+                              style="background: rgba(255, 48, 96, 0.4)"
+                            ></div>
+                          </div>
+                        </div>
+                        <svg
+                          class="beaker-svg-el"
+                          viewBox="0 0 180 240"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M30 10 L30 200 Q30 226 56 226 L124 226 Q150 226 150 200 L150 10"
+                            stroke="rgba(34,211,238,0.7)"
+                            stroke-width="2.4"
+                            fill="rgba(6,15,28,0.18)"
+                          />
+                          <path
+                            d="M20 10 L160 10"
+                            stroke="rgba(34,211,238,0.78)"
+                            stroke-width="2.4"
+                            stroke-linecap="round"
+                          />
+                          <path
+                            d="M30 50 L20 50"
+                            stroke="rgba(34,211,238,0.36)"
+                            stroke-width="1.5"
+                          />
+                          <path
+                            d="M30 90 L20 90"
+                            stroke="rgba(34,211,238,0.36)"
+                            stroke-width="1.5"
+                          />
+                          <path
+                            d="M30 130 L20 130"
+                            stroke="rgba(34,211,238,0.36)"
+                            stroke-width="1.5"
+                          />
+                          <path
+                            d="M30 170 L20 170"
+                            stroke="rgba(34,211,238,0.36)"
+                            stroke-width="1.5"
+                          />
+                          <text
+                            x="12"
+                            y="54"
+                            fill="rgba(34,211,238,0.5)"
+                            font-size="9"
+                            font-family="monospace"
+                          >
+                            200
+                          </text>
+                          <text
+                            x="12"
+                            y="94"
+                            fill="rgba(34,211,238,0.5)"
+                            font-size="9"
+                            font-family="monospace"
+                          >
+                            150
+                          </text>
+                          <text
+                            x="12"
+                            y="134"
+                            fill="rgba(34,211,238,0.5)"
+                            font-size="9"
+                            font-family="monospace"
+                          >
+                            100
+                          </text>
+                          <text
+                            x="12"
+                            y="174"
+                            fill="rgba(34,211,238,0.5)"
+                            font-size="9"
+                            font-family="monospace"
+                          >
+                            50
+                          </text>
+                          <path
+                            d="M150 10 L160 10 L160 26 L152 30"
+                            stroke="rgba(34,211,238,0.54)"
+                            stroke-width="1.5"
+                            fill="none"
+                            stroke-linecap="round"
+                          />
+                          <path
+                            d="M38 22 L38 194 Q38 216 60 216 L120 216 Q142 216 142 194 L142 22"
+                            stroke="rgba(255,255,255,0.08)"
+                            stroke-width="1"
+                            fill="none"
+                          />
+                        </svg>
+                      </div>
+                    </div>
 
-    <div class="card reaction-log" id="reactionLog">
-      <div class="log-entry info"><span class="log-time">[00:00]</span> System initialized. Acid waste detected (HCl). pH = 1.0</div>
-      <div class="log-entry info"><span class="log-time">[00:01]</span> Target: pH 7.0 ± 0.5 | Volume target: 200mL</div>
-    </div>
-  </div>
+                    <div class="card reaction-log" id="reactionLog">
+                      <div class="log-entry info">
+                        <span class="log-time">[00:00]</span> System
+                        initialized. Acid waste detected (HCl). pH = 1.0
+                      </div>
+                      <div class="log-entry info">
+                        <span class="log-time">[00:01]</span> Target: pH 7.0 ±
+                        0.5 | Volume target: 200mL
+                      </div>
+                    </div>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        Status Panel
   -------------------------------------------------- -->
-  <div class="status-panel">
-    <div class="card ph-meter-card">
-      <div class="card-title"><div class="dot"></div>pH METER</div>
-      <div class="ph-scale">
-        <div class="ph-bar-track">
-          <div class="ph-indicator" id="phIndicator" style="top:91%"></div>
-          <div class="ph-labels">
-            <span>0</span><span>2</span><span>4</span><span>6</span><span>7</span><span>8</span><span>10</span><span>12</span><span>14</span>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top:14px;">
-        <div class="stat-label">VOLUME PROGRESS</div>
-        <div class="volume-bar"><div class="volume-fill" id="volumeFill" style="width:25%"></div></div>
-        <div style="display:flex;justify-content:space-between;margin-top:4px;">
-          <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);" id="vol-label">50 mL</span>
-          <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);">200 mL</span>
-        </div>
-      </div>
-    </div>
+                  <div class="status-panel">
+                    <div class="card ph-meter-card">
+                      <div class="card-title">
+                        <div class="dot"></div>
+                        pH METER
+                      </div>
+                      <div class="ph-scale">
+                        <div class="ph-bar-track">
+                          <div
+                            class="ph-indicator"
+                            id="phIndicator"
+                            style="top: 91%"
+                          ></div>
+                          <div class="ph-labels">
+                            <span>0</span><span>2</span><span>4</span
+                            ><span>6</span><span>7</span><span>8</span
+                            ><span>10</span><span>12</span><span>14</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top: 14px">
+                        <div class="stat-label">VOLUME PROGRESS</div>
+                        <div class="volume-bar">
+                          <div
+                            class="volume-fill"
+                            id="volumeFill"
+                            style="width: 25%"
+                          ></div>
+                        </div>
+                        <div
+                          style="
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: 4px;
+                          "
+                        >
+                          <span
+                            style="
+                              font-family: &quot;Space Mono&quot;, monospace;
+                              font-size: 9px;
+                              color: var(--text-dim);
+                            "
+                            id="vol-label"
+                            >50 mL</span
+                          >
+                          <span
+                            style="
+                              font-family: &quot;Space Mono&quot;, monospace;
+                              font-size: 9px;
+                              color: var(--text-dim);
+                            "
+                            >200 mL</span
+                          >
+                        </div>
+                      </div>
+                    </div>
 
-    <div class="card" style="padding:16px;">
-      <div class="card-title"><div class="dot"></div>STATUS</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-        <div style="background:var(--bg);border:1px solid var(--border);padding:10px;text-align:center;">
-          <div class="stat-label">COMPOUNDS</div>
-          <div class="stat-value" id="compound-count" style="color:var(--neon-blue);">1</div>
-        </div>
-        <div style="background:var(--bg);border:1px solid var(--border);padding:10px;text-align:center;">
-          <div class="stat-label">REACTIONS</div>
-          <div class="stat-value" id="reaction-count" style="color:var(--neon-green);">0</div>
-        </div>
-      </div>
-      <button class="activate-btn" onclick="mixAndReact()"><i class="bx bx-bolt-circle" aria-hidden="true"></i> MIX & REACT</button>
-      <button class="reset-btn" onclick="resetChemistryChallenge()"><i class="bx bx-reset" aria-hidden="true"></i> RESET EXPERIMENT</button>
-    </div>
-  </div>
+                    <div class="card" style="padding: 16px">
+                      <div class="card-title">
+                        <div class="dot"></div>
+                        STATUS
+                      </div>
+                      <div
+                        style="
+                          display: grid;
+                          grid-template-columns: 1fr 1fr;
+                          gap: 8px;
+                          margin-bottom: 12px;
+                        "
+                      >
+                        <div
+                          style="
+                            background: var(--bg);
+                            border: 1px solid var(--border);
+                            padding: 10px;
+                            text-align: center;
+                          "
+                        >
+                          <div class="stat-label">COMPOUNDS</div>
+                          <div
+                            class="stat-value"
+                            id="compound-count"
+                            style="color: var(--neon-blue)"
+                          >
+                            1
+                          </div>
+                        </div>
+                        <div
+                          style="
+                            background: var(--bg);
+                            border: 1px solid var(--border);
+                            padding: 10px;
+                            text-align: center;
+                          "
+                        >
+                          <div class="stat-label">REACTIONS</div>
+                          <div
+                            class="stat-value"
+                            id="reaction-count"
+                            style="color: var(--neon-green)"
+                          >
+                            0
+                          </div>
+                        </div>
+                      </div>
+                      <button class="activate-btn" onclick="mixAndReact()">
+                        <i class="bx bx-bolt-circle" aria-hidden="true"></i> MIX
+                        & REACT
+                      </button>
+                      <button
+                        class="reset-btn"
+                        onclick="resetChemistryChallenge()"
+                      >
+                        <i class="bx bx-reset" aria-hidden="true"></i> RESET
+                        EXPERIMENT
+                      </button>
+                    </div>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        End Chemistry Lab
   -------------------------------------------------- -->
-</div>
+                </div>
 
-<!-- --------------------------------------------------
+                <!-- --------------------------------------------------
      LAB 2: PHYSICS
 -------------------------------------------------- -->
-<div class="lab-panel" id="lab-phys" data-lab="phys">
+                <div class="lab-panel" id="lab-phys" data-lab="phys">
+                  <div class="mission-header">
+                    <div class="mission-icon">
+                      <i class="bx bx-bolt-circle" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                      <div class="mission-title">
+                        SHORT CIRCUIT SOLVER — POWER THE CITY
+                      </div>
+                      <div class="mission-desc">
+                        // OBJECTIVE: Build a circuit with current I between
+                        1.5A – 2.0A
+                      </div>
+                    </div>
+                    <div class="mission-spacer"></div>
+                    <div>
+                      <div
+                        style="
+                          font-family: &quot;Space Mono&quot;, monospace;
+                          font-size: 9px;
+                          color: var(--text-dim);
+                          letter-spacing: 2px;
+                          margin-bottom: 4px;
+                        "
+                      >
+                        TIME REMAINING
+                      </div>
+                      <div class="mission-timer" id="phys-timer">05:00</div>
+                    </div>
+                  </div>
 
-  <div class="mission-header">
-    <div class="mission-icon"><i class="bx bx-bolt-circle" aria-hidden="true"></i></div>
-    <div>
-      <div class="mission-title">SHORT CIRCUIT SOLVER — POWER THE CITY</div>
-      <div class="mission-desc">// OBJECTIVE: Build a circuit with current I between 1.5A – 2.0A</div>
-    </div>
-    <div class="mission-spacer"></div>
-    <div>
-      <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:2px;margin-bottom:4px;">TIME REMAINING</div>
-      <div class="mission-timer" id="phys-timer">05:00</div>
-    </div>
-  </div>
-
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        Components Tray
   -------------------------------------------------- -->
-  <div class="card circuit-components">
-    <div class="card-title"><div class="dot" style="background:var(--neon-yellow);box-shadow:0 0 8px var(--neon-yellow);"></div>COMPONENTS</div>
+                  <div class="card circuit-components">
+                    <div class="card-title">
+                      <div
+                        class="dot"
+                        style="
+                          background: var(--neon-yellow);
+                          box-shadow: 0 0 8px var(--neon-yellow);
+                        "
+                      ></div>
+                      COMPONENTS
+                    </div>
 
-    <div class="component-block" draggable="true" data-component-id="battery" data-type="battery" data-voltage="9" ondragstart="dragComponent(event)">
-      <div class="component-icon"><i class="bx bx-battery" aria-hidden="true"></i></div>
-      <div>
-        <div class="component-name">Battery</div>
-        <div class="component-spec">V = 9V</div>
-      </div>
-      <div class="component-badge">DC</div>
-    </div>
+                    <div
+                      class="component-block"
+                      draggable="true"
+                      data-component-id="battery"
+                      data-type="battery"
+                      data-voltage="9"
+                      ondragstart="dragComponent(event)"
+                    >
+                      <div class="component-icon">
+                        <i class="bx bx-battery" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        <div class="component-name">Battery</div>
+                        <div class="component-spec">V = 9V</div>
+                      </div>
+                      <div class="component-badge">DC</div>
+                    </div>
 
-    <div class="component-block" draggable="true" data-component-id="resistor-5" data-type="resistor" data-resistance="5" ondragstart="dragComponent(event)">
-      <div class="component-icon"><i class="bx bx-square" aria-hidden="true"></i></div>
-      <div>
-        <div class="component-name">Resistor 5Ω</div>
-        <div class="component-spec">R = 5Ω</div>
-      </div>
-      <div class="component-badge">5Ω</div>
-    </div>
+                    <div
+                      class="component-block"
+                      draggable="true"
+                      data-component-id="resistor-5"
+                      data-type="resistor"
+                      data-resistance="5"
+                      ondragstart="dragComponent(event)"
+                    >
+                      <div class="component-icon">
+                        <i class="bx bx-square" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        <div class="component-name">Resistor 5Ω</div>
+                        <div class="component-spec">R = 5Ω</div>
+                      </div>
+                      <div class="component-badge">5Ω</div>
+                    </div>
 
-    <div class="component-block" draggable="true" data-component-id="resistor-3" data-type="resistor" data-resistance="3" ondragstart="dragComponent(event)">
-      <div class="component-icon"><i class="bx bx-square" aria-hidden="true"></i></div>
-      <div>
-        <div class="component-name">Resistor 3Ω</div>
-        <div class="component-spec">R = 3Ω</div>
-      </div>
-      <div class="component-badge">3Ω</div>
-    </div>
+                    <div
+                      class="component-block"
+                      draggable="true"
+                      data-component-id="resistor-3"
+                      data-type="resistor"
+                      data-resistance="3"
+                      ondragstart="dragComponent(event)"
+                    >
+                      <div class="component-icon">
+                        <i class="bx bx-square" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        <div class="component-name">Resistor 3Ω</div>
+                        <div class="component-spec">R = 3Ω</div>
+                      </div>
+                      <div class="component-badge">3Ω</div>
+                    </div>
 
-    <div class="component-block" draggable="true" data-component-id="resistor-1" data-type="resistor" data-resistance="1" ondragstart="dragComponent(event)">
-      <div class="component-icon"><i class="bx bx-square" aria-hidden="true"></i></div>
-      <div>
-        <div class="component-name">Resistor 1Ω</div>
-        <div class="component-spec">R = 1Ω</div>
-      </div>
-      <div class="component-badge">1Ω</div>
-    </div>
+                    <div
+                      class="component-block"
+                      draggable="true"
+                      data-component-id="resistor-1"
+                      data-type="resistor"
+                      data-resistance="1"
+                      ondragstart="dragComponent(event)"
+                    >
+                      <div class="component-icon">
+                        <i class="bx bx-square" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        <div class="component-name">Resistor 1Ω</div>
+                        <div class="component-spec">R = 1Ω</div>
+                      </div>
+                      <div class="component-badge">1Ω</div>
+                    </div>
 
-    <div class="component-block" draggable="true" data-component-id="lamp" data-type="lamp" data-resistance="2" ondragstart="dragComponent(event)">
-      <div class="component-icon"><i class="bx bx-bulb" aria-hidden="true"></i></div>
-      <div>
-        <div class="component-name">Lamp LED</div>
-        <div class="component-spec">Tol: 1.5–2.0A</div>
-      </div>
-      <div class="component-badge">LED</div>
-    </div>
+                    <div
+                      class="component-block"
+                      draggable="true"
+                      data-component-id="lamp"
+                      data-type="lamp"
+                      data-resistance="2"
+                      ondragstart="dragComponent(event)"
+                    >
+                      <div class="component-icon">
+                        <i class="bx bx-bulb" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        <div class="component-name">Lamp LED</div>
+                        <div class="component-spec">Tol: 1.5–2.0A</div>
+                      </div>
+                      <div class="component-badge">LED</div>
+                    </div>
 
-    <div class="component-block" draggable="true" data-component-id="switch" data-type="switch" ondragstart="dragComponent(event)">
-      <div class="component-icon"><i class="bx bx-power-off" aria-hidden="true"></i></div>
-      <div>
-        <div class="component-name">Switch</div>
-        <div class="component-spec">On / Off</div>
-      </div>
-      <div class="component-badge">SW</div>
-    </div>
+                    <div
+                      class="component-block"
+                      draggable="true"
+                      data-component-id="switch"
+                      data-type="switch"
+                      ondragstart="dragComponent(event)"
+                    >
+                      <div class="component-icon">
+                        <i class="bx bx-power-off" aria-hidden="true"></i>
+                      </div>
+                      <div>
+                        <div class="component-name">Switch</div>
+                        <div class="component-spec">On / Off</div>
+                      </div>
+                      <div class="component-badge">SW</div>
+                    </div>
 
-    <div style="margin-top:12px;padding:10px;background:var(--bg);border:1px solid var(--border);font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);line-height:1.8;">
-      <i class="bx bx-bulb" aria-hidden="true"></i> TIP: Drag components onto the grid.<br>
-      Arrange: Battery → Resistor(s) → Lamp<br>
-      Target: V/R_total = 1.5A – 2.0A
-    </div>
-  </div>
+                    <div
+                      style="
+                        margin-top: 12px;
+                        padding: 10px;
+                        background: var(--bg);
+                        border: 1px solid var(--border);
+                        font-family: &quot;Space Mono&quot;, monospace;
+                        font-size: 9px;
+                        color: var(--text-dim);
+                        line-height: 1.8;
+                      "
+                    >
+                      <i class="bx bx-bulb" aria-hidden="true"></i> TIP: Drag
+                      components onto the grid.<br />
+                      Arrange: Battery → Resistor(s) → Lamp<br />
+                      Target: V/R_total = 1.5A – 2.0A
+                    </div>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        Circuit Grid
   -------------------------------------------------- -->
-  <div class="circuit-grid-area">
-    <div class="card" style="padding:12px 16px 8px;display:flex;align-items:center;gap:12px;">
-      <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text-dim);">CIRCUIT GRID — Drag & drop components here</div>
-    </div>
-    <div class="card circuit-canvas-wrap" id="circuitGrid">
-      <!-- --------------------------------------------------
+                  <div class="circuit-grid-area">
+                    <div
+                      class="card"
+                      style="
+                        padding: 12px 16px 8px;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                      "
+                    >
+                      <div
+                        style="
+                          font-family: &quot;Space Mono&quot;, monospace;
+                          font-size: 10px;
+                          color: var(--text-dim);
+                        "
+                      >
+                        CIRCUIT GRID — Drag & drop components here
+                      </div>
+                    </div>
+                    <div class="card circuit-canvas-wrap" id="circuitGrid">
+                      <!-- --------------------------------------------------
            6x4 = 24 cells generated by JS
       -------------------------------------------------- -->
-    </div>
+                    </div>
 
-    <div class="card ohm-panel">
-      <div class="ohm-formula">V = I × R &nbsp;|&nbsp; <span id="ohm-equation">9V = ? × ?Ω</span></div>
-      <div class="ohm-values">
-        <div class="ohm-val-box">
-          <div class="ohm-val-num" id="volt-val" style="color:var(--neon-yellow)">9</div>
-          <div class="ohm-val-unit">VOLTAGE (V)</div>
-        </div>
-        <div class="ohm-val-box">
-          <div class="ohm-val-num" id="resist-val" style="color:var(--neon-orange)">—</div>
-          <div class="ohm-val-unit">RESISTANCE (Ω)</div>
-        </div>
-        <div class="ohm-val-box">
-          <div class="ohm-val-num" id="current-val" style="color:var(--neon-blue)">—</div>
-          <div class="ohm-val-unit">CURRENT (A)</div>
-        </div>
-      </div>
-    </div>
-  </div>
+                    <div class="card ohm-panel">
+                      <div class="ohm-formula">
+                        V = I × R &nbsp;|&nbsp;
+                        <span id="ohm-equation">9V = ? × ?Ω</span>
+                      </div>
+                      <div class="ohm-values">
+                        <div class="ohm-val-box">
+                          <div
+                            class="ohm-val-num"
+                            id="volt-val"
+                            style="color: var(--neon-yellow)"
+                          >
+                            9
+                          </div>
+                          <div class="ohm-val-unit">VOLTAGE (V)</div>
+                        </div>
+                        <div class="ohm-val-box">
+                          <div
+                            class="ohm-val-num"
+                            id="resist-val"
+                            style="color: var(--neon-orange)"
+                          >
+                            —
+                          </div>
+                          <div class="ohm-val-unit">RESISTANCE (Ω)</div>
+                        </div>
+                        <div class="ohm-val-box">
+                          <div
+                            class="ohm-val-num"
+                            id="current-val"
+                            style="color: var(--neon-blue)"
+                          >
+                            —
+                          </div>
+                          <div class="ohm-val-unit">CURRENT (A)</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        Physics Status
   -------------------------------------------------- -->
-  <div class="phys-status">
-    <div class="card oscilloscope">
-      <div class="card-title"><div class="dot" style="background:var(--neon-green);box-shadow:0 0 8px var(--neon-green);"></div>OSCILLOSCOPE</div>
-      <div class="osc-screen" id="oscScreen">
-        <!-- --------------------------------------------------
+                  <div class="phys-status">
+                    <div class="card oscilloscope">
+                      <div class="card-title">
+                        <div
+                          class="dot"
+                          style="
+                            background: var(--neon-green);
+                            box-shadow: 0 0 8px var(--neon-green);
+                          "
+                        ></div>
+                        OSCILLOSCOPE
+                      </div>
+                      <div class="osc-screen" id="oscScreen">
+                        <!-- --------------------------------------------------
              H grid lines
         -------------------------------------------------- -->
-        <div class="osc-grid-line" style="width:100%;height:1px;top:25%;left:0"></div>
-        <div class="osc-grid-line" style="width:100%;height:1px;top:50%;left:0"></div>
-        <div class="osc-grid-line" style="width:100%;height:1px;top:75%;left:0"></div>
-        <!-- --------------------------------------------------
+                        <div
+                          class="osc-grid-line"
+                          style="width: 100%; height: 1px; top: 25%; left: 0"
+                        ></div>
+                        <div
+                          class="osc-grid-line"
+                          style="width: 100%; height: 1px; top: 50%; left: 0"
+                        ></div>
+                        <div
+                          class="osc-grid-line"
+                          style="width: 100%; height: 1px; top: 75%; left: 0"
+                        ></div>
+                        <!-- --------------------------------------------------
              V grid lines
         -------------------------------------------------- -->
-        <div class="osc-grid-line" style="height:100%;width:1px;left:25%;top:0"></div>
-        <div class="osc-grid-line" style="height:100%;width:1px;left:50%;top:0"></div>
-        <div class="osc-grid-line" style="height:100%;width:1px;left:75%;top:0"></div>
-        <svg id="oscWave" style="position:absolute;inset:0;width:100%;height:100%"></svg>
-      </div>
-      <div class="osc-label" id="oscStatus">// STANDBY — Activate circuit to see waveform</div>
-    </div>
+                        <div
+                          class="osc-grid-line"
+                          style="height: 100%; width: 1px; left: 25%; top: 0"
+                        ></div>
+                        <div
+                          class="osc-grid-line"
+                          style="height: 100%; width: 1px; left: 50%; top: 0"
+                        ></div>
+                        <div
+                          class="osc-grid-line"
+                          style="height: 100%; width: 1px; left: 75%; top: 0"
+                        ></div>
+                        <svg
+                          id="oscWave"
+                          style="
+                            position: absolute;
+                            inset: 0;
+                            width: 100%;
+                            height: 100%;
+                          "
+                        ></svg>
+                      </div>
+                      <div class="osc-label" id="oscStatus">
+                        // STANDBY — Activate circuit to see waveform
+                      </div>
+                    </div>
 
-    <div class="card lamp-display">
-      <div class="card-title"><div class="dot" style="background:var(--neon-yellow);box-shadow:0 0 8px var(--neon-yellow);"></div>LAMP STATUS</div>
-      <div class="lamp-icon" id="lampIcon"><i class="bx bx-bulb" aria-hidden="true"></i></div>
-      <div class="lamp-status" id="lampStatus" style="color:var(--text-dim)">CIRCUIT INACTIVE</div>
-      <div style="margin-top:8px;font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);">Tolerance: 1.5A – 2.0A</div>
-    </div>
+                    <div class="card lamp-display">
+                      <div class="card-title">
+                        <div
+                          class="dot"
+                          style="
+                            background: var(--neon-yellow);
+                            box-shadow: 0 0 8px var(--neon-yellow);
+                          "
+                        ></div>
+                        LAMP STATUS
+                      </div>
+                      <div class="lamp-icon" id="lampIcon">
+                        <i class="bx bx-bulb" aria-hidden="true"></i>
+                      </div>
+                      <div
+                        class="lamp-status"
+                        id="lampStatus"
+                        style="color: var(--text-dim)"
+                      >
+                        CIRCUIT INACTIVE
+                      </div>
+                      <div
+                        style="
+                          margin-top: 8px;
+                          font-family: &quot;Space Mono&quot;, monospace;
+                          font-size: 9px;
+                          color: var(--text-dim);
+                        "
+                      >
+                        Tolerance: 1.5A – 2.0A
+                      </div>
+                    </div>
 
-    <button class="circuit-switch-btn" id="circuitSwitch" onclick="toggleCircuit()"><i class="bx bx-bolt-circle" aria-hidden="true"></i> ACTIVATE CIRCUIT</button>
-    <button class="reset-btn" onclick="resetPhysicsChallenge()" style="width:100%;padding:12px;"><i class="bx bx-reset" aria-hidden="true"></i> RESET CIRCUIT</button>
-  </div>
+                    <button
+                      class="circuit-switch-btn"
+                      id="circuitSwitch"
+                      onclick="toggleCircuit()"
+                    >
+                      <i class="bx bx-bolt-circle" aria-hidden="true"></i>
+                      ACTIVATE CIRCUIT
+                    </button>
+                    <button
+                      class="reset-btn"
+                      onclick="resetPhysicsChallenge()"
+                      style="width: 100%; padding: 12px"
+                    >
+                      <i class="bx bx-reset" aria-hidden="true"></i> RESET
+                      CIRCUIT
+                    </button>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        End Physics Lab
   -------------------------------------------------- -->
-</div>
+                </div>
 
-<!-- --------------------------------------------------
+                <!-- --------------------------------------------------
      LAB 3: BIOLOGY
 -------------------------------------------------- -->
-<div class="lab-panel" id="lab-bio" data-lab="bio">
+                <div class="lab-panel" id="lab-bio" data-lab="bio">
+                  <div class="mission-header">
+                    <div class="mission-icon">
+                      <i class="bx bx-scan" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                      <div class="mission-title">
+                        THE ANATOMY DETECTIVE — VIRTUAL PATIENT DIAGNOSIS
+                      </div>
+                      <div class="mission-desc">
+                        // OBJECTIVE: Place all organs correctly and diagnose 3
+                        patient complaints
+                      </div>
+                    </div>
+                    <div class="mission-spacer"></div>
+                    <div>
+                      <div
+                        style="
+                          font-family: &quot;Space Mono&quot;, monospace;
+                          font-size: 9px;
+                          color: var(--text-dim);
+                          letter-spacing: 2px;
+                          margin-bottom: 4px;
+                        "
+                      >
+                        TIME REMAINING
+                      </div>
+                      <div class="mission-timer" id="bio-timer">04:00</div>
+                    </div>
+                  </div>
 
-  <div class="mission-header">
-    <div class="mission-icon"><i class="bx bx-scan" aria-hidden="true"></i></div>
-    <div>
-      <div class="mission-title">THE ANATOMY DETECTIVE — VIRTUAL PATIENT DIAGNOSIS</div>
-      <div class="mission-desc">// OBJECTIVE: Place all organs correctly and diagnose 3 patient complaints</div>
-    </div>
-    <div class="mission-spacer"></div>
-    <div>
-      <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:2px;margin-bottom:4px;">TIME REMAINING</div>
-      <div class="mission-timer" id="bio-timer">04:00</div>
-    </div>
-  </div>
-
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        Anatomy Area
   -------------------------------------------------- -->
-  <div class="anatomy-area">
-    <div class="card body-canvas-wrap active-scan" ondragover="allowDrop(event)" ondrop="dropOrganNearZone(event)">
-      <div style="position:absolute;top:16px;left:16px;font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:2px;">ANATOMY VIEW — PATIENT #001</div>
+                  <div class="anatomy-area">
+                    <div
+                      class="card body-canvas-wrap active-scan"
+                      ondragover="allowDrop(event)"
+                      ondrop="dropOrganNearZone(event)"
+                    >
+                      <div
+                        style="
+                          position: absolute;
+                          top: 16px;
+                          left: 16px;
+                          font-family: &quot;Space Mono&quot;, monospace;
+                          font-size: 9px;
+                          color: var(--text-dim);
+                          letter-spacing: 2px;
+                        "
+                      >
+                        ANATOMY VIEW — PATIENT #001
+                      </div>
 
-      <div class="body-silhouette" id="bodySilhouette">
-        <div class="body-head"></div>
-        <div class="body-outline">
-          <div class="drop-zone" id="dz-brain" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'brain')"><i class="bx bx-brain" aria-hidden="true"></i></div>
-          <div class="drop-zone" id="dz-lung-l" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'lung-l')"><i class="bx bx-wind" aria-hidden="true"></i></div>
-          <div class="drop-zone" id="dz-lung-r" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'lung-r')"><i class="bx bx-wind" aria-hidden="true"></i></div>
-          <div class="drop-zone" id="dz-heart" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'heart')"><i class="bx bx-heart" aria-hidden="true"></i></div>
-          <div class="drop-zone" id="dz-stomach" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'stomach')"><i class="bx bx-capsule" aria-hidden="true"></i></div>
-        </div>
-      </div>
+                      <div class="body-silhouette" id="bodySilhouette">
+                        <div class="body-head"></div>
+                        <div class="body-outline">
+                          <div
+                            class="drop-zone"
+                            id="dz-brain"
+                            ondragover="allowDrop(event)"
+                            ondrop="dropOrgan(event, 'brain')"
+                          >
+                            <i class="bx bx-brain" aria-hidden="true"></i>
+                          </div>
+                          <div
+                            class="drop-zone"
+                            id="dz-lung-l"
+                            ondragover="allowDrop(event)"
+                            ondrop="dropOrgan(event, 'lung-l')"
+                          >
+                            <i class="bx bx-wind" aria-hidden="true"></i>
+                          </div>
+                          <div
+                            class="drop-zone"
+                            id="dz-lung-r"
+                            ondragover="allowDrop(event)"
+                            ondrop="dropOrgan(event, 'lung-r')"
+                          >
+                            <i class="bx bx-wind" aria-hidden="true"></i>
+                          </div>
+                          <div
+                            class="drop-zone"
+                            id="dz-heart"
+                            ondragover="allowDrop(event)"
+                            ondrop="dropOrgan(event, 'heart')"
+                          >
+                            <i class="bx bx-heart" aria-hidden="true"></i>
+                          </div>
+                          <div
+                            class="drop-zone"
+                            id="dz-stomach"
+                            ondragover="allowDrop(event)"
+                            ondrop="dropOrgan(event, 'stomach')"
+                          >
+                            <i class="bx bx-capsule" aria-hidden="true"></i>
+                          </div>
+                        </div>
+                      </div>
 
-      <div style="position:absolute;bottom:16px;right:16px;font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);">
-        <div>ORGANS PLACED: <span id="organs-placed" style="color:var(--neon-green)">0</span>/5</div>
-        <div>MISTAKES: <span id="mistake-count" style="color:var(--neon-red)">0</span>/3</div>
-      </div>
-    </div>
+                      <div
+                        style="
+                          position: absolute;
+                          bottom: 16px;
+                          right: 16px;
+                          font-family: &quot;Space Mono&quot;, monospace;
+                          font-size: 9px;
+                          color: var(--text-dim);
+                        "
+                      >
+                        <div>
+                          ORGANS PLACED:
+                          <span
+                            id="organs-placed"
+                            style="color: var(--neon-green)"
+                            >0</span
+                          >/5
+                        </div>
+                        <div>
+                          MISTAKES:
+                          <span
+                            id="mistake-count"
+                            style="color: var(--neon-red)"
+                            >0</span
+                          >/3
+                        </div>
+                      </div>
+                    </div>
 
-    <!-- --------------------------------------------------
+                    <!-- --------------------------------------------------
          Organs Tray
     -------------------------------------------------- -->
-    <div class="card organs-tray">
-      <div class="organ-item" id="organ-heart" draggable="true" data-organ="heart" ondragstart="dragOrgan(event)" ondragend="endOrganDrag()">
-        <div class="organ-emoji"><i class="bx bx-heart" aria-hidden="true"></i></div>
-        <div class="organ-label">HEART</div>
-      </div>
-      <div class="organ-item" id="organ-lung-l" draggable="true" data-organ="lung-l" ondragstart="dragOrgan(event)" ondragend="endOrganDrag()">
-        <div class="organ-emoji"><i class="bx bx-wind" aria-hidden="true"></i></div>
-        <div class="organ-label">LEFT LUNG</div>
-      </div>
-      <div class="organ-item" id="organ-lung-r" draggable="true" data-organ="lung-r" ondragstart="dragOrgan(event)" ondragend="endOrganDrag()">
-        <div class="organ-emoji"><i class="bx bx-wind" aria-hidden="true"></i></div>
-        <div class="organ-label">RIGHT LUNG</div>
-      </div>
-      <div class="organ-item" id="organ-stomach" draggable="true" data-organ="stomach" ondragstart="dragOrgan(event)" ondragend="endOrganDrag()">
-        <div class="organ-emoji"><i class="bx bx-capsule" aria-hidden="true"></i></div>
-        <div class="organ-label">STOMACH</div>
-      </div>
-      <div class="organ-item" id="organ-brain" draggable="true" data-organ="brain" ondragstart="dragOrgan(event)" ondragend="endOrganDrag()">
-        <div class="organ-emoji"><i class="bx bx-brain" aria-hidden="true"></i></div>
-        <div class="organ-label">BRAIN</div>
-      </div>
-    </div>
-  </div>
+                    <div class="card organs-tray">
+                      <div
+                        class="organ-item"
+                        id="organ-heart"
+                        draggable="true"
+                        data-organ="heart"
+                        ondragstart="dragOrgan(event)"
+                        ondragend="endOrganDrag()"
+                      >
+                        <div class="organ-emoji">
+                          <i class="bx bx-heart" aria-hidden="true"></i>
+                        </div>
+                        <div class="organ-label">HEART</div>
+                      </div>
+                      <div
+                        class="organ-item"
+                        id="organ-lung-l"
+                        draggable="true"
+                        data-organ="lung-l"
+                        ondragstart="dragOrgan(event)"
+                        ondragend="endOrganDrag()"
+                      >
+                        <div class="organ-emoji">
+                          <i class="bx bx-wind" aria-hidden="true"></i>
+                        </div>
+                        <div class="organ-label">LEFT LUNG</div>
+                      </div>
+                      <div
+                        class="organ-item"
+                        id="organ-lung-r"
+                        draggable="true"
+                        data-organ="lung-r"
+                        ondragstart="dragOrgan(event)"
+                        ondragend="endOrganDrag()"
+                      >
+                        <div class="organ-emoji">
+                          <i class="bx bx-wind" aria-hidden="true"></i>
+                        </div>
+                        <div class="organ-label">RIGHT LUNG</div>
+                      </div>
+                      <div
+                        class="organ-item"
+                        id="organ-stomach"
+                        draggable="true"
+                        data-organ="stomach"
+                        ondragstart="dragOrgan(event)"
+                        ondragend="endOrganDrag()"
+                      >
+                        <div class="organ-emoji">
+                          <i class="bx bx-capsule" aria-hidden="true"></i>
+                        </div>
+                        <div class="organ-label">STOMACH</div>
+                      </div>
+                      <div
+                        class="organ-item"
+                        id="organ-brain"
+                        draggable="true"
+                        data-organ="brain"
+                        ondragstart="dragOrgan(event)"
+                        ondragend="endOrganDrag()"
+                      >
+                        <div class="organ-emoji">
+                          <i class="bx bx-brain" aria-hidden="true"></i>
+                        </div>
+                        <div class="organ-label">BRAIN</div>
+                      </div>
+                    </div>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        Diagnosis Panel
   -------------------------------------------------- -->
-  <div class="diagnosis-panel">
-    <div class="card patient-card">
-      <div class="patient-avatar"><i class="bx bx-clinic" aria-hidden="true"></i></div>
-      <div class="patient-name">PATIENT: BUDI SANTOSO</div>
-      <div class="patient-age">AGE: 45 YEARS | ID: PT-0042</div>
-      <div class="vital-row"><span class="vital-name">HEART RATE</span><span class="vital-val abnormal" id="bio-hr">112 BPM ↑</span></div>
-      <div class="vital-row"><span class="vital-name">O₂ SATURATION</span><span class="vital-val abnormal" id="bio-o2">88% ↓</span></div>
-      <div class="vital-row"><span class="vital-name">BLOOD PRESSURE</span><span class="vital-val normal">128/84 mmHg</span></div>
-      <div class="vital-row"><span class="vital-name">TEMPERATURE</span><span class="vital-val abnormal">38.9°C ↑</span></div>
-      <div class="vital-row"><span class="vital-name">RESPIRATORY</span><span class="vital-val abnormal">26/min ↑</span></div>
-    </div>
+                  <div class="diagnosis-panel">
+                    <div class="card patient-card">
+                      <div class="patient-avatar">
+                        <i class="bx bx-clinic" aria-hidden="true"></i>
+                      </div>
+                      <div class="patient-name">PATIENT: BUDI SANTOSO</div>
+                      <div class="patient-age">AGE: 45 YEARS | ID: PT-0042</div>
+                      <div class="vital-row">
+                        <span class="vital-name">HEART RATE</span
+                        ><span class="vital-val abnormal" id="bio-hr"
+                          >112 BPM ↑</span
+                        >
+                      </div>
+                      <div class="vital-row">
+                        <span class="vital-name">O₂ SATURATION</span
+                        ><span class="vital-val abnormal" id="bio-o2"
+                          >88% ↓</span
+                        >
+                      </div>
+                      <div class="vital-row">
+                        <span class="vital-name">BLOOD PRESSURE</span
+                        ><span class="vital-val normal">128/84 mmHg</span>
+                      </div>
+                      <div class="vital-row">
+                        <span class="vital-name">TEMPERATURE</span
+                        ><span class="vital-val abnormal">38.9°C ↑</span>
+                      </div>
+                      <div class="vital-row">
+                        <span class="vital-name">RESPIRATORY</span
+                        ><span class="vital-val abnormal">26/min ↑</span>
+                      </div>
+                    </div>
 
-    <div class="card observation-log">
-      <div class="card-title"><div class="dot" style="background:var(--neon-purple);box-shadow:0 0 8px var(--neon-purple);"></div>OBSERVATION LOG</div>
+                    <div class="card observation-log">
+                      <div class="card-title">
+                        <div
+                          class="dot"
+                          style="
+                            background: var(--neon-purple);
+                            box-shadow: 0 0 8px var(--neon-purple);
+                          "
+                        ></div>
+                        OBSERVATION LOG
+                      </div>
 
-      <div class="complaint-item active-complaint" id="complaint-1" data-organ="lung-l" onclick="scanComplaint(1,'lung-l')">
-        <div class="complaint-icon"><i class="bx bx-wind" aria-hidden="true"></i></div>
-        <div class="complaint-text">"Severe shortness of breath, difficulty breathing for 2 days"</div>
-        <div class="complaint-status" id="cs-1"><i class="bx bx-search" aria-hidden="true"></i></div>
-      </div>
-      <div class="complaint-item" id="complaint-2" data-organ="heart" onclick="scanComplaint(2,'heart')">
-        <div class="complaint-icon"><i class="bx bx-heart" aria-hidden="true"></i></div>
-        <div class="complaint-text">"Left-sided chest pain, irregular heartbeat"</div>
-        <div class="complaint-status" id="cs-2"><i class="bx bx-search" aria-hidden="true"></i></div>
-      </div>
-      <div class="complaint-item" id="complaint-3" data-organ="stomach" onclick="scanComplaint(3,'stomach')">
-        <div class="complaint-icon"><i class="bx bx-sad" aria-hidden="true"></i></div>
-        <div class="complaint-text">"Severe nausea and upper abdominal pain after eating"</div>
-        <div class="complaint-status" id="cs-3"><i class="bx bx-search" aria-hidden="true"></i></div>
-      </div>
+                      <div
+                        class="complaint-item active-complaint"
+                        id="complaint-1"
+                        data-organ="lung-l"
+                        onclick="scanComplaint(1, 'lung-l')"
+                      >
+                        <div class="complaint-icon">
+                          <i class="bx bx-wind" aria-hidden="true"></i>
+                        </div>
+                        <div class="complaint-text">
+                          "Severe shortness of breath, difficulty breathing for
+                          2 days"
+                        </div>
+                        <div class="complaint-status" id="cs-1">
+                          <i class="bx bx-search" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                      <div
+                        class="complaint-item"
+                        id="complaint-2"
+                        data-organ="heart"
+                        onclick="scanComplaint(2, 'heart')"
+                      >
+                        <div class="complaint-icon">
+                          <i class="bx bx-heart" aria-hidden="true"></i>
+                        </div>
+                        <div class="complaint-text">
+                          "Left-sided chest pain, irregular heartbeat"
+                        </div>
+                        <div class="complaint-status" id="cs-2">
+                          <i class="bx bx-search" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                      <div
+                        class="complaint-item"
+                        id="complaint-3"
+                        data-organ="stomach"
+                        onclick="scanComplaint(3, 'stomach')"
+                      >
+                        <div class="complaint-icon">
+                          <i class="bx bx-sad" aria-hidden="true"></i>
+                        </div>
+                        <div class="complaint-text">
+                          "Severe nausea and upper abdominal pain after eating"
+                        </div>
+                        <div class="complaint-status" id="cs-3">
+                          <i class="bx bx-search" aria-hidden="true"></i>
+                        </div>
+                      </div>
 
-      <button class="scan-btn" onclick="activateScanTool()"><i class="bx bx-scan" aria-hidden="true"></i> ACTIVATE SCAN TOOL</button>
-    </div>
-  </div>
+                      <button class="scan-btn" onclick="activateScanTool()">
+                        <i class="bx bx-scan" aria-hidden="true"></i> ACTIVATE
+                        SCAN TOOL
+                      </button>
+                    </div>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        Bio Status
   -------------------------------------------------- -->
-  <div class="bio-status">
-    <div class="card" style="padding:20px;">
-      <div class="card-title"><div class="dot" style="background:var(--neon-purple);box-shadow:0 0 8px var(--neon-purple);"></div>MISSION PROGRESS</div>
-      <div class="progress-ring-wrap">
-        <svg width="120" height="120" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r="48" fill="none" stroke="var(--border)" stroke-width="8"/>
-          <circle id="bioProgress" cx="60" cy="60" r="48" fill="none" stroke="var(--neon-purple)"
-            stroke-width="8" stroke-linecap="round"
-            stroke-dasharray="301.6" stroke-dashoffset="301.6"
-            class="progress-ring progress-ring-circle"
-            transform="rotate(-90 60 60)"/>
-          <text x="60" y="56" text-anchor="middle" fill="var(--text-bright)" font-family="'Bebas Neue',sans-serif" font-size="24" id="progressText">0%</text>
-          <text x="60" y="72" text-anchor="middle" fill="var(--text-dim)" font-family="'Space Mono',monospace" font-size="8">COMPLETE</text>
-        </svg>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div style="background:var(--bg);border:1px solid var(--border);padding:10px;text-align:center;">
-          <div class="stat-label">ORGANS</div>
-          <div class="stat-value" id="organs-placed2" style="color:var(--neon-purple);">0/5</div>
-        </div>
-        <div style="background:var(--bg);border:1px solid var(--border);padding:10px;text-align:center;">
-          <div class="stat-label">DIAGNOSIS</div>
-          <div class="stat-value" id="diag-count" style="color:var(--neon-green);">0/3</div>
-        </div>
-      </div>
-    </div>
+                  <div class="bio-status">
+                    <div class="card" style="padding: 20px">
+                      <div class="card-title">
+                        <div
+                          class="dot"
+                          style="
+                            background: var(--neon-purple);
+                            box-shadow: 0 0 8px var(--neon-purple);
+                          "
+                        ></div>
+                        MISSION PROGRESS
+                      </div>
+                      <div class="progress-ring-wrap">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                          <circle
+                            cx="60"
+                            cy="60"
+                            r="48"
+                            fill="none"
+                            stroke="var(--border)"
+                            stroke-width="8"
+                          />
+                          <circle
+                            id="bioProgress"
+                            cx="60"
+                            cy="60"
+                            r="48"
+                            fill="none"
+                            stroke="var(--neon-purple)"
+                            stroke-width="8"
+                            stroke-linecap="round"
+                            stroke-dasharray="301.6"
+                            stroke-dashoffset="301.6"
+                            class="progress-ring progress-ring-circle"
+                            transform="rotate(-90 60 60)"
+                          />
+                          <text
+                            x="60"
+                            y="56"
+                            text-anchor="middle"
+                            fill="var(--text-bright)"
+                            font-family="'Bebas Neue',sans-serif"
+                            font-size="24"
+                            id="progressText"
+                          >
+                            0%
+                          </text>
+                          <text
+                            x="60"
+                            y="72"
+                            text-anchor="middle"
+                            fill="var(--text-dim)"
+                            font-family="'Space Mono',monospace"
+                            font-size="8"
+                          >
+                            COMPLETE
+                          </text>
+                        </svg>
+                      </div>
+                      <div
+                        style="
+                          display: grid;
+                          grid-template-columns: 1fr 1fr;
+                          gap: 8px;
+                        "
+                      >
+                        <div
+                          style="
+                            background: var(--bg);
+                            border: 1px solid var(--border);
+                            padding: 10px;
+                            text-align: center;
+                          "
+                        >
+                          <div class="stat-label">ORGANS</div>
+                          <div
+                            class="stat-value"
+                            id="organs-placed2"
+                            style="color: var(--neon-purple)"
+                          >
+                            0/5
+                          </div>
+                        </div>
+                        <div
+                          style="
+                            background: var(--bg);
+                            border: 1px solid var(--border);
+                            padding: 10px;
+                            text-align: center;
+                          "
+                        >
+                          <div class="stat-label">DIAGNOSIS</div>
+                          <div
+                            class="stat-value"
+                            id="diag-count"
+                            style="color: var(--neon-green)"
+                          >
+                            0/3
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-    <div class="card" style="padding:16px;">
-      <div class="card-title"><div class="dot" style="background:var(--neon-red);box-shadow:0 0 8px var(--neon-red);"></div>MISTAKE TRACKER</div>
-      <div class="mistakes-counter">
-        <div class="mistake-dot" id="md-1"></div>
-        <div class="mistake-dot" id="md-2"></div>
-        <div class="mistake-dot" id="md-3"></div>
-      </div>
-      <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);text-align:center;margin-top:8px;">3 MISTAKES = MISSION FAILED</div>
-    </div>
+                    <div class="card" style="padding: 16px">
+                      <div class="card-title">
+                        <div
+                          class="dot"
+                          style="
+                            background: var(--neon-red);
+                            box-shadow: 0 0 8px var(--neon-red);
+                          "
+                        ></div>
+                        MISTAKE TRACKER
+                      </div>
+                      <div class="mistakes-counter">
+                        <div class="mistake-dot" id="md-1"></div>
+                        <div class="mistake-dot" id="md-2"></div>
+                        <div class="mistake-dot" id="md-3"></div>
+                      </div>
+                      <div
+                        style="
+                          font-family: &quot;Space Mono&quot;, monospace;
+                          font-size: 9px;
+                          color: var(--text-dim);
+                          text-align: center;
+                          margin-top: 8px;
+                        "
+                      >
+                        3 MISTAKES = MISSION FAILED
+                      </div>
+                    </div>
 
-    <div class="card" style="padding:16px;">
-      <div class="card-title"><div class="dot"></div>SCAN LOG</div>
-      <div id="scanLog" style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);line-height:1.8;max-height:140px;overflow-y:auto;">
-        <div>// Scan tool standby</div>
-        <div>// Select complaint to diagnose</div>
-      </div>
-    </div>
+                    <div class="card" style="padding: 16px">
+                      <div class="card-title">
+                        <div class="dot"></div>
+                        SCAN LOG
+                      </div>
+                      <div
+                        id="scanLog"
+                        style="
+                          font-family: &quot;Space Mono&quot;, monospace;
+                          font-size: 9px;
+                          color: var(--text-dim);
+                          line-height: 1.8;
+                          max-height: 140px;
+                          overflow-y: auto;
+                        "
+                      >
+                        <div>// Scan tool standby</div>
+                        <div>// Select complaint to diagnose</div>
+                      </div>
+                    </div>
 
-    <button class="reset-btn" onclick="resetBiologyChallenge()" style="width:100%;padding:12px;"><i class="bx bx-reset" aria-hidden="true"></i> RESET EXPERIMENT</button>
-  </div>
+                    <button
+                      class="reset-btn"
+                      onclick="resetBiologyChallenge()"
+                      style="width: 100%; padding: 12px"
+                    >
+                      <i class="bx bx-reset" aria-hidden="true"></i> RESET
+                      EXPERIMENT
+                    </button>
+                  </div>
 
-  <!-- --------------------------------------------------
+                  <!-- --------------------------------------------------
        End Biology Lab
   -------------------------------------------------- -->
-</div>
+                </div>
               </div>
             </section>
           </div>
