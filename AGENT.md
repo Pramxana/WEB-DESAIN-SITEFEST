@@ -27,29 +27,30 @@ WEB-DESAIN-SITEFEST/
 ├── physic.html
 ├── biology.html
 ├── challenge.html
-├── css/
-│   ├── global.css
-│   ├── landingpage.css
-│   ├── dashboard.css
-│   ├── chemistry.css
-│   ├── physic.css
-│   ├── biology.css
-│   ├── challenge.css
-│   └── boxicons.min.css
-├── js/
-│   ├── main.js
-│   ├── landingpage.js
-│   ├── dashboard.js
-│   ├── chemistry.js
-│   ├── physic.js
-│   ├── biology.js
-│   └── challenge.js
-├── fonts/
-│   ├── boxicons.eot
-│   ├── boxicons.svg
-│   ├── boxicons.ttf
-│   ├── boxicons.woff
-│   └── boxicons.woff2
+├── assets/
+│   ├── css/
+│   │   ├── global.css
+│   │   ├── landingpage.css
+│   │   ├── dashboard.css
+│   │   ├── chemistry.css
+│   │   ├── physic.css
+│   │   ├── biology.css
+│   │   ├── challenge.css
+│   │   └── boxicons.min.css
+│   ├── js/
+│   │   ├── main.js
+│   │   ├── landingpage.js
+│   │   ├── dashboard.js
+│   │   ├── chemistry.js
+│   │   ├── physic.js
+│   │   ├── biology.js
+│   │   └── challenge.js
+│   └── fonts/
+│       ├── boxicons.eot
+│       ├── boxicons.svg
+│       ├── boxicons.ttf
+│       ├── boxicons.woff
+│       └── boxicons.woff2
 ├── package.json
 ├── package-lock.json
 └── README.md
