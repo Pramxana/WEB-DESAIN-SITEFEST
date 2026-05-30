@@ -1,8 +1,10 @@
-// ============================================================
-//  main.js — shared utilities for all pages
-// ============================================================
+// --------------------------------------------------
+// main.JS — shared utilities for all pages
+// --------------------------------------------------
 
-// ── CUSTOM CURSOR ──
+// --------------------------------------------------
+// CUSTOM CURSOR
+// --------------------------------------------------
 (function () {
   const cursor = document.getElementById("cursor");
   const cursorDot = document.getElementById("cursorDot");

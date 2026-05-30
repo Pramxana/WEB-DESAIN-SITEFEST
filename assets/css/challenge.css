@@ -1,0 +1,1136 @@
+/* --------------------------------------------------
+   CHALLENGE.CSS - Challenge Mode page specific styles Shared shell, sidebar, topbar, cursor, grid, buttons, and base panels come from CSS/global.CSS.
+-------------------------------------------------- */
+
+body.challenge-page {
+  --active-challenge: var(--accent);
+  --active-challenge-rgb: var(--accent-rgb);
+  --bg: var(--background);
+  --bg2: var(--surface-alt);
+  --panel: var(--surface);
+  --panel2: var(--surface-raised);
+  --border: rgba(var(--primary-rgb), 0.22);
+  --border2: rgba(var(--accent-rgb), 0.28);
+  --neon-green: var(--secondary);
+  --neon-blue: var(--accent);
+  --neon-red: var(--danger);
+  --neon-yellow: var(--warning);
+  --neon-purple: var(--purple);
+  --neon-orange: var(--orange);
+  --text: rgba(var(--text-main-rgb), 0.78);
+  --text-dim: rgba(var(--text-muted-rgb), 0.62);
+  --text-bright: var(--white);
+  --glow-g: 0 0 18px rgba(var(--secondary-rgb), 0.32), 0 0 40px rgba(var(--secondary-rgb), 0.12);
+  --glow-b: 0 0 18px rgba(var(--accent-rgb), 0.3), 0 0 40px rgba(var(--accent-rgb), 0.1);
+  --glow-r: 0 0 18px rgba(var(--danger-rgb), 0.3), 0 0 40px rgba(var(--danger-rgb), 0.1);
+  --glow-p: 0 0 18px rgba(var(--purple-rgb), 0.3), 0 0 40px rgba(var(--purple-rgb), 0.1);
+  background: radial-gradient(circle at 50% 26%, rgba(var(--primary-rgb), 0.08), transparent 36rem), var(--background);
+  color: var(--text);
+  overflow: hidden;
+}
+
+body.challenge-page[data-challenge-mode="physics"] {
+  --active-challenge: var(--primary);
+  --active-challenge-rgb: var(--primary-rgb);
+}
+
+body.challenge-page[data-challenge-mode="biology"] {
+  --active-challenge: var(--secondary);
+  --active-challenge-rgb: var(--secondary-rgb);
+}
+
+.challenge-page .app,
+.challenge-page .main {
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.challenge-content {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.scan-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.14), transparent);
+  animation: scan 10s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes scan {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.module-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+  border-radius: var(--radius);
+  background: rgba(var(--primary-rgb), 0.1);
+  padding: 5px 14px;
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.module-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 5px var(--primary);
+  animation: blink 1.2s infinite;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.6vw, 2.3rem);
+  letter-spacing: 4px;
+  line-height: 1;
+  color: var(--white);
+}
+
+.page-title .t-cyan {
+  color: var(--yellow);
+  text-shadow: 0 0 16px rgba(var(--warning-rgb), 0.4);
+}
+
+.page-sub {
+  margin-top: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.5px;
+  color: rgba(var(--text-main-rgb), 0.42);
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.challenge-workspace {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.challenge-selector-panel {
+  position: static;
+  top: 76px;
+}
+
+.challenge-tabs {
+  display: grid;
+  gap: 8px;
+}
+
+.tab-btn.challenge-select-card {
+  --selector-theme: var(--primary);
+  --selector-theme-rgb: var(--primary-rgb);
+  width: 100%;
+  min-height: 76px;
+  border: 1px solid rgba(var(--primary-rgb), 0.16);
+  border-radius: var(--radius);
+  background: rgba(var(--primary-rgb), 0.04);
+  color: rgba(var(--text-main-rgb), 0.5);
+  cursor: none;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.tab-btn.challenge-select-card[data-tab="chem"] {
+  --selector-theme: var(--accent);
+  --selector-theme-rgb: var(--accent-rgb);
+}
+
+.tab-btn.challenge-select-card[data-tab="bio"] {
+  --selector-theme: var(--secondary);
+  --selector-theme-rgb: var(--secondary-rgb);
+}
+
+.tab-btn.challenge-select-card:hover {
+  background: rgba(var(--selector-theme-rgb), 0.1);
+  border-color: rgba(var(--selector-theme-rgb), 0.48);
+  transform: translateX(3px);
+}
+
+.tab-btn.challenge-select-card.active {
+  background: rgba(var(--selector-theme-rgb), 0.15);
+  border-color: var(--selector-theme);
+  color: var(--selector-theme);
+  box-shadow: inset 0 0 18px rgba(var(--selector-theme-rgb), 0.08), 0 0 16px rgba(var(--selector-theme-rgb), 0.18);
+}
+
+.challenge-select-icon {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(var(--primary-rgb), 0.25);
+  border-radius: var(--radius);
+  background: rgba(var(--primary-rgb), 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  font-size: 1rem;
+}
+
+.challenge-select-title {
+  display: block;
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.challenge-select-sub {
+  display: block;
+  margin-top: 4px;
+  color: rgba(var(--text-main-rgb), 0.38);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  line-height: 1.4;
+  letter-spacing: 0.4px;
+}
+
+.challenge-arena {
+  min-width: 0;
+}
+
+.lab-panel + .lab-panel {
+  margin-top: 16px;
+}
+/* --------------------------------------------------
+   MAIN LAYOUT
+-------------------------------------------------- */
+.challenge-stage { position: relative; z-index: 10; min-width: 0; }
+.lab-panel { --lab-theme: var(--primary); --lab-theme-rgb: var(--primary-rgb); display: none; min-width: 0; }
+.lab-panel.active { display: grid; }
+
+#lab-chem { --lab-theme: var(--accent); --lab-theme-rgb: var(--accent-rgb); }
+#lab-phys { --lab-theme: var(--primary); --lab-theme-rgb: var(--primary-rgb); }
+#lab-bio { --lab-theme: var(--secondary); --lab-theme-rgb: var(--secondary-rgb); }
+
+.lab-panel .card,
+.lab-panel .mission-header {
+  border-color: rgba(var(--lab-theme-rgb), 0.28);
+}
+
+.lab-panel .card::before {
+  background: linear-gradient(90deg, transparent, var(--lab-theme), transparent);
+}
+
+/* --------------------------------------------------
+   PANEL COMMON
+-------------------------------------------------- */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 20px;
+  position: relative;
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+  opacity: 0.4;
+}
+.card-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 3px;
+  color: var(--text-dim); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+}
+.card-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--neon-blue); box-shadow: var(--glow-b); }
+
+/* --------------------------------------------------
+   LAB 1: CHEMISTRY
+-------------------------------------------------- */
+#lab-chem { grid-template-columns: minmax(220px, 270px) minmax(390px, 1fr) minmax(220px, 250px); grid-template-rows: auto 1fr; gap: 16px; }
+
+/* --------------------------------------------------
+   Mission Header
+-------------------------------------------------- */
+.mission-header {
+  grid-column: 1 / -1;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex; align-items: center; gap: 20px;
+}
+.mission-icon { font-size: 28px; }
+.mission-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--text-bright); }
+.mission-desc { font-size: 12px; color: var(--text-dim); font-family: 'Space Mono', monospace; }
+.mission-spacer { flex: 1; }
+.mission-timer { font-family: 'Space Mono', monospace; font-size: 28px; color: var(--neon-yellow); text-shadow: 0 0 18px #ffe60060; letter-spacing: 4px; }
+.mission-timer.danger { color: var(--neon-red); text-shadow: var(--glow-r); animation: pulse 0.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* --------------------------------------------------
+   Compounds Panel
+-------------------------------------------------- */
+.compounds-panel { grid-column: 1; }
+.compound-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; margin-bottom: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: none; transition: all 0.2s;
+  user-select: none;
+}
+.compound-item:hover { border-color: var(--neon-blue); background: rgba(0,200,255,0.05); }
+.compound-item.selected { border-color: var(--neon-green); background: rgba(0,255,136,0.07); }
+.compound-icon { font-size: 22px; }
+.compound-info { flex: 1; }
+.compound-name { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--text-bright); font-weight: 700; }
+.compound-ph { font-size: 10px; color: var(--text-dim); }
+.compound-ph span { color: var(--neon-blue); }
+.add-btn {
+  padding: 6px 12px; font-family: 'Space Mono', monospace; font-size: 10px;
+  background: none; border: 1px solid var(--border2); color: var(--text-dim);
+  cursor: none; transition: all 0.2s; letter-spacing: 1px;
+}
+.add-btn:hover { border-color: var(--neon-green); color: var(--neon-green); text-shadow: var(--glow-g); }
+.add-btn:active { transform: scale(0.95); }
+
+/* --------------------------------------------------
+   Reaction Chamber
+-------------------------------------------------- */
+.reaction-chamber {
+  grid-column: 2; display: flex; flex-direction: column; gap: 12px;
+}
+.beaker-area {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--bg); border: 1px solid var(--border); padding: 20px; position: relative; min-height: 280px;
+}
+.beaker-svg { position: relative; }
+.beaker-container { position: relative; width: 180px; height: 240px; }
+.beaker-svg-el { width: 100%; height: 100%; }
+.liquid-fill {
+  position: absolute; bottom: 14px; left: 18px; right: 18px;
+  border-radius: 0 0 8px 8px;
+  transition: height 0.8s cubic-bezier(.4,0,.2,1), background 0.8s;
+  overflow: hidden;
+}
+.liquid-wave {
+  position: absolute; top: -8px; left: -10px; right: -10px; height: 16px;
+  background: inherit; border-radius: 50%;
+  animation: wave 2s ease-in-out infinite;
+}
+@keyframes wave { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.bubble {
+  position: absolute; border-radius: 50%; opacity: 0.6;
+  animation: rise 2s ease-in infinite;
+}
+@keyframes rise { 0%{transform:translateY(0);opacity:0.6} 100%{transform:translateY(-80px);opacity:0} }
+.ph-display {
+  position: absolute; top: 16px; right: 16px;
+  font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim);
+}
+.ph-value { font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1; }
+.smoke-particle {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  animation: smoke-rise 1.5s ease-out forwards;
+}
+@keyframes smoke-rise { 0%{opacity:0.8;transform:translateY(0) scale(1)} 100%{opacity:0;transform:translateY(-60px) scale(3)} }
+.beaker-container.shake { animation: shake 0.5s ease-in-out; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)} }
+
+/* --------------------------------------------------
+   Reaction Log
+-------------------------------------------------- */
+.reaction-log { background: var(--bg); border: 1px solid var(--border); padding: 14px; height: 110px; overflow-y: auto; }
+.reaction-log::-webkit-scrollbar { width: 4px; }
+.reaction-log::-webkit-scrollbar-track { background: transparent; }
+.reaction-log::-webkit-scrollbar-thumb { background: var(--border2); }
+.log-entry { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-dim); margin-bottom: 4px; }
+.log-entry.success { color: var(--neon-green); }
+.log-entry.error { color: var(--neon-red); }
+.log-entry.info { color: var(--neon-blue); }
+.log-time { color: var(--text-dim); margin-right: 8px; }
+
+/* --------------------------------------------------
+   Chemistry Status Panel
+-------------------------------------------------- */
+.status-panel { grid-column: 3; display: flex; flex-direction: column; gap: 12px; }
+.ph-meter-card { padding: 16px; }
+.ph-scale { position: relative; height: 180px; display: flex; flex-direction: column; }
+.ph-bar-track { flex: 1; width: 24px; border-radius: 12px; background: linear-gradient(to bottom, #ff3060, #ff7a00, #ffe600, #00ff88, #00c8ff, #b44aff); position: relative; margin: 0 auto; box-shadow: 0 0 20px rgba(0,200,255,0.2); }
+.ph-indicator { position: absolute; left: -16px; width: 56px; height: 3px; background: white; box-shadow: 0 0 8px white; transition: top 0.8s cubic-bezier(.4,0,.2,1); border-radius: 2px; }
+.ph-labels { position: absolute; right: -32px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text-dim); }
+.volume-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+.volume-fill { height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-green)); border-radius: 4px; transition: width 0.8s; }
+.stat-label { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+.stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 20px; }
+.reset-btn, .activate-btn {
+  width: 100%; padding: 12px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px;
+  border: 1px solid; cursor: none; background: none; text-transform: uppercase; transition: all 0.2s;
+}
+.activate-btn { border-color: var(--neon-green); color: var(--neon-green); }
+.activate-btn:hover { background: rgba(0,255,136,0.1); box-shadow: var(--glow-g); }
+.reset-btn { border-color: var(--border2); color: var(--text-dim); margin-top: 4px; }
+.reset-btn:hover { border-color: var(--neon-red); color: var(--neon-red); }
+
+/* --------------------------------------------------
+   LAB 2: PHYSICS
+-------------------------------------------------- */
+#lab-phys { grid-template-columns: minmax(200px, 240px) minmax(390px, 1fr) minmax(220px, 260px); grid-template-rows: auto 1fr; gap: 16px; }
+.circuit-components { grid-column: 1; }
+.component-block {
+  display: flex; align-items: center; gap: 12px; padding: 12px;
+  border: 1px solid var(--border); background: var(--bg); margin-bottom: 8px;
+  cursor: grab; transition: all 0.2s; user-select: none;
+}
+.component-block:hover { border-color: var(--neon-blue); background: rgba(0,200,255,0.05); transform: translateX(4px); }
+.component-block:active { cursor: grabbing; }
+.component-block.component-disabled {
+  opacity: 0.38;
+  filter: saturate(0.4);
+  border-color: rgba(var(--primary-rgb), 0.12);
+  background: rgba(var(--primary-rgb), 0.025);
+  cursor: default;
+}
+.component-block.component-disabled:hover {
+  border-color: rgba(var(--primary-rgb), 0.12);
+  background: rgba(var(--primary-rgb), 0.025);
+  box-shadow: none;
+  transform: none;
+}
+.component-block.component-disabled .component-name,
+.component-block.component-disabled .component-spec,
+.component-block.component-disabled .component-badge {
+  color: var(--text-dim);
+}
+.component-icon { font-size: 20px; }
+.component-name { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-bright); }
+.component-spec { font-size: 9px; color: var(--neon-blue); font-family: 'Space Mono', monospace; }
+.component-badge { font-family: 'Space Mono', monospace; font-size: 9px; padding: 2px 6px; border: 1px solid var(--border); color: var(--text-dim); margin-left: auto; }
+
+.circuit-grid-area { grid-column: 2; display: flex; flex-direction: column; gap: 12px; }
+.circuit-canvas-wrap {
+  flex: 1; background: var(--bg); border: 1px solid var(--border); position: relative; min-height: 300px;
+  display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(4, 1fr); gap: 2px; padding: 12px;
+}
+.circuit-cell {
+  border: 1px dashed rgba(0,200,255,0.1); display: flex; align-items: center; justify-content: center;
+  border-radius: 4px; transition: all 0.2s; position: relative; min-height: 60px;
+  font-size: 24px;
+}
+.circuit-cell.drag-over { border-color: var(--neon-blue); background: rgba(0,200,255,0.08); box-shadow: inset 0 0 12px rgba(0,200,255,0.1); }
+.circuit-cell.has-component { border-color: var(--border2); background: rgba(var(--text-main-rgb), 0.02); }
+.circuit-cell .cell-label { position: absolute; bottom: 2px; right: 4px; font-family: 'Space Mono', monospace; font-size: 8px; color: var(--text-dim); }
+.circuit-cell .remove-cell { position: absolute; top: 2px; right: 2px; font-size: 10px; cursor: none; opacity: 0; transition: opacity 0.2s; background: none; border: none; color: var(--neon-red); }
+.circuit-cell:hover .remove-cell { opacity: 1; }
+.wire-layer { position: absolute; inset: 0; pointer-events: none; }
+
+.ohm-panel { background: var(--bg); border: 1px solid var(--border); padding: 14px; }
+.ohm-formula { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); margin-bottom: 10px; text-align: center; }
+.ohm-formula span { color: var(--neon-yellow); font-weight: 700; }
+.ohm-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.ohm-val-box { text-align: center; background: var(--panel); border: 1px solid var(--border); padding: 10px 6px; }
+.ohm-val-num { font-family: 'Bebas Neue', sans-serif; font-size: 22px; }
+.ohm-val-unit { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text-dim); }
+
+.phys-status { grid-column: 3; display: flex; flex-direction: column; gap: 12px; }
+.oscilloscope {
+  background: #020d04; border: 1px solid var(--border); padding: 12px;
+  font-family: 'Space Mono', monospace;
+}
+.osc-screen {
+  width: 100%; height: 140px; background: #010a03; border: 1px solid #1a3020; position: relative; overflow: hidden;
+}
+.osc-grid-line { position: absolute; background: rgba(0,255,136,0.1); }
+.osc-wave { position: absolute; bottom: 0; left: 0; width: 200%; height: 100%; }
+.osc-label { font-size: 9px; color: #006020; margin-top: 6px; letter-spacing: 2px; }
+.lamp-display {
+  background: var(--bg); border: 1px solid var(--border); padding: 20px; text-align: center;
+}
+.lamp-icon { font-size: 48px; transition: all 0.5s; }
+.lamp-icon.on { filter: drop-shadow(0 0 20px #ffe600) drop-shadow(0 0 40px #ffe60080); animation: flicker 0.1s infinite; }
+@keyframes flicker { 0%,100%{opacity:1} 50%{opacity:0.92} }
+.lamp-icon.overload { animation: overload-shake 0.1s infinite; }
+@keyframes overload-shake { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
+.lamp-status { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; margin-top: 8px; }
+.circuit-switch-btn {
+  width: 100%; padding: 14px; font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 3px;
+  background: none; border: 1px solid var(--neon-blue); color: var(--neon-blue); cursor: none; transition: all 0.2s;
+}
+.circuit-switch-btn:hover { background: rgba(0,200,255,0.1); box-shadow: var(--glow-b); }
+.circuit-switch-btn.on { border-color: var(--neon-green); color: var(--neon-green); background: rgba(0,255,136,0.08); }
+
+/* --------------------------------------------------
+   LAB 3: BIOLOGY
+-------------------------------------------------- */
+#lab-bio { grid-template-columns: minmax(390px, 1fr) minmax(250px, 290px) minmax(220px, 250px); grid-template-rows: auto 1fr; gap: 16px; }
+.anatomy-area { grid-column: 1; display: flex; flex-direction: column; gap: 12px; }
+.body-canvas-wrap {
+  flex: 1; background: var(--bg); border: 1px solid var(--border); position: relative;
+  display: flex; align-items: center; justify-content: center; min-height: 460px; overflow: hidden;
+}
+.body-silhouette { position: relative; width: 210px; height: 320px; }
+.body-outline {
+  width: 100%; height: 100%;
+  background: rgba(0,200,255,0.04);
+  border: 1px solid rgba(0,200,255,0.15);
+  border-radius: 60px 60px 30px 30px;
+  position: relative;
+}
+/* --------------------------------------------------
+   Head
+-------------------------------------------------- */
+.body-head {
+  width: 66px; height: 66px; border-radius: 50%;
+  border: 1px solid rgba(0,200,255,0.15);
+  background: rgba(0,200,255,0.04);
+  position: absolute; top: -68px; left: 50%; transform: translateX(-50%);
+}
+/* --------------------------------------------------
+   Drop zones
+-------------------------------------------------- */
+.drop-zone {
+  position: absolute; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 27px; transition: all 0.3s; border: 2px dashed rgba(var(--secondary-rgb), 0.28);
+  background: rgba(var(--secondary-rgb), 0.04);
+}
+.drop-zone.drop-ready { border-color: rgba(var(--secondary-rgb), 0.62); background: rgba(var(--secondary-rgb), 0.08); }
+.drop-zone.drop-match { border-color: var(--neon-green); background: rgba(var(--secondary-rgb), 0.16); box-shadow: var(--glow-g); }
+.drop-zone.drag-over { border-color: var(--neon-yellow); background: rgba(var(--warning-rgb), 0.12); box-shadow: 0 0 18px rgba(var(--warning-rgb), 0.28); }
+.drop-zone.correct { border-color: var(--neon-green); background: rgba(0,255,136,0.1); box-shadow: var(--glow-g); }
+.drop-zone.wrong { border-color: var(--neon-red); animation: bounce-back 0.5s ease; }
+.drop-zone.filled { border-color: var(--neon-green); background: rgba(0,255,136,0.08); }
+@keyframes bounce-back { 0%{transform:scale(1)} 30%{transform:scale(1.3)} 60%{transform:scale(0.9)} 100%{transform:scale(1)} }
+#dz-heart { width: 58px; height: 58px; top: 100px; left: 50%; transform: translateX(-50%); }
+#dz-lung-l { width: 58px; height: 68px; top: 70px; left: 18px; border-radius: 32px 14px 14px 32px; }
+#dz-lung-r { width: 58px; height: 68px; top: 70px; right: 18px; border-radius: 14px 32px 32px 14px; }
+#dz-stomach { width: 68px; height: 54px; top: 172px; left: 50%; transform: translateX(-50%); border-radius: 22px; }
+#dz-brain { width: 66px; height: 52px; top: -60px; left: 50%; transform: translateX(-50%); border-radius: 50%; }
+
+/* --------------------------------------------------
+   Organ draggables
+-------------------------------------------------- */
+.organs-tray {
+  background: var(--bg); border: 1px solid var(--border); padding: 14px;
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+}
+.organ-item {
+  width: 78px; height: 78px; border: 1px solid rgba(var(--secondary-rgb), 0.34); background: var(--panel);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: grab; border-radius: 8px; transition: all 0.2s; user-select: none;
+}
+.organ-item:hover { border-color: var(--neon-blue); transform: scale(1.05); box-shadow: var(--glow-b); }
+.organ-item:active { cursor: grabbing; transform: scale(0.95); }
+.organ-item.dragging { border-color: var(--neon-green); box-shadow: var(--glow-g); opacity: 0.72; }
+.organ-item.placed { opacity: 0.3; pointer-events: none; }
+.organ-emoji { font-size: 28px; }
+.organ-label { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--text-dim); margin-top: 4px; }
+
+/* --------------------------------------------------
+   Diagnosis Panel
+-------------------------------------------------- */
+.diagnosis-panel { grid-column: 2; display: flex; flex-direction: column; gap: 12px; }
+.patient-card { background: var(--bg); border: 1px solid var(--border); padding: 16px; }
+.patient-avatar { font-size: 40px; text-align: center; margin-bottom: 10px; }
+.patient-name { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; text-align: center; color: var(--text-bright); }
+.patient-age { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text-dim); text-align: center; margin-bottom: 14px; }
+.vital-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.vital-name { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text-dim); }
+.vital-val { font-family: 'Space Mono', monospace; font-size: 11px; }
+.vital-val.normal { color: var(--neon-green); }
+.vital-val.abnormal { color: var(--neon-red); animation: pulse 1s infinite; }
+
+.observation-log { background: var(--bg); border: 1px solid var(--border); padding: 14px; flex: 1; }
+.complaint-item {
+  padding: 10px; margin-bottom: 8px; border: 1px solid var(--border); background: var(--panel);
+  display: flex; align-items: center; gap: 10px; cursor: none;
+  transition: all 0.2s;
+}
+.complaint-item:hover { border-color: var(--neon-purple); background: rgba(180,74,255,0.05); }
+.complaint-item.diagnosed { border-color: var(--neon-green); background: rgba(0,255,136,0.05); }
+.complaint-item.active-complaint { border-color: var(--neon-yellow); background: rgba(255,230,0,0.05); animation: pulse 1s infinite; }
+.complaint-icon { font-size: 18px; }
+.complaint-text { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text); flex: 1; }
+.complaint-status { font-size: 12px; }
+.scan-btn {
+  width: 100%; padding: 12px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px;
+  border: 1px solid var(--neon-purple); color: var(--neon-purple); background: none; cursor: none; transition: all 0.2s;
+}
+.scan-btn:hover { background: rgba(180,74,255,0.1); box-shadow: var(--glow-p); }
+
+/* --------------------------------------------------
+   Locked challenge interactions
+-------------------------------------------------- */
+.challenge-locked .component-block,
+.challenge-locked .organ-item {
+  opacity: 0.46;
+  filter: saturate(0.55);
+}
+.challenge-locked .component-block:hover,
+.challenge-locked .organ-item:hover {
+  border-color: var(--border);
+  box-shadow: none;
+  transform: none;
+}
+.challenge-locked .circuit-switch-btn,
+.challenge-locked .scan-btn,
+#lab-chem.challenge-locked .add-btn,
+#lab-chem.challenge-locked .activate-btn {
+  opacity: 0.46;
+  filter: saturate(0.55);
+}
+#lab-chem.challenge-locked .add-btn:hover,
+#lab-chem.challenge-locked .activate-btn:hover {
+  border-color: var(--border2);
+  color: var(--text-dim);
+  box-shadow: none;
+  text-shadow: none;
+}
+#lab-chem.challenge-locked .add-btn:active {
+  transform: none;
+}
+
+/* --------------------------------------------------
+   Bio Status
+-------------------------------------------------- */
+.bio-status { grid-column: 3; display: flex; flex-direction: column; gap: 12px; }
+.progress-ring-wrap { display: flex; align-items: center; justify-content: center; padding: 16px; }
+.mistakes-counter { display: flex; gap: 8px; justify-content: center; padding: 12px 16px; flex-wrap: wrap; }
+.mistake-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border2); transition: all 0.3s; }
+.mistake-dot.used { background: var(--neon-red); border-color: var(--neon-red); box-shadow: var(--glow-r); }
+
+/* --------------------------------------------------
+   MODALS
+-------------------------------------------------- */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(var(--ink-rgb), 0.85);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.4s;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.show { opacity: 1; pointer-events: all; }
+.challenge-success-modal, .challenge-failed-modal {
+  background: var(--panel); border: 1px solid var(--border);
+  padding: 40px; text-align: center; max-width: 440px; width: 90%;
+  position: relative; animation: modal-in 0.5s cubic-bezier(.17,.67,.3,1.33);
+}
+@keyframes modal-in { from{transform:scale(0.7) translateY(30px)} to{transform:scale(1) translateY(0)} }
+.challenge-success-modal { border-color: var(--neon-green); box-shadow: 0 0 60px rgba(0,255,136,0.2); }
+.challenge-failed-modal { border-color: var(--neon-red); box-shadow: 0 0 60px rgba(255,48,96,0.2); }
+.modal-icon { font-size: 56px; margin-bottom: 16px; }
+.modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 4px; margin-bottom: 8px; }
+.modal-sub { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); margin-bottom: 24px; line-height: 1.8; }
+.badge-award { display: inline-block; padding: 10px 20px; border: 1px solid var(--neon-yellow); font-family: 'Space Mono', monospace; font-size: 12px; color: var(--neon-yellow); text-shadow: 0 0 18px #ffe60060; margin-bottom: 24px; letter-spacing: 2px; }
+.modal-btn {
+  padding: 14px 32px; font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 3px;
+  border: 1px solid; cursor: none; background: none; margin: 0 6px; transition: all 0.2s;
+}
+.modal-btn.primary { border-color: var(--neon-green); color: var(--neon-green); }
+.modal-btn.primary:hover { background: rgba(0,255,136,0.1); box-shadow: var(--glow-g); }
+.modal-btn.secondary { border-color: var(--border2); color: var(--text-dim); }
+.modal-btn.secondary:hover { border-color: var(--text); color: var(--text); }
+.modal-btn.danger { border-color: var(--neon-red); color: var(--neon-red); }
+.modal-btn.danger:hover { background: rgba(255,48,96,0.1); box-shadow: var(--glow-r); }
+
+/* --------------------------------------------------
+   Confetti
+-------------------------------------------------- */
+.confetti-piece {
+  position: fixed; width: 8px; height: 8px; pointer-events: none; z-index: 1001;
+  animation: confetti-fall linear forwards;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* --------------------------------------------------
+   SHARED UI
+-------------------------------------------------- */
+.progress-ring { transform: rotate(-90deg); }
+.progress-ring-circle { transition: stroke-dashoffset 0.8s cubic-bezier(.4,0,.2,1); }
+
+/* --------------------------------------------------
+   Scrollbar
+-------------------------------------------------- */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); }
+
+/* --------------------------------------------------
+   Scan line animation on active panels
+-------------------------------------------------- */
+.active-scan::after {
+  content: '';
+  position: absolute; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+  animation: scan 3s linear infinite;
+  pointer-events: none; top: 0;
+}
+@keyframes scan { 0%{top:0;opacity:1} 100%{top:100%;opacity:0} }
+
+/* --------------------------------------------------
+   Toast notifications
+-------------------------------------------------- */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 500;
+  background: var(--panel); border: 1px solid var(--border);
+  padding: 12px 20px; font-family: 'Space Mono', monospace; font-size: 11px;
+  transform: translateX(120%); transition: transform 0.4s cubic-bezier(.17,.67,.3,1.33);
+  max-width: 300px;
+}
+.toast.show { transform: translateX(0); }
+.toast.success { border-color: var(--neon-green); color: var(--neon-green); }
+.toast.error { border-color: var(--neon-red); color: var(--neon-red); }
+.toast.info { border-color: var(--neon-blue); color: var(--neon-blue); }
+
+.challenge-page .card {
+  border: 2px solid var(--border-c);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.challenge-page .card-title {
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+.mission-header {
+  border: 2px solid var(--border-c);
+  border-radius: var(--radius);
+  background: rgba(var(--primary-rgb), 0.05);
+}
+
+.mission-title {
+  font-family: var(--font-display);
+  color: var(--white);
+}
+
+.mission-desc,
+.stat-label,
+.log-entry,
+.compound-ph,
+.component-spec,
+.osc-label,
+.patient-age,
+.vital-row,
+.organ-label,
+.complaint-text {
+  font-family: var(--font-mono);
+}
+
+.beaker-area {
+  overflow: hidden;
+}
+
+.beaker-container {
+  position: relative;
+  width: 180px;
+  height: 240px;
+  overflow: visible;
+  filter: drop-shadow(0 0 18px rgba(var(--accent-rgb), 0.12));
+}
+
+.beaker-glow {
+  position: absolute;
+  inset: 24px 14px 0;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(var(--accent-rgb), 0.1), transparent 66%);
+  pointer-events: none;
+}
+
+.beaker-glass {
+  position: absolute;
+  z-index: 1;
+  left: 31px;
+  right: 31px;
+  top: 12px;
+  bottom: 14px;
+  overflow: hidden;
+  border-radius: 2px 2px 25px 25px;
+  clip-path: polygon(0 0, 100% 0, 100% 84%, 93% 94%, 80% 100%, 20% 100%, 7% 94%, 0 84%);
+  background: rgba(var(--primary-rgb), 0.035);
+}
+
+.beaker-svg-el {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.liquid-fill {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 100%;
+  min-height: 0;
+  border-radius: 0 0 22px 22px;
+  overflow: hidden;
+  transition: height 0.8s cubic-bezier(.4,0,.2,1), background 0.8s;
+  box-shadow: inset 0 10px 18px rgba(var(--text-main-rgb), 0.05), inset 0 -12px 18px rgba(var(--ink-rgb), 0.18);
+}
+
+.liquid-wave {
+  position: absolute;
+  top: -7px;
+  left: -15%;
+  width: 130%;
+  height: 18px;
+  border-radius: 50%;
+  animation: wave 2s ease-in-out infinite;
+}
+
+.bubble {
+  z-index: 2;
+}
+
+.activate-btn,
+.reset-btn,
+.circuit-switch-btn,
+.scan-btn,
+.modal-btn,
+.add-btn {
+  border-radius: var(--radius);
+}
+
+.toast {
+  background: var(--surface);
+  border: 2px solid var(--border-c);
+  border-radius: var(--radius);
+}
+
+.modal-overlay {
+  z-index: 10000;
+}
+
+@media (max-width: 1500px) {
+  .challenge-workspace {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  #lab-chem,
+  #lab-phys,
+  #lab-bio {
+    grid-template-columns: 1fr;
+  }
+
+  .mission-header,
+  .compounds-panel,
+  .reaction-chamber,
+  .status-panel,
+  .circuit-components,
+  .circuit-grid-area,
+  .phys-status,
+  .anatomy-area,
+  .diagnosis-panel,
+  .bio-status {
+    grid-column: 1 !important;
+  }
+}
+
+@media (max-width: 980px) {
+  body.challenge-page {
+    overflow: auto;
+  }
+
+  .challenge-page .app,
+  .challenge-page .main {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .page-header {
+    flex-direction: column;
+  }
+
+  .challenge-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-selector-panel {
+    position: relative;
+    top: 0;
+  }
+
+  .challenge-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* --------------------------------------------------
+   Result modal polish
+-------------------------------------------------- */
+.modal-overlay {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(var(--primary-rgb), 0.1), transparent 32rem),
+    rgba(0, 5, 12, 0.72);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 24px;
+}
+
+.challenge-success-modal,
+.challenge-failed-modal {
+  width: min(520px, calc(100vw - 48px));
+  max-width: 520px;
+  padding: 46px 46px 34px;
+  border: 2px solid rgba(var(--accent-rgb), 0.5);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(var(--primary-rgb), 0.1), rgba(var(--primary-rgb), 0.025)),
+    #06111f;
+  box-shadow:
+    0 0 0 1px rgba(var(--text-main-rgb), 0.02) inset,
+    0 0 44px rgba(var(--accent-rgb), 0.14),
+    0 28px 80px rgba(var(--ink-rgb), 0.58);
+  overflow: hidden;
+}
+
+.challenge-success-modal::before,
+.challenge-failed-modal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--green), transparent);
+  opacity: 0.9;
+}
+
+.challenge-success-modal::after,
+.challenge-failed-modal::after {
+  content: "MISSION RESULT";
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  border: 1px solid rgba(var(--accent-rgb), 0.18);
+  border-radius: 999px;
+  background: rgba(var(--primary-rgb), 0.08);
+  padding: 3px 8px;
+  color: rgba(var(--accent-rgb), 0.48);
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  letter-spacing: 1.4px;
+}
+
+.challenge-failed-modal {
+  border-color: rgba(var(--danger-rgb), 0.5);
+  box-shadow:
+    0 0 0 1px rgba(var(--text-main-rgb), 0.02) inset,
+    0 0 44px rgba(var(--danger-rgb), 0.13),
+    0 28px 80px rgba(var(--ink-rgb), 0.58);
+}
+
+.challenge-failed-modal::before {
+  background: linear-gradient(90deg, transparent, var(--red), var(--orange), transparent);
+}
+
+.modal-icon {
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 20px;
+  border: 1px solid rgba(var(--accent-rgb), 0.24);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.16), rgba(var(--primary-rgb), 0.04) 62%, transparent 63%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan);
+  font-size: 2.45rem;
+  text-shadow: 0 0 16px rgba(var(--accent-rgb), 0.45);
+}
+
+.challenge-success-modal .modal-icon {
+  color: var(--yellow);
+  border-color: rgba(var(--warning-rgb), 0.32);
+  background: radial-gradient(circle, rgba(var(--warning-rgb), 0.15), rgba(var(--secondary-rgb), 0.05) 62%, transparent 63%);
+  text-shadow: 0 0 16px rgba(var(--warning-rgb), 0.45);
+}
+
+.challenge-failed-modal .modal-icon {
+  color: var(--red);
+  border-color: rgba(var(--danger-rgb), 0.32);
+  background: radial-gradient(circle, rgba(var(--danger-rgb), 0.15), rgba(var(--orange-rgb), 0.05) 62%, transparent 63%);
+  text-shadow: 0 0 16px rgba(var(--danger-rgb), 0.45);
+}
+
+.modal-title {
+  margin-bottom: 12px;
+  color: var(--white);
+  font-size: clamp(2rem, 3.2vw, 2.55rem);
+  letter-spacing: 5px;
+  text-shadow: 0 0 24px rgba(var(--accent-rgb), 0.2);
+}
+
+.modal-sub {
+  max-width: 360px;
+  margin: 0 auto 24px;
+  color: rgba(226, 232, 240, 0.56);
+  font-size: 0.72rem;
+  line-height: 1.8;
+}
+
+.badge-award {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  margin-bottom: 30px;
+  padding: 12px 22px;
+  border: 1px solid rgba(var(--warning-rgb), 0.55);
+  background: linear-gradient(90deg, rgba(var(--warning-rgb), 0.08), rgba(var(--warning-rgb), 0.15), rgba(var(--warning-rgb), 0.08));
+  color: var(--yellow);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-shadow: 0 0 16px rgba(var(--warning-rgb), 0.35);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-btn {
+  min-width: 150px;
+  min-height: 46px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+  border-radius: var(--radius);
+  text-decoration: none;
+  line-height: 1;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: rgba(var(--primary-rgb), 0.04);
+}
+
+.modal-btn.primary {
+  border-color: rgba(var(--secondary-rgb), 0.7);
+  color: var(--secondary-light);
+  box-shadow: 4px 4px 0 rgba(var(--secondary-rgb), 0.16);
+}
+
+.modal-btn.secondary {
+  border-color: rgba(var(--accent-rgb), 0.28);
+  color: rgba(226, 232, 240, 0.58);
+  box-shadow: 4px 4px 0 rgba(var(--primary-rgb), 0.12);
+}
+
+.modal-btn.danger {
+  border-color: rgba(var(--danger-rgb), 0.7);
+  color: #f87171;
+  box-shadow: 4px 4px 0 rgba(var(--danger-rgb), 0.14);
+}
+
+.modal-btn:hover {
+  transform: translate(-2px, -2px);
+}
+
+.modal-btn.primary:hover {
+  background: rgba(var(--secondary-rgb), 0.12);
+  box-shadow: 7px 7px 0 rgba(var(--secondary-rgb), 0.2), var(--glow-g);
+}
+
+.modal-btn.secondary:hover {
+  background: rgba(var(--primary-rgb), 0.1);
+  color: var(--cyan);
+  border-color: rgba(var(--accent-rgb), 0.55);
+  box-shadow: 7px 7px 0 rgba(var(--primary-rgb), 0.18), var(--glow-b);
+}
+
+.modal-btn.danger:hover {
+  background: rgba(var(--danger-rgb), 0.12);
+  box-shadow: 7px 7px 0 rgba(var(--danger-rgb), 0.18), var(--glow-r);
+}
+
+.challenge-arena > .panel-card:first-child {
+  background:
+    linear-gradient(90deg, rgba(var(--active-challenge-rgb), 0.11), rgba(var(--active-challenge-rgb), 0.025)),
+    var(--surface);
+}
+
+@media (max-width: 620px) {
+  .challenge-success-modal,
+  .challenge-failed-modal {
+    padding: 40px 22px 26px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-btn {
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------
+   Boxicons Icon Normalization
+-------------------------------------------------- */
+.mission-icon .bx,
+.compound-icon .bx,
+.component-icon .bx,
+.lamp-icon .bx,
+.organ-emoji .bx,
+.patient-avatar .bx,
+.complaint-icon .bx,
+.complaint-status .bx,
+.drop-zone .bx {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.circuit-cell-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.activate-btn .bx,
+.reset-btn .bx,
+.scan-btn .bx,
+.circuit-switch-btn .bx,
+.log-entry .bx {
+  vertical-align: -0.12em;
+}
