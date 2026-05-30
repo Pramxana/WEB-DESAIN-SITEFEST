@@ -3,6 +3,9 @@
 -------------------------------------------------- */
 
 body {
+  --biology-theme: var(--secondary);
+  --biology-theme-rgb: var(--secondary-rgb);
+  --biology-theme-light: var(--secondary-light);
   background: var(--background);
 }
 
@@ -12,21 +15,21 @@ body {
 .page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
 .page-tag {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(var(--purple-rgb), 0.1);
-  border: 1px solid rgba(var(--purple-rgb), 0.3);
+  background: rgba(var(--biology-theme-rgb), 0.1);
+  border: 1px solid rgba(var(--biology-theme-rgb), 0.3);
   border-radius: var(--radius);
   padding: 5px 14px;
   font-family: var(--font-mono); font-size: 0.56rem;
-  color: var(--purple); letter-spacing: 2px; text-transform: uppercase;
+  color: var(--biology-theme); letter-spacing: 2px; text-transform: uppercase;
   margin-bottom: 10px;
 }
 .page-tag .wdot {
   width: 5px; height: 5px; border-radius: 50%;
-  background: var(--purple); box-shadow: 0 0 5px var(--purple);
+  background: var(--biology-theme); box-shadow: 0 0 5px var(--biology-theme);
   animation: blink 1.2s infinite;
 }
 .page-title { font-family: var(--font-display); font-size: clamp(1.6rem,2.5vw,2.2rem); letter-spacing: 4px; line-height: 1; color: var(--white); }
-.page-title span { color: var(--purple); text-shadow: 0 0 16px rgba(var(--purple-rgb), 0.4); }
+.page-title span { color: var(--biology-theme); text-shadow: 0 0 16px rgba(var(--biology-theme-rgb), 0.4); }
 .page-sub { font-family: var(--font-mono); font-size: 0.58rem; color: rgba(var(--text-main-rgb), 0.4); margin-top: 6px; letter-spacing: 0.5px; }
 
 /* --------------------------------------------------
@@ -56,14 +59,14 @@ body {
   left: 0;
   width: 2px;
   height: 100%;
-  background: var(--purple);
+  background: var(--biology-theme);
   opacity: 0.5;
 }
 
 .card-title {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--purple);
+  color: var(--biology-theme);
   letter-spacing: 2px;
   margin-bottom: 15px;
   text-transform: uppercase;
@@ -81,8 +84,8 @@ body {
 
 .tab-btn {
   flex: 1;
-  background: rgba(var(--purple-rgb), 0.1);
-  border: 1px solid rgba(var(--purple-rgb), 0.2);
+  background: rgba(var(--biology-theme-rgb), 0.1);
+  border: 1px solid rgba(var(--biology-theme-rgb), 0.2);
   color: rgba(var(--text-main-rgb), 0.5);
   padding: 8px;
   font-family: var(--font-mono);
@@ -94,10 +97,10 @@ body {
 }
 
 .tab-btn.active {
-  background: var(--purple);
+  background: var(--biology-theme);
   color: white;
-  border-color: var(--purple);
-  box-shadow: 0 0 10px rgba(var(--purple-rgb), 0.4);
+  border-color: var(--biology-theme);
+  box-shadow: 0 0 10px rgba(var(--biology-theme-rgb), 0.4);
 }
 
 /* --------------------------------------------------
@@ -130,9 +133,9 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 12px;
   height: 12px;
-  background: var(--purple);
+  background: var(--biology-theme);
   border-radius: 50%;
-  box-shadow: 0 0 5px var(--purple);
+  box-shadow: 0 0 5px var(--biology-theme);
   cursor: none;
 }
 
@@ -141,7 +144,7 @@ input[type="range"]::-webkit-slider-thumb {
 -------------------------------------------------- */
 .info-box {
   background: rgba(var(--ink-rgb), 0.2);
-  border: 1px solid rgba(var(--purple-rgb), 0.2);
+  border: 1px solid rgba(var(--biology-theme-rgb), 0.2);
   padding: 12px;
   border-radius: var(--radius);
   min-height: 100px;
@@ -157,7 +160,7 @@ input[type="range"]::-webkit-slider-thumb {
 .organ-title {
   font-family: var(--font-display);
   font-size: 1.4rem;
-  color: var(--purple);
+  color: var(--biology-theme);
   margin-bottom: 5px;
 }
 
@@ -172,7 +175,7 @@ input[type="range"]::-webkit-slider-thumb {
 -------------------------------------------------- */
 .sim-view {
   background: radial-gradient(circle at center, var(--surface-muted) 0%, var(--background) 100%);
-  border: 1px solid rgba(var(--purple-rgb), 0.2);
+  border: 1px solid rgba(var(--biology-theme-rgb), 0.2);
   border-radius: var(--radius);
   display: flex;
   align-items: center;
@@ -204,12 +207,12 @@ input[type="range"]::-webkit-slider-thumb {
 .human-body-svg {
   height: 100%;
   width: auto;
-  filter: drop-shadow(0 0 10px rgba(var(--purple-rgb), 0.1));
+  filter: drop-shadow(0 0 10px rgba(var(--biology-theme-rgb), 0.1));
 }
 
 .body-outline {
-  fill: rgba(var(--purple-rgb), 0.05);
-  stroke: rgba(var(--purple-rgb), 0.3);
+  fill: rgba(var(--biology-theme-rgb), 0.05);
+  stroke: rgba(var(--biology-theme-rgb), 0.3);
   stroke-width: 1.5;
   stroke-dasharray: 1000;
   stroke-dashoffset: 0;
@@ -274,8 +277,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .organ {
-  fill: rgba(var(--purple-rgb), 0.15);
-  stroke: var(--purple);
+  fill: rgba(var(--biology-theme-rgb), 0.15);
+  stroke: var(--biology-theme);
   stroke-width: 1.2;
   cursor: none;
   transition: all 0.3s ease;
@@ -299,21 +302,21 @@ input[type="range"]::-webkit-slider-thumb {
   opacity: 1;
   fill: white;
   font-size: 7px;
-  text-shadow: 0 0 5px var(--purple);
+  text-shadow: 0 0 5px var(--biology-theme);
 }
 
 .organ.clickable:hover {
-  fill: rgba(var(--purple-rgb), 0.4);
+  fill: rgba(var(--biology-theme-rgb), 0.4);
   stroke: white;
   stroke-width: 1.5;
-  filter: drop-shadow(0 0 8px var(--purple));
+  filter: drop-shadow(0 0 8px var(--biology-theme));
 }
 
 .organ.selected {
-  fill: rgba(var(--purple-rgb), 0.7);
+  fill: rgba(var(--biology-theme-rgb), 0.7);
   stroke: white;
   stroke-width: 2;
-  filter: drop-shadow(0 0 15px var(--purple));
+  filter: drop-shadow(0 0 15px var(--biology-theme));
 }
 
 
@@ -379,8 +382,8 @@ input[type="range"]::-webkit-slider-thumb {
   transition: width 0.5s ease;
 }
 
-.c1 { color: var(--purple); }
-.stat-bar-fill.c1 { background: var(--purple); box-shadow: 0 0 10px var(--purple); }
+.c1 { color: var(--biology-theme); }
+.stat-bar-fill.c1 { background: var(--biology-theme); box-shadow: 0 0 10px var(--biology-theme); }
 .c2 { color: var(--cyan); }
 .stat-bar-fill.c2 { background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
 .c3 { color: var(--green); }
@@ -398,16 +401,16 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .obs-item {
-  border-left: 2px solid var(--purple);
+  border-left: 2px solid var(--biology-theme);
   padding: 6px 10px;
-  background: rgba(var(--purple-rgb), 0.05);
+  background: rgba(var(--biology-theme-rgb), 0.05);
   border-radius: 0 4px 4px 0;
 }
 
 .obs-time {
   font-family: var(--font-mono);
   font-size: 0.5rem;
-  color: rgba(var(--purple-rgb), 0.5);
+  color: rgba(var(--biology-theme-rgb), 0.5);
   margin-bottom: 2px;
 }
 
@@ -420,40 +423,26 @@ input[type="range"]::-webkit-slider-thumb {
 /* --------------------------------------------------
    BUTTONS
 -------------------------------------------------- */
-.btn {
-  padding: 8px 16px;
-  border-radius: var(--radius);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: none;
-  transition: all 0.3s ease;
-  border: none;
+.biology-page .btn-primary {
+  background: var(--biology-theme);
+  border-color: var(--biology-theme-light);
+  color: var(--white);
+  box-shadow: 4px 4px 0 rgba(var(--biology-theme-rgb), 0.3);
 }
 
-.btn-sm { padding: 6px 12px; }
-
-.btn-primary {
-  background: var(--purple);
-  color: white;
-  box-shadow: 0 0 15px rgba(var(--purple-rgb), 0.3);
+.biology-page .btn-primary:hover {
+  background: var(--biology-theme-light);
+  box-shadow: 7px 7px 0 rgba(var(--biology-theme-rgb), 0.4), var(--glow-g);
 }
 
-.btn-primary:hover {
-  background: var(--purple-light);
-  transform: translateY(-2px);
+.biology-page .btn-ghost {
+  border-color: rgba(var(--biology-theme-rgb), 0.32);
+  box-shadow: 4px 4px 0 rgba(var(--biology-theme-rgb), 0.16);
 }
 
-.btn-yellow {
-  background: var(--yellow);
-  color: #000;
-}
-
-.btn-yellow:hover {
-  background: var(--warning);
-  box-shadow: 0 0 15px rgba(var(--warning-rgb), 0.4);
-  transform: translateY(-2px);
+.biology-page .btn-ghost:hover {
+  border-color: var(--biology-theme);
+  color: var(--biology-theme-light);
 }
 
 /* --------------------------------------------------
@@ -494,23 +483,23 @@ input[type="range"]::-webkit-slider-thumb {
   font-family: var(--font-mono); font-size: 0.58rem; color: rgba(var(--text-main-rgb), 0.45);
   display: flex; align-items: center; gap: 8px; cursor: none;
 }
-.layer-check input { accent-color: var(--purple); }
+.layer-check input { accent-color: var(--biology-theme); }
 
 .organ-index {
   max-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;
 }
 .organ-index-item {
   display: flex; align-items: center; gap: 8px; width: 100%;
-  background: rgba(var(--purple-rgb), 0.06); border: 1px solid rgba(var(--purple-rgb), 0.15);
+  background: rgba(var(--biology-theme-rgb), 0.06); border: 1px solid rgba(var(--biology-theme-rgb), 0.15);
   border-radius: var(--radius); padding: 6px 8px; cursor: none; text-align: left;
   transition: all 0.2s ease;
 }
 .organ-index-item:hover, .organ-index-item.active {
-  background: rgba(var(--purple-rgb), 0.2); border-color: var(--purple);
+  background: rgba(var(--biology-theme-rgb), 0.2); border-color: var(--biology-theme);
 }
 .organ-index-dot {
   width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-  background: var(--purple); box-shadow: 0 0 4px var(--purple);
+  background: var(--biology-theme); box-shadow: 0 0 4px var(--biology-theme);
 }
 .organ-index-dot.sys-nervous { background: #f472b6; box-shadow: 0 0 4px #f472b6; }
 .organ-index-dot.sys-respiratory { background: var(--purple-light); }
@@ -524,23 +513,23 @@ input[type="range"]::-webkit-slider-thumb {
 .info-box-scroll { max-height: 280px; overflow-y: auto; }
 .organ-latin { font-family: var(--font-mono); font-size: 0.62rem; color: rgba(244, 114, 182, 0.8); font-style: italic; margin-bottom: 6px; }
 .organ-system-badge {
-  font-family: var(--font-mono); font-size: 0.5rem; color: var(--purple);
+  font-family: var(--font-mono); font-size: 0.5rem; color: var(--biology-theme);
   letter-spacing: 1.5px; margin-bottom: 10px; padding: 4px 8px;
-  background: rgba(var(--purple-rgb), 0.1); border-radius: 4px; display: inline-block;
+  background: rgba(var(--biology-theme-rgb), 0.1); border-radius: 4px; display: inline-block;
 }
 .bio-metrics { display: grid; grid-template-columns: 1fr; gap: 6px; margin: 12px 0; }
 .bio-metric {
   display: flex; justify-content: space-between; align-items: center;
   padding: 6px 8px; background: rgba(var(--ink-rgb), 0.25); border-radius: 4px;
-  border-left: 2px solid var(--purple);
+  border-left: 2px solid var(--biology-theme);
 }
 .bio-metric-lbl { font-family: var(--font-mono); font-size: 0.5rem; color: rgba(var(--text-main-rgb), 0.35); text-transform: uppercase; }
 .bio-metric-val { font-size: 0.65rem; color: rgba(var(--text-main-rgb), 0.75); text-align: right; max-width: 60%; }
-.bio-section-lbl { font-family: var(--font-mono); font-size: 0.5rem; color: rgba(var(--purple-rgb), 0.7); letter-spacing: 1px; margin: 10px 0 6px; text-transform: uppercase; }
+.bio-section-lbl { font-family: var(--font-mono); font-size: 0.5rem; color: rgba(var(--biology-theme-rgb), 0.7); letter-spacing: 1px; margin: 10px 0 6px; text-transform: uppercase; }
 .bio-tags { display: flex; flex-wrap: wrap; gap: 4px; }
 .bio-tag {
   font-size: 0.58rem; padding: 3px 8px; border-radius: 20px;
-  background: rgba(var(--purple-rgb), 0.15); border: 1px solid rgba(var(--purple-rgb), 0.3); color: rgba(var(--text-main-rgb), 0.7);
+  background: rgba(var(--biology-theme-rgb), 0.15); border: 1px solid rgba(var(--biology-theme-rgb), 0.3); color: rgba(var(--text-main-rgb), 0.7);
 }
 .bio-tag-dim { background: rgba(var(--text-main-rgb), 0.04); border-color: rgba(var(--text-main-rgb), 0.1); color: rgba(var(--text-main-rgb), 0.45); }
 
@@ -585,67 +574,9 @@ input[type="range"]::-webkit-slider-thumb {
 
 .biology-page {
   background:
-    radial-gradient(circle at 50% 10%, rgba(var(--purple-rgb), 0.12), transparent 30rem),
+    radial-gradient(circle at 50% 10%, rgba(var(--biology-theme-rgb), 0.12), transparent 30rem),
     radial-gradient(circle at 82% 40%, rgba(var(--accent-rgb), 0.08), transparent 24rem),
     #020617;
-}
-
-.biology-page .sidebar {
-  background: linear-gradient(180deg, rgba(var(--surface-rgb, 6, 15, 28), 0.96), rgba(3, 7, 18, 0.98));
-}
-
-.biology-page .nav-item {
-  overflow: hidden;
-}
-
-.biology-page .nav-item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(var(--purple-rgb), 0.16), rgba(var(--accent-rgb), 0.05));
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.biology-page .nav-item:hover::after,
-.biology-page .nav-item.active::after {
-  opacity: 1;
-}
-
-.biology-page .nav-item .nav-icon,
-.biology-page .nav-item span {
-  position: relative;
-  z-index: 1;
-}
-
-.bio-top-monitor {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 6px 12px;
-  border: 1px solid rgba(var(--accent-rgb), 0.24);
-  border-radius: var(--radius);
-  background: rgba(var(--accent-rgb), 0.06);
-  font-family: var(--font-mono);
-  font-size: 0.54rem;
-  color: rgba(226, 232, 240, 0.55);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.bio-top-monitor strong {
-  color: var(--cyan);
-  letter-spacing: 1.5px;
-}
-
-.bio-live-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--secondary);
-  box-shadow: 0 0 10px var(--secondary);
-  animation: blink 1s infinite;
 }
 
 .system-orbit-status {
@@ -656,8 +587,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .system-orbit-status div {
-  border: 1px solid rgba(var(--purple-rgb), 0.2);
-  background: rgba(var(--purple-rgb), 0.06);
+  border: 1px solid rgba(var(--biology-theme-rgb), 0.2);
+  background: rgba(var(--biology-theme-rgb), 0.06);
   border-radius: var(--radius);
   padding: 8px;
 }
@@ -683,9 +614,9 @@ input[type="range"]::-webkit-slider-thumb {
 
 .sim-card {
   background:
-    linear-gradient(135deg, rgba(var(--purple-rgb), 0.08), rgba(var(--accent-rgb), 0.035)),
+    linear-gradient(135deg, rgba(var(--biology-theme-rgb), 0.08), rgba(var(--accent-rgb), 0.035)),
     rgba(2, 6, 23, 0.62);
-  border-color: rgba(var(--purple-rgb), 0.24);
+  border-color: rgba(var(--biology-theme-rgb), 0.24);
   box-shadow: 0 0 28px rgba(2, 6, 23, 0.34), inset 0 1px 0 rgba(var(--text-main-rgb), 0.03);
 }
 
@@ -694,16 +625,42 @@ input[type="range"]::-webkit-slider-thumb {
   box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.08), inset 0 1px 0 rgba(var(--text-main-rgb), 0.04);
 }
 
+.sim-sidebar {
+  align-self: start;
+  position: sticky;
+  top: 74px;
+  max-height: calc(100vh - 94px);
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-color: rgba(var(--biology-theme-rgb), 0.34) transparent;
+  scrollbar-width: thin;
+}
+
+.sim-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sim-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(var(--biology-theme-rgb), 0.34);
+  border-radius: 2px;
+}
+
 .sim-view {
   --mx: 50%;
   --my: 50%;
+  align-self: start;
+  position: sticky;
+  top: 74px;
+  height: calc(100vh - 94px);
+  max-height: 760px;
+  min-height: 560px;
   background:
     radial-gradient(circle at var(--mx) var(--my), rgba(var(--accent-rgb), 0.14), transparent 16rem),
     radial-gradient(circle at center, #081826 0%, #020617 74%);
-  border-color: rgba(var(--purple-rgb), 0.34);
+  border-color: rgba(var(--biology-theme-rgb), 0.34);
   box-shadow:
     inset 0 0 58px rgba(var(--accent-rgb), 0.06),
-    0 0 34px rgba(var(--purple-rgb), 0.1);
+    0 0 34px rgba(var(--biology-theme-rgb), 0.1);
 }
 
 .sim-view::before {
@@ -732,7 +689,7 @@ input[type="range"]::-webkit-slider-thumb {
   aspect-ratio: 1;
   border: 1px dashed rgba(var(--accent-rgb), 0.2);
   border-radius: 50%;
-  box-shadow: 0 0 30px rgba(var(--purple-rgb), 0.08);
+  box-shadow: 0 0 30px rgba(var(--biology-theme-rgb), 0.08);
   animation: holoRotate 18s linear infinite;
 }
 
@@ -840,7 +797,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .sim-view.guided-mode {
   border-color: rgba(236, 72, 153, 0.55);
-  box-shadow: 0 0 38px rgba(236, 72, 153, 0.14), inset 0 0 64px rgba(var(--purple-rgb), 0.08);
+  box-shadow: 0 0 38px rgba(236, 72, 153, 0.14), inset 0 0 64px rgba(var(--biology-theme-rgb), 0.08);
 }
 
 .wave-card {
@@ -911,54 +868,11 @@ input[type="range"]::-webkit-slider-thumb {
   padding-bottom: 28px;
 }
 
-.bio-fact,
-.quiz-question,
-.quiz-feedback {
+.bio-fact {
   color: rgba(226, 232, 240, 0.72);
   font-size: 0.72rem;
   line-height: 1.55;
 }
-
-.quiz-choices {
-  display: grid;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.quiz-choice {
-  border: 1px solid rgba(var(--purple-rgb), 0.18);
-  border-radius: var(--radius);
-  background: rgba(var(--purple-rgb), 0.08);
-  color: rgba(226, 232, 240, 0.72);
-  padding: 7px 8px;
-  cursor: none;
-  font-family: var(--font-mono);
-  font-size: 0.55rem;
-  text-align: left;
-  transition: all 0.2s ease;
-}
-
-.quiz-choice:hover {
-  border-color: rgba(var(--accent-rgb), 0.45);
-  color: var(--accent);
-}
-
-.quiz-choice.correct {
-  border-color: rgba(var(--secondary-rgb), 0.5);
-  background: rgba(var(--secondary-rgb), 0.12);
-  color: var(--secondary);
-}
-
-.quiz-choice.wrong {
-  border-color: rgba(236, 72, 153, 0.5);
-  background: rgba(236, 72, 153, 0.12);
-  color: #ec4899;
-}
-
-.quiz-card.active {
-  border-color: rgba(236, 72, 153, 0.42);
-}
-
 
 /* --------------------------------------------------
    Biology shell polish
@@ -967,42 +881,6 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.sidebar-bottom {
-  margin-top: auto;
-  padding: 14px 16px;
-  border-top: 1px solid var(--border-c);
-  background: rgba(2, 6, 23, 0.42);
-}
-
-.sidebar-user {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sidebar-avatar {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(var(--accent-rgb), 0.35);
-  border-radius: var(--radius);
-  background: rgba(var(--purple-rgb), 0.12);
-}
-
-.sidebar-user-name {
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-
-.sidebar-user-role {
-  font-family: var(--font-mono);
-  font-size: 0.48rem;
-  color: rgba(var(--accent-rgb), 0.48);
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
 }
 
 .scanner-line {
@@ -1101,7 +979,7 @@ input[type="range"]::-webkit-slider-thumb {
   stroke-width: 2;
   filter:
     drop-shadow(0 0 8px rgba(var(--text-main-rgb), 0.72))
-    drop-shadow(0 0 24px rgba(var(--purple-rgb), 0.82))
+    drop-shadow(0 0 24px rgba(var(--biology-theme-rgb), 0.82))
     drop-shadow(0 0 38px rgba(var(--accent-rgb), 0.34));
 }
 
@@ -1274,56 +1152,31 @@ input[type="range"]::-webkit-slider-thumb {
   gap: 7px;
 }
 
-.guided-card {
-  overflow: hidden;
-}
-
-.organGuideSwiper {
-  min-height: 138px;
-  padding-bottom: 22px;
-}
-
-.guide-slide {
-  min-height: 110px;
-  border: 1px solid rgba(var(--purple-rgb), 0.2);
-  border-radius: var(--radius);
-  padding: 10px;
-  background: rgba(2, 6, 23, 0.45);
-}
-
-.guide-slide strong {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--accent);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  letter-spacing: 1px;
-}
-
-.guide-slide p {
-  margin: 0;
-  color: rgba(226, 232, 240, 0.66);
-  font-size: 0.66rem;
-  line-height: 1.45;
-}
-
-.swiper-pagination-bullet {
-  background: rgba(var(--accent-rgb), 0.55);
-}
-
-.organ-modal {
-  width: min(720px, 92vw);
+/* --------------------------------------------------
+   Deep Scan Result
+-------------------------------------------------- */
+.deep-scan-result {
+  scroll-margin-top: 74px;
+  margin-top: 22px;
+  padding: 22px;
+  border: 2px solid rgba(var(--biology-theme-rgb), 0.48);
   border-radius: var(--radius);
   background:
-    radial-gradient(circle at 20% 0%, rgba(236, 72, 153, 0.14), transparent 20rem),
-    linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(2, 6, 23, 0.98));
-  border: 1px solid rgba(var(--accent-rgb), 0.26);
-  color: #e2e8f0;
-  padding: 22px;
-  box-shadow: 0 0 50px rgba(var(--accent-rgb), 0.12);
+    radial-gradient(circle at 18% 0%, rgba(var(--biology-theme-rgb), 0.16), transparent 24rem),
+    linear-gradient(135deg, rgba(6, 15, 28, 0.98), rgba(2, 6, 23, 0.98));
+  box-shadow: 6px 6px 0 rgba(var(--biology-theme-rgb), 0.16), 0 0 42px rgba(var(--biology-theme-rgb), 0.12);
+  color: var(--text-main);
 }
 
-.modal-organ-head {
+.deep-scan-result[hidden] {
+  display: none;
+}
+
+.deep-scan-result.is-visible {
+  animation: scanResultDrop 0.48s ease-out both;
+}
+
+.deep-scan-head {
   display: flex;
   justify-content: space-between;
   gap: 16px;
@@ -1334,85 +1187,127 @@ input[type="range"]::-webkit-slider-thumb {
   text-transform: uppercase;
 }
 
-.modal-organ-head span,
-.modal-organ-head strong {
+.deep-scan-head span,
+.deep-scan-head strong {
   display: inline-flex;
   align-items: center;
   gap: 7px;
 }
 
-.modal-organ-head strong {
-  color: var(--accent);
+.deep-scan-head strong {
+  color: var(--biology-theme-light);
 }
 
-.modal-organ-title {
+.deep-scan-title {
   margin: 10px 0 14px;
   font-family: var(--font-display);
   font-size: 2.4rem;
   letter-spacing: 2px;
-  color: #fff;
+  color: var(--text-main);
 }
 
-.modal-organ-body {
+.deep-scan-grid {
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: 16px;
   align-items: start;
 }
 
-.modal-organ-icon {
+.deep-scan-icon {
   width: 74px;
   height: 74px;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(236, 72, 153, 0.28);
+  border: 1px solid rgba(var(--biology-theme-rgb), 0.44);
   border-radius: var(--radius);
-  background: rgba(236, 72, 153, 0.08);
-  color: #ec4899;
+  background: rgba(var(--biology-theme-rgb), 0.12);
+  color: var(--biology-theme-light);
   font-size: 2rem;
-  filter: drop-shadow(0 0 16px rgba(236, 72, 153, 0.32));
+  filter: drop-shadow(0 0 16px rgba(var(--biology-theme-rgb), 0.32));
 }
 
-.modal-organ-body p {
+.deep-scan-grid p {
   margin: 0;
   color: rgba(226, 232, 240, 0.72);
   line-height: 1.6;
   font-size: 0.86rem;
 }
 
-.organDetailSwiper {
+.deep-scan-details {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
   margin-top: 18px;
-  padding-bottom: 26px;
 }
 
-.detail-slide {
-  border: 1px solid rgba(var(--accent-rgb), 0.16);
+.deep-scan-detail {
+  border: 1px solid rgba(var(--biology-theme-rgb), 0.28);
   border-radius: var(--radius);
   padding: 14px;
-  background: rgba(var(--accent-rgb), 0.05);
+  background: rgba(var(--biology-theme-rgb), 0.07);
 }
 
-.detail-slide span {
+.deep-scan-detail span {
   display: block;
   margin-bottom: 6px;
   font-family: var(--font-mono);
-  color: var(--accent);
+  color: var(--biology-theme-light);
   font-size: 0.55rem;
   letter-spacing: 1.2px;
   text-transform: uppercase;
 }
 
-.detail-slide p {
+.deep-scan-detail p {
   margin: 0;
   font-size: 0.76rem;
 }
 
+@keyframes scanResultDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 1000px) {
+  .sim-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-sidebar {
+    position: relative;
+    top: auto;
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
+  }
+
+  .sim-view {
+    position: relative;
+    top: auto;
+    height: min(680px, 76vh);
+    min-height: 400px;
+  }
+
   .human-body-svg {
     max-height: 560px;
   }
 
-  .modal-organ-body {
+  .deep-scan-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .deep-scan-details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .deep-scan-details {
     grid-template-columns: 1fr;
   }
 }

@@ -8,6 +8,14 @@
 let running = false, circuitType = "series", srcType = "DC", eColor = "#22D3EE";
 let simT = 0, stepN = 1, obsT = 0;
 let particles = [];
+function bxIcon(name) {
+  return `<i class="bx ${name}" aria-hidden="true"></i>`;
+}
+
+function bxIconText(name, text) {
+  return `${bxIcon(name)} ${text}`;
+}
+
 
 function vals() {
   const V  = parseFloat(document.getElementById("voltSlider").value);
@@ -79,7 +87,7 @@ function setStep(n) {
     const row = document.getElementById("s" + i);
     const num = document.getElementById("sn" + i);
     row.className = "step-row" + (i < n ? " done" : i === n ? " active" : "");
-    num.textContent = i < n ? "✓" : i;
+    num.innerHTML = i < n ? bxIcon("bx-check") : i;
   }
 }
 
@@ -105,7 +113,7 @@ function toggleRun() {
     setStep(Math.max(stepN, 3));
     const { V, I, P } = vals();
     addObs(`Simulation started · V=${V.toFixed(1)}V · I=${I.toFixed(3)}A · P=${P.toFixed(2)}W`, "ok");
-    if (I > 3) addObs("⚠ High current! Consider increasing resistance.", "warn");
+    if (I > 3) addObs(bxIconText("bx-error", "High current! Consider increasing resistance."), "warn");
   } else {
     addObs("Simulation paused.");
   }
@@ -130,7 +138,7 @@ function loadChallenge() {
   document.getElementById("r2").value = 5;
   document.getElementById("r3").value = 7;
   sync(); setStep(1);
-  addObs("🏆 Challenge: R1=3Ω · R2=5Ω · R3=7Ω · 9V. Verify Ohm's Law!", "warn");
+  addObs(bxIconText("bx-trophy", "Challenge: R1=3Ω · R2=5Ω · R3=7Ω · 9V. Verify Ohm's Law!"), "warn");
 }
 
 // --------------------------------------------------
@@ -257,7 +265,17 @@ function drawBulb(ctx, x, y, I) {
   ctx.fillStyle = `rgba(255,200,60,${0.04 + b * 0.45})`; ctx.fill();
   ctx.strokeStyle = `rgba(255,200,60,${0.3 + b * 0.6})`; ctx.lineWidth = 2; ctx.stroke();
   ctx.restore();
-  ctx.font = "16px serif"; ctx.textAlign = "center"; ctx.fillText("💡", x, y+6);
+  ctx.strokeStyle = `rgba(255,220,0,${0.5 + b * 0.5})`;
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.arc(x, y - 2, 6, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x - 4, y + 7);
+  ctx.lineTo(x + 4, y + 7);
+  ctx.moveTo(x - 3, y + 10);
+  ctx.lineTo(x + 3, y + 10);
+  ctx.stroke();
   ctx.font = "8px Space Mono,monospace";
   ctx.fillStyle = `rgba(255,200,60,${0.4 + b * 0.5})`; ctx.textAlign = "center";
   ctx.fillText((I * I * 10).toFixed(1) + "W", x, y+32);
@@ -523,7 +541,7 @@ setInterval(() => {
     circuitType === "series"
       ? `Series circuit: same current ${I.toFixed(3)}A through all components.`
       : `Parallel branches share total current ${I.toFixed(3)}A.`,
-    `Ohm's Law verified: ${V.toFixed(1)} ÷ ${Rt.toFixed(1)} = ${I.toFixed(3)}A ✓`,
+    `Ohm's Law verified: ${V.toFixed(1)} ÷ ${Rt.toFixed(1)} = ${I.toFixed(3)}A ${bxIcon('bx-check')}`, 
   ];
   addObs(msgs[Math.floor(Math.random() * msgs.length)]);
   if (stepN >= 3) setStep(5);

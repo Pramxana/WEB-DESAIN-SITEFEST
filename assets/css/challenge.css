@@ -1022,3 +1022,34 @@ body.challenge-page {
     width: 100%;
   }
 }
+
+/* --------------------------------------------------
+   Boxicons Icon Normalization
+-------------------------------------------------- */
+.mission-icon .bx,
+.compound-icon .bx,
+.component-icon .bx,
+.lamp-icon .bx,
+.organ-emoji .bx,
+.patient-avatar .bx,
+.complaint-icon .bx,
+.complaint-status .bx,
+.drop-zone .bx {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.circuit-cell-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.activate-btn .bx,
+.reset-btn .bx,
+.scan-btn .bx,
+.circuit-switch-btn .bx,
+.log-entry .bx {
+  vertical-align: -0.12em;
+}

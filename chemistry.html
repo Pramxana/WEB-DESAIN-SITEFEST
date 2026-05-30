@@ -1,3 +1,6 @@
+<!-- --------------------------------------------------
+     Chemistry Lab Page
+-------------------------------------------------- -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,12 +16,21 @@
     />
   </head>
   <body class="chemistry-page">
+    <!-- --------------------------------------------------
+         Decorative Background
+    -------------------------------------------------- -->
     <div class="cursor" id="cursor"></div>
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="grid-bg"></div>
     <div class="scan-line"></div>
 
+    <!-- --------------------------------------------------
+         Application Shell
+    -------------------------------------------------- -->
     <div class="app">
+      <!-- --------------------------------------------------
+           Sidebar Navigation
+      -------------------------------------------------- -->
       <aside class="sidebar">
         <a href="dashboard.html" class="sidebar-logo">
           <div class="sidebar-logo-icon">
@@ -56,7 +68,13 @@
         </nav>
       </aside>
 
+      <!-- --------------------------------------------------
+           Main Content
+      -------------------------------------------------- -->
       <div class="main">
+        <!-- --------------------------------------------------
+             Topbar Header
+        -------------------------------------------------- -->
         <header class="topbar">
           <div>
             <div class="topbar-title">CHEMISTRY LAB</div>
@@ -67,7 +85,13 @@
           </div>
         </header>
 
+        <!-- --------------------------------------------------
+             Chemistry Workspace
+        -------------------------------------------------- -->
         <div class="content chemistry-content">
+          <!-- --------------------------------------------------
+               Module Header
+          -------------------------------------------------- -->
           <div class="page-header">
                   <div>
                     <div class="module-tag">
@@ -78,10 +102,10 @@
                     <div class="page-sub">Realtime chemical reaction simulation &middot; pH Level &middot; Temperature &middot; Gas Output</div>
                   </div>
                   <div class="page-actions">
-                    <button class="btn btn-yellow btn-sm" type="button" onclick="addLog('Challenge mode coming soon!','warn')">
+                    <a class="btn btn-yellow btn-sm" href="challenge.html">
                       <i class="bx bx-trophy"></i>
                       Challenge Mode
-                    </button>
+                    </a>
                     <button class="btn btn-primary btn-sm" type="button" onclick="runMix()">
                       <i class="bx bx-play"></i>
                       Run Experiment
@@ -89,8 +113,17 @@
                   </div>
                 </div>
           
+                <!-- --------------------------------------------------
+                     Laboratory Layout
+                -------------------------------------------------- -->
                 <div class="lab-layout">
+                  <!-- --------------------------------------------------
+                       Experiment Controls
+                  -------------------------------------------------- -->
                   <div class="controls-panel">
+                    <!-- --------------------------------------------------
+                         Reaction Type
+                    -------------------------------------------------- -->
                     <section class="panel-card ctrl-section">
                       <div class="ctrl-label">
                         <span class="ctrl-label-icon"><i class="bx bx-vial"></i></span>
@@ -105,6 +138,9 @@
                       </div>
                     </section>
           
+                    <!-- --------------------------------------------------
+                         Chemical Source
+                    -------------------------------------------------- -->
                     <section class="panel-card ctrl-section">
                       <div class="ctrl-label">
                         <span class="ctrl-label-icon"><i class="bx bx-droplet"></i></span>
@@ -128,6 +164,9 @@
                       </div>
                     </section>
           
+                    <!-- --------------------------------------------------
+                         Reaction Parameters
+                    -------------------------------------------------- -->
                     <section class="panel-card ctrl-section">
                       <div class="ctrl-label">
                         <span class="ctrl-label-icon"><i class="bx bx-slider-alt"></i></span>
@@ -161,6 +200,9 @@
                       </div>
                     </section>
           
+                    <!-- --------------------------------------------------
+                         Reaction Formula
+                    -------------------------------------------------- -->
                     <section class="panel-card ctrl-section">
                       <div class="ctrl-label">
                         <span class="ctrl-label-icon"><i class="bx bx-math"></i></span>
@@ -176,6 +218,9 @@
                       </div>
                     </section>
           
+                    <!-- --------------------------------------------------
+                         Guided Hint
+                    -------------------------------------------------- -->
                     <section class="panel-card ctrl-section">
                       <div class="ctrl-label">
                         <span class="ctrl-label-icon"><i class="bx bx-bulb"></i></span>
@@ -190,6 +235,9 @@
                     </section>
                   </div>
           
+                  <!-- --------------------------------------------------
+                       Reaction Chamber
+                  -------------------------------------------------- -->
                   <section class="chamber-area">
                     <div class="chamber-topbar">
                       <div class="sdot"></div>
@@ -309,7 +357,13 @@
                     </div>
                   </section>
           
+                  <!-- --------------------------------------------------
+                       Live Analysis Sidebar
+                  -------------------------------------------------- -->
                   <aside class="right-panel">
+                    <!-- --------------------------------------------------
+                         Live Meters
+                    -------------------------------------------------- -->
                     <section class="panel-card">
                       <div class="panel-header">
                         <span class="panel-header-icon"><i class="bx bx-bar-chart-alt-2"></i></span>
@@ -366,6 +420,9 @@
                       </div>
                     </section>
           
+                    <!-- --------------------------------------------------
+                         Analysis Result
+                    -------------------------------------------------- -->
                     <section class="panel-card">
                       <div class="panel-header">
                         <span class="panel-header-icon"><i class="bx bx-pulse"></i></span>
@@ -381,6 +438,9 @@
                       </div>
                     </section>
           
+                    <!-- --------------------------------------------------
+                         Observation Log
+                    -------------------------------------------------- -->
                     <section class="panel-card obs-card">
                       <div class="obs-head">
                         <span class="panel-header-icon"><i class="bx bx-clipboard"></i></span>
@@ -395,6 +455,9 @@
       </div>
     </div>
 
+    <!-- --------------------------------------------------
+         Script Includes
+    -------------------------------------------------- -->
     <script src="assets/js/main.js"></script>
     <script src="assets/js/chemistry.js"></script>
   </body>

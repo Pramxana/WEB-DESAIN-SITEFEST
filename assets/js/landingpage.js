@@ -340,7 +340,15 @@ createBubbles("bubblesC", "rgba(139,92,246,0.5)");
     ctx.fillStyle = `rgba(255,${180 + Math.floor(bright * 75)},0,${0.08 + bright * 0.7})`;
     ctx.fill();
     ctx.font = "10px serif"; ctx.fillStyle = `rgba(255,220,0,${0.5 + bright * 0.5})`;
-    ctx.fillText("💡", 334, 65);
+    ctx.beginPath();
+    ctx.arc(340, 58, 5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(336, 66);
+    ctx.lineTo(344, 66);
+    ctx.moveTo(337, 69);
+    ctx.lineTo(343, 69);
+    ctx.stroke();
 
     ctx.fillStyle = "rgba(16,185,129,0.3)"; ctx.strokeStyle = "rgba(16,185,129,0.6)";
     ctx.lineWidth = 1.5; ctx.fillRect(178, 192, 44, 16); ctx.strokeRect(178, 192, 44, 16);

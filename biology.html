@@ -1,5 +1,5 @@
 <!-- --------------------------------------------------
-     BIOLOGY LAB
+    BIOLOGY LAB
 -------------------------------------------------- -->
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +22,7 @@
 
     <div class="app">
       <!-- --------------------------------------------------
-           SIDEBAR
+          SIDEBAR
       -------------------------------------------------- -->
       <aside class="sidebar">
         <a href="dashboard.html" class="sidebar-logo">
@@ -60,15 +60,6 @@
           </a>
         </nav>
 
-        <div class="sidebar-bottom">
-          <div class="sidebar-user">
-            <div class="sidebar-avatar">👩‍🔬</div>
-            <div class="sidebar-user-info">
-              <div class="sidebar-user-name">Aisyah Rahma</div>
-              <div class="sidebar-user-role">Researcher · Lv.12</div>
-            </div>
-          </div>
-        </div>
       </aside>
 
       <!-- --------------------------------------------------
@@ -85,11 +76,6 @@
               <a href="dashboard.html">HOME /</a>
               <a href="biology.html">BIOLOGY</a> / HUMAN ANATOMY
             </div>
-          <div class="bio-top-monitor">
-            <span class="bio-live-dot"></span>
-            <span>LIVE BIOSCAN</span>
-            <strong id="bioClock">00:00:00</strong>
-          </div>
           </div>
         </header>
 
@@ -111,9 +97,9 @@
               </div>
             </div>
             <div class="page-actions">
-              <button class="btn btn-yellow btn-sm" id="quizBtn">
-                <i class="bx bx-brain"></i> Quiz Mode
-              </button>
+              <a class="btn btn-yellow btn-sm" href="challenge.html">
+                <i class="bx bx-trophy"></i> Challenge Mode
+              </a>
               <button class="btn btn-ghost btn-sm" id="guideBtn">
                 <i class="bx bx-target-lock"></i> Guided Scan
               </button>
@@ -200,7 +186,7 @@
                   <svg viewBox="0 0 200 520" class="human-body-svg" id="humanSvg">
                     <defs>
                       <radialGradient id="bodyGlow" cx="50%" cy="45%" r="55%">
-                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.18" />
+                        <stop offset="0%" style="stop-color:var(--secondary);stop-opacity:0.18" />
                         <stop offset="100%" style="stop-color:transparent;stop-opacity:0" />
                       </radialGradient>
                       <linearGradient id="gradBrain" x1="0" y1="0" x2="1" y2="1">
@@ -499,21 +485,6 @@
                 <div id="bioFact" class="bio-fact">The heart can beat over 100,000 times per day while coordinating electrical signals through the SA node.</div>
               </div>
 
-              <div class="sim-card guided-card">
-                <div class="card-title">GUIDED EXPLORATION</div>
-                <div class="swiper organGuideSwiper">
-                  <div class="swiper-wrapper" id="organGuideSlides"></div>
-                  <div class="swiper-pagination"></div>
-                </div>
-              </div>
-
-              <div class="sim-card quiz-card" id="quizCard">
-                <div class="card-title">ANATOMY QUIZ</div>
-                <div id="quizQuestion" class="quiz-question">Select Quiz Mode to generate a question.</div>
-                <div id="quizChoices" class="quiz-choices"></div>
-                <div id="quizFeedback" class="quiz-feedback"></div>
-              </div>
-
               <div class="sim-card">
                 <div class="card-title">OBSERVATION LOG</div>
                 <div class="obs-log" id="obsLog">
@@ -528,32 +499,30 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <div id="organModal" class="organ-modal" style="display:none;">
-      <div class="modal-organ-head">
-        <span><i class="bx bx-scan"></i> Deep Organ Scan</span>
-        <strong id="modalOrganSystem">SYSTEM</strong>
-      </div>
-      <div class="modal-organ-title" id="modalOrganName">Organ</div>
-      <div class="modal-organ-body">
-        <div class="modal-organ-icon"><i class="bx bx-heart-circle"></i></div>
-        <div>
-          <p id="modalOrganDesc">Select an organ to inspect detailed biology data.</p>
-          <div class="bio-metrics modal-metrics" id="modalOrganMetrics"></div>
+          <!-- --------------------------------------------------
+               Deep Scan Result
+          -------------------------------------------------- -->
+          <section class="deep-scan-result" id="deepScanResult" aria-live="polite" hidden>
+            <div class="deep-scan-head">
+              <span><i class="bx bx-scan"></i> Deep Organ Scan</span>
+              <strong id="scanResultSystem">SYSTEM</strong>
+            </div>
+            <div class="deep-scan-grid">
+              <div class="deep-scan-icon"><i class="bx bx-heart-circle"></i></div>
+              <div>
+                <div class="deep-scan-title" id="scanResultName">Organ</div>
+                <p id="scanResultDesc">Select an organ and run Deep Scan to inspect detailed biology data.</p>
+                <div class="bio-metrics deep-scan-metrics" id="scanResultMetrics"></div>
+              </div>
+            </div>
+            <div class="deep-scan-details" id="scanResultDetails"></div>
+          </section>
         </div>
-      </div>
-      <div class="swiper organDetailSwiper">
-        <div class="swiper-wrapper" id="organDetailSlides"></div>
-        <div class="swiper-pagination"></div>
       </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.5/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/biology.js"></script>

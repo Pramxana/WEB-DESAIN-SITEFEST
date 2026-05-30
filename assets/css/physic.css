@@ -209,7 +209,8 @@ body {
   border-color: var(--primary);
 }
 .comp-btn.active::after {
-  content: "✓";
+  content: "\ea41";
+  font-family: boxicons !important;
   position: absolute;
   top: 2px;
   right: 4px;
@@ -252,12 +253,16 @@ body {
 }
 
 .action-btn {
+  display: block;
   width: 100%;
   padding: 9px;
+  box-sizing: border-box;
   border-radius: var(--radius);
   font-family: var(--font-mono);
   font-size: 0.62rem;
   font-weight: 700;
+  text-align: center;
+  text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: none;

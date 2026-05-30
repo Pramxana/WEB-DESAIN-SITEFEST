@@ -97,10 +97,10 @@
               </div>
             </div>
             <div style="display: flex; gap: 8px; align-items: center">
-              <button class="btn btn-yellow btn-sm" onclick="loadChallenge()">
+              <a class="btn btn-yellow btn-sm" href="challenge.html">
                 <i class="bx bx-trophy"></i>
                 Challenge Mode
-              </button>
+              </a>
               <button
                 class="btn btn-primary btn-sm"
                 id="runBtnTop"
@@ -370,12 +370,6 @@
                   class="panel-body"
                   style="display: flex; flex-direction: column; gap: 6px"
                 >
-                  <button
-                    class="action-btn ab-challenge"
-                    onclick="loadChallenge()"
-                  >
-                    <i class="bx bx-trophy"></i> Challenge Mode
-                  </button>
                   <button class="action-btn ab-reset" onclick="resetLab()">
                     <i class="bx bx-refresh"></i> Reset Circuit
                   </button>
@@ -428,7 +422,7 @@
                 </div>
                 <div class="oscillo-wrap">
                   <div class="oscillo-head">
-                    <span>⚡ Oscilloscope — Voltage / Time</span>
+                    <span><i class="bx bx-bolt-circle" aria-hidden="true"></i> Oscilloscope — Voltage / Time</span>
                     <span id="oscLabel">DC Signal</span>
                   </div>
                   <canvas id="oscilloCanvas"></canvas>
@@ -446,19 +440,19 @@
                   <div class="fm-desc">Current ∝ Voltage, ∝ 1/Resistance</div>
                 </div>
                 <div class="formula-mini">
-                  <span class="fm-icon">💡</span>
+                  <span class="fm-icon"><i class="bx bx-bulb" aria-hidden="true"></i></span>
                   <div class="fm-name">Power</div>
                   <div class="fm-eq">P = <span>VI</span></div>
                   <div class="fm-desc">Energy per unit time in Watts</div>
                 </div>
                 <div class="formula-mini">
-                  <span class="fm-icon">🔌</span>
+                  <span class="fm-icon"><i class="bx bx-plug" aria-hidden="true"></i></span>
                   <div class="fm-name">Series R</div>
                   <div class="fm-eq"><span>R</span>t = ΣR</div>
                   <div class="fm-desc">Resistors add up in series circuits</div>
                 </div>
                 <div class="formula-mini">
-                  <span class="fm-icon">🔀</span>
+                  <span class="fm-icon"><i class="bx bx-shuffle" aria-hidden="true"></i></span>
                   <div class="fm-name">Parallel R</div>
                   <div class="fm-eq">1/<span>R</span>t = Σ1/R</div>
                   <div class="fm-desc">
@@ -477,7 +471,7 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon">📊</div>
+                  <div class="panel-header-icon"><i class="bx bx-bar-chart-alt-2" aria-hidden="true"></i></div>
                   <span class="panel-header-title">Live Meters</span>
                   <span class="panel-header-badge">Realtime</span>
                 </div>
@@ -610,7 +604,7 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon">📋</div>
+                  <div class="panel-header-icon"><i class="bx bx-clipboard" aria-hidden="true"></i></div>
                   <span class="panel-header-title">Observations</span>
                   <span class="panel-header-badge">LIVE</span>
                 </div>
@@ -631,7 +625,7 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon">📌</div>
+                  <div class="panel-header-icon"><i class="bx bx-pin" aria-hidden="true"></i></div>
                   <span class="panel-header-title">Experiment Steps</span>
                 </div>
                 <div class="panel-body">

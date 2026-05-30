@@ -10,6 +10,15 @@ const challengeLabels = {
   bio: 'Biology Challenge',
   all: 'All Challenges'
 };
+function bxIcon(name, extraClass = '') {
+  const className = extraClass ? `bx ${name} ${extraClass}` : `bx ${name}`;
+  return `<i class="${className}" aria-hidden="true"></i>`;
+}
+
+function bxIconText(name, text, extraClass = '') {
+  return `${bxIcon(name, extraClass)} ${text}`;
+}
+
 
 function markActiveSelector(tab) {
   document.querySelectorAll('.tab-btn').forEach((button) => {
@@ -68,7 +77,7 @@ function showToast(msg, type = 'info', duration = 3000) {
 function openModal(id, title, sub, badge = null) {
   document.getElementById(id === 'success' ? 'successTitle' : 'failedTitle').textContent = title;
   document.getElementById(id === 'success' ? 'successSub' : 'failedSub').textContent = sub;
-  if (badge && id === 'success') document.getElementById('badgeAward').textContent = '⭐ ' + badge;
+  if (badge && id === 'success') document.getElementById('badgeAward').innerHTML = bxIconText('bx-star', badge);
   document.getElementById(id + 'Modal').classList.add('show');
   if (id === 'success') spawnConfetti();
 }
@@ -208,7 +217,7 @@ const ChemState = {
       this.isCompleted = true;
       stopTimer('chem-timer');
       localStorage.setItem('badge_molecular_expert', 'true');
-      addChemLog('✓ NETRALISASI BERHASIL! pH = ' + this.currentpH.toFixed(1), 'success');
+      addChemLog(bxIconText('bx-check', 'NETRALISASI BERHASIL! pH = ' + this.currentpH.toFixed(1)), 'success');
       setTimeout(() => openModal('success', 'MISSION COMPLETE!', `Limbah berhasil dinetralkan! pH = ${this.currentpH.toFixed(1)}\nVolume final: ${this.volume} mL`, 'MOLECULAR EXPERT BADGE'), 600);
       return true;
     }
@@ -221,7 +230,7 @@ const ChemState = {
       beaker.classList.add('shake');
       setTimeout(() => beaker.classList.remove('shake'), 600);
       this.spawnSmoke();
-      addChemLog('⚠ BAHAYA! Konsentrasi ekstrem — eksperimen tidak aman!', 'error');
+      addChemLog(bxIconText('bx-error', 'BAHAYA! Konsentrasi ekstrem — eksperimen tidak aman!'), 'error');
       setTimeout(() => {
         openModal('failed', 'EXPERIMENT FAILED', 'Konsentrasi zat terlalu ekstrem.\nTabung reaksi tidak aman! Reset dan coba strategi lain.');
       }, 800);
@@ -279,7 +288,7 @@ function addCompound(name, ph, type) {
     const lastCompound = ChemState.addedList[ChemState.addedList.length - 1];
     const rxn = mixCompounds(lastCompound.name, name);
     if (rxn) {
-      addChemLog(`⚗ REAKSI: ${lastCompound.name} + ${name} → ${rxn.product} | ${rxn.note}`, 'success');
+      addChemLog(`${bxIcon('bx-test-tube')} REAKSI: ${lastCompound.name} + ${name} → ${rxn.product} | ${rxn.note}`, 'success');
       ChemState.reactions++;
       // --------------------------------------------------
       // Pull toward reaction pH more aggressively
@@ -306,7 +315,7 @@ function addCompound(name, ph, type) {
 
 function activateMix() {
   if (ChemState.addedList.length < 2) { showToast('Tambahkan minimal 2 senyawa terlebih dahulu!', 'error'); return; }
-  addChemLog('⚡ MIXING ACTIVATED — Kalkulasi reaksi dijalankan...', 'info');
+  addChemLog(bxIconText('bx-bolt-circle', 'MIXING ACTIVATED — Kalkulasi reaksi dijalankan...'), 'info');
   // --------------------------------------------------
   // Simulate mixing effect
   // --------------------------------------------------
@@ -340,7 +349,7 @@ const PhysState = {
   isCompleted: false,
   circuitOn: false,
   voltage: 9,
-  components: {}, // cellId -> {type, resistance, voltage, emoji}
+  components: {}, // cellId -> {type, resistance, voltage, icon}
 
   init() {
     this.buildGrid();
@@ -399,11 +408,11 @@ const PhysState = {
       // --------------------------------------------------
       // Short circuit!
       // --------------------------------------------------
-      document.getElementById('lampIcon').textContent = '💥';
+      document.getElementById('lampIcon').innerHTML = bxIcon('bx-error');
       document.getElementById('lampIcon').className = 'lamp-icon';
       document.getElementById('lampStatus').textContent = 'SHORT CIRCUIT!';
       document.getElementById('lampStatus').style.color = 'var(--neon-red)';
-      document.getElementById('oscStatus').textContent = '// ⚠ SHORT CIRCUIT DETECTED — R = 0Ω';
+      document.getElementById('oscStatus').innerHTML = `// ${bxIcon('bx-error')} SHORT CIRCUIT DETECTED — R = 0Ω`;
       document.getElementById('oscStatus').style.color = 'var(--neon-red)';
       this.drawOscWave('overload');
       openModal('failed', 'SHORT CIRCUIT!', 'Resistansi = 0Ω! Arus tak terbatas merusak rangkaian.\nTambahkan resistor untuk membatasi arus.');
@@ -411,7 +420,7 @@ const PhysState = {
     }
 
     if (!isFinite(calc.I) || calc.I > 4.0) {
-      document.getElementById('lampIcon').textContent = '💥';
+      document.getElementById('lampIcon').innerHTML = bxIcon('bx-error');
       document.getElementById('lampStatus').textContent = 'OVERLOAD — BURNT OUT!';
       document.getElementById('lampStatus').style.color = 'var(--neon-red)';
       document.getElementById('lampIcon').classList.add('overload');
@@ -426,12 +435,12 @@ const PhysState = {
       // --------------------------------------------------
       this.isCompleted = true;
       stopTimer('phys-timer');
-      document.getElementById('lampIcon').textContent = '💡';
+      document.getElementById('lampIcon').innerHTML = bxIcon('bx-bulb');
       document.getElementById('lampIcon').className = 'lamp-icon on';
-      document.getElementById('lampStatus').textContent = `PERFECT! I = ${calc.I.toFixed(2)}A ✓`;
+      document.getElementById('lampStatus').innerHTML = `PERFECT! I = ${calc.I.toFixed(2)}A ${bxIcon('bx-check')}`;
       document.getElementById('lampStatus').style.color = 'var(--neon-green)';
       this.drawOscWave('normal', calc.I);
-      document.getElementById('oscStatus').textContent = `// ✓ STABLE — I = ${calc.I.toFixed(2)}A — DALAM TOLERANSI`;
+      document.getElementById('oscStatus').innerHTML = `// ${bxIcon('bx-check')} STABLE — I = ${calc.I.toFixed(2)}A — DALAM TOLERANSI`;
       document.getElementById('oscStatus').style.color = 'var(--neon-green)';
       localStorage.setItem('badge_circuit_master', 'true');
       setTimeout(() => openModal('success', 'POWER RESTORED!', `Arus ${calc.I.toFixed(2)}A dalam rentang toleransi.\nLampu menyala — Kota bercahaya kembali!`, 'CIRCUIT MASTER BADGE'), 600);
@@ -439,12 +448,12 @@ const PhysState = {
       // --------------------------------------------------
       // Not optimal
       // --------------------------------------------------
-      document.getElementById('lampIcon').textContent = '💡';
+      document.getElementById('lampIcon').innerHTML = bxIcon('bx-bulb');
       document.getElementById('lampIcon').className = 'lamp-icon';
       document.getElementById('lampStatus').textContent = `I = ${calc.I.toFixed(2)}A — DI LUAR TOLERANSI`;
       document.getElementById('lampStatus').style.color = 'var(--neon-yellow)';
       this.drawOscWave('weak', calc.I);
-      document.getElementById('oscStatus').textContent = `// ⚠ I = ${calc.I.toFixed(2)}A — Target: 1.5–2.0A`;
+      document.getElementById('oscStatus').innerHTML = `// ${bxIcon('bx-error')} I = ${calc.I.toFixed(2)}A — Target: 1.5–2.0A`;
       document.getElementById('oscStatus').style.color = 'var(--neon-yellow)';
       showToast(`Arus ${calc.I.toFixed(2)}A — Sesuaikan resistor hingga 1.5–2.0A!`, 'error');
     }
@@ -482,12 +491,12 @@ function dropComponent(e, cellIdx) {
   const cell = document.getElementById(`cell-${cellIdx}`);
   if (cell.textContent.trim() && !cell.querySelector('.remove-cell')) return; // occupied
 
-  const icons = { battery:'🔋', resistor:'⬛', lamp:'💡', switch:'🔘' };
+  const icons = { battery:'bx-battery', resistor:'bx-square', lamp:'bx-bulb', switch:'bx-power-off' };
   const labels = { battery:`${dragData.voltage}V`, resistor:`${dragData.resistance}Ω`, lamp:'LED', switch:'SW' };
 
-  cell.innerHTML = `<span style="font-size:22px">${icons[dragData.type]}</span>
+  cell.innerHTML = `<i class="bx ${icons[dragData.type]} circuit-cell-icon" aria-hidden="true"></i>
     <span class="cell-label">${labels[dragData.type]}</span>
-    <button class="remove-cell" onclick="removeCell(${cellIdx})">✕</button>`;
+    <button class="remove-cell" onclick="removeCell(${cellIdx})"><i class="bx bx-x" aria-hidden="true"></i></button>`;
   cell.classList.add('has-component');
 
   PhysState.components[cellIdx] = { ...dragData };
@@ -527,13 +536,13 @@ function toggleCircuit() {
   const btn = document.getElementById('circuitSwitch');
   PhysState.circuitOn = !PhysState.circuitOn;
   if (PhysState.circuitOn) {
-    btn.textContent = '🔌 DEACTIVATE CIRCUIT';
+    btn.innerHTML = bxIconText('bx-plug', 'DEACTIVATE CIRCUIT');
     btn.classList.add('on');
     PhysState.checkCircuit();
   } else {
-    btn.textContent = '⚡ ACTIVATE CIRCUIT';
+    btn.innerHTML = bxIconText('bx-bolt-circle', 'ACTIVATE CIRCUIT');
     btn.classList.remove('on');
-    document.getElementById('lampIcon').textContent = '💡';
+    document.getElementById('lampIcon').innerHTML = bxIcon('bx-bulb');
     document.getElementById('lampIcon').className = 'lamp-icon';
     document.getElementById('lampStatus').textContent = 'CIRCUIT INACTIVE';
     document.getElementById('lampStatus').style.color = 'var(--text-dim)';
@@ -550,14 +559,14 @@ function resetPhys() {
   PhysState.components = {};
   PhysState.buildGrid();
   PhysState.updateOhmDisplay({ V: 9, R: 0, I: 0, hasBattery: false, hasLamp: false });
-  document.getElementById('lampIcon').textContent = '💡';
+  document.getElementById('lampIcon').innerHTML = bxIcon('bx-bulb');
   document.getElementById('lampIcon').className = 'lamp-icon';
   document.getElementById('lampStatus').textContent = 'CIRCUIT INACTIVE';
   document.getElementById('lampStatus').style.color = 'var(--text-dim)';
   PhysState.drawOscWave(false);
   document.getElementById('oscStatus').textContent = '// STANDBY — Activate circuit to see waveform';
   document.getElementById('oscStatus').style.color = '#006020';
-  document.getElementById('circuitSwitch').textContent = '⚡ ACTIVATE CIRCUIT';
+  document.getElementById('circuitSwitch').innerHTML = bxIconText('bx-bolt-circle', 'ACTIVATE CIRCUIT');
   document.getElementById('circuitSwitch').classList.remove('on');
   document.getElementById('volt-val').textContent = '9';
   document.getElementById('resist-val').textContent = '—';
@@ -677,8 +686,8 @@ function dropOrgan(e, dzOrgan) {
     // --------------------------------------------------
     const organEl = document.getElementById(`organ-${droppedOrgan}`);
     if (organEl) organEl.classList.add('placed');
-    addScanLog(`✓ ${droppedOrgan.toUpperCase()} terpasang dengan benar!`);
-    showToast(`✓ ${droppedOrgan} — Posisi tepat!`, 'success');
+    addScanLog(`${bxIcon('bx-check')} ${droppedOrgan.toUpperCase()} terpasang dengan benar!`, 'success');
+    showToast(`${droppedOrgan} ? Posisi tepat!`, 'success');
   } else {
     // --------------------------------------------------
     // WRONG!
@@ -686,8 +695,8 @@ function dropOrgan(e, dzOrgan) {
     BioState.mistakes++;
     dzEl.classList.add('wrong');
     setTimeout(() => dzEl.classList.remove('wrong'), 600);
-    addScanLog(`✗ Salah! ${droppedOrgan} bukan di sini.`);
-    showToast(`✗ Organ salah posisi! Coba lagi.`, 'error');
+    addScanLog(`${bxIcon('bx-x')} Salah! ${droppedOrgan} bukan di sini.`, 'error');
+    showToast('Organ salah posisi! Coba lagi.', 'error');
     BioState.checkFail();
   }
 
@@ -717,8 +726,8 @@ function scanComplaint(complaintNum, targetOrgan) {
       BioState.diagnosedSet.add(complaintNum);
       BioState.diagnosedComplaints++;
       document.getElementById(`complaint-${complaintNum}`).classList.add('diagnosed');
-      document.getElementById(`cs-${complaintNum}`).textContent = '✅';
-      addScanLog(`✓ DIAGNOSIS CONFIRMED — Keluhan #${complaintNum}: ${targetOrgan.toUpperCase()}`);
+      document.getElementById(`cs-${complaintNum}`).innerHTML = bxIcon('bx-check');
+      addScanLog(`${bxIcon('bx-check')} DIAGNOSIS CONFIRMED — Keluhan #${complaintNum}: ${targetOrgan.toUpperCase()}`, 'success');
       showToast(`Diagnosis #${complaintNum} berhasil!`, 'success');
       BioState.updateUI();
       BioState.checkWin();
@@ -730,26 +739,26 @@ function activateScan() {
   BioState.scanActive = !BioState.scanActive;
   const btn = document.querySelector('.scan-btn');
   if (BioState.scanActive) {
-    btn.textContent = '🔬 SCAN ACTIVE — Click Complaint to Diagnose';
+    btn.innerHTML = bxIconText('bx-scan', 'SCAN ACTIVE — Click Complaint to Diagnose');
     btn.style.borderColor = 'var(--neon-green)';
     btn.style.color = 'var(--neon-green)';
     addScanLog('>> SCAN TOOL ACTIVATED');
     addScanLog('>> Klik keluhan pasien untuk mendiagnosis');
     showToast('Scan Tool aktif! Klik keluhan untuk diagnosa.', 'success');
   } else {
-    btn.textContent = '🔬 ACTIVATE SCAN TOOL';
+    btn.innerHTML = bxIconText('bx-scan', 'ACTIVATE SCAN TOOL');
     btn.style.borderColor = 'var(--neon-purple)';
     btn.style.color = 'var(--neon-purple)';
     addScanLog('>> Scan tool standby');
   }
 }
 
-function addScanLog(msg) {
+function addScanLog(msg, type = 'info') {
   const log = document.getElementById('scanLog');
   const el = document.createElement('div');
-  el.textContent = msg;
-  if (msg.startsWith('✓')) el.style.color = 'var(--neon-green)';
-  else if (msg.startsWith('✗')) el.style.color = 'var(--neon-red)';
+  el.innerHTML = msg;
+  if (type === 'success') el.style.color = 'var(--neon-green)';
+  else if (type === 'error') el.style.color = 'var(--neon-red)';
   else el.style.color = 'var(--neon-blue)';
   log.appendChild(el);
   log.scrollTop = log.scrollHeight;
@@ -773,14 +782,14 @@ function resetBio() {
   // --------------------------------------------------
   for (let i = 1; i <= 3; i++) {
     document.getElementById(`complaint-${i}`).classList.remove('diagnosed');
-    document.getElementById(`cs-${i}`).textContent = '🔍';
+    document.getElementById(`cs-${i}`).innerHTML = bxIcon('bx-search');
   }
   document.getElementById('complaint-1').classList.add('active-complaint');
   // --------------------------------------------------
   // Reset scan btn
   // --------------------------------------------------
   const btn = document.querySelector('.scan-btn');
-  btn.textContent = '🔬 ACTIVATE SCAN TOOL';
+  btn.innerHTML = bxIconText('bx-scan', 'ACTIVATE SCAN TOOL');
   btn.style.borderColor = 'var(--neon-purple)';
   btn.style.color = 'var(--neon-purple)';
   document.getElementById('scanLog').innerHTML = '<div>// Scan tool standby</div>';

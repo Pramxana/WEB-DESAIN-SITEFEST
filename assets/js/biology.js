@@ -265,8 +265,6 @@ const ORGAN_DATA = {
 let activeOrganId = null;
 let manualRotation = 0;
 let bodyParallax = { x: 0, y: 0 };
-let detailSwiper = null;
-let guideSwiper = null;
 
 (function ($) {
   "use strict";
@@ -279,13 +277,10 @@ let guideSwiper = null;
     const $organStatusPanel = $("#organStatusPanel");
 
     buildOrganIndex();
-    buildGuideSlides();
     initTypedStatus();
-    initGuideSwiper();
     bindAnatomy();
     bindControls();
-    bindQuiz();
-    initClockAndVitals();
+    initVitals();
     initEcg();
 
     selectOrgan("organ-heart", { silent: true });
@@ -367,7 +362,6 @@ let guideSwiper = null;
         const nextId = ids[(currentIndex + 1) % ids.length];
         $("#guidedToggle").prop("checked", true).trigger("change");
         selectOrgan(nextId);
-        if (guideSwiper) guideSwiper.slideTo(Object.keys(ORGAN_DATA).indexOf(nextId));
       });
 
       $("#resetBtn").on("click", resetView);
@@ -377,7 +371,7 @@ let guideSwiper = null;
       });
 
       $(document).on("click", ".deep-scan-btn", function () {
-        openOrganModal(activeOrganId || "organ-heart");
+        showDeepScanResult(activeOrganId || "organ-heart");
       });
     }
 
@@ -397,7 +391,6 @@ let guideSwiper = null;
       renderStatusPanel(data);
       applyOrganVitals(data);
       updateFact(data);
-      updateModalContent(data);
 
       if (!options.silent) {
         addLog("Analysis locked: " + data.name + " - " + data.system + ".");
@@ -440,50 +433,39 @@ let guideSwiper = null;
           miniVital("O2", mini.o2 + "%") +
           miniVital("Temp", mini.temp + " C") +
           miniVital("Resp", mini.rr + "/min") +
-        "</div>" +
-        '<button type="button" class="btn btn-ghost btn-sm deep-scan-btn"><i class="bx bx-search-alt"></i> View Modal</button>'
+        "</div>"
       );
     }
 
-    function updateModalContent(data) {
-      $("#modalOrganSystem").text(data.system);
-      $("#modalOrganName").text(data.name);
-      $("#modalOrganDesc").text(data.desc);
-      $(".modal-organ-icon i").attr("class", data.icon);
-      $("#modalOrganMetrics").html(
+    function showDeepScanResult(organId) {
+      const data = ORGAN_DATA[organId];
+      const result = document.getElementById("deepScanResult");
+      if (!data || !result) return;
+
+      $("#scanResultSystem").text(data.system);
+      $("#scanResultName").text(data.name);
+      $("#scanResultDesc").text(data.desc);
+      $(".deep-scan-icon i").attr("class", data.icon);
+      $("#scanResultMetrics").html(
         metric("Condition", data.status) +
         metric("Function", data.functionShort) +
         metric("Perfusion", data.bloodFlow)
       );
 
-      $("#organDetailSlides").html(
-        detailSlide("System Type", data.system + " - " + data.type) +
-        detailSlide("Main Function", data.functionShort) +
-        detailSlide("Learning Focus", data.functions.join(", ")) +
-        detailSlide("Connected Structures", data.related.join(", "))
+      $("#scanResultDetails").html(
+        scanDetail("System Type", data.system + " - " + data.type) +
+        scanDetail("Main Function", data.functionShort) +
+        scanDetail("Learning Focus", data.functions.join(", ")) +
+        scanDetail("Connected Structures", data.related.join(", "))
       );
 
-      window.setTimeout(function () {
-        if (window.Swiper) {
-          if (detailSwiper) detailSwiper.destroy(true, true);
-          detailSwiper = new Swiper(".organDetailSwiper", {
-            loop: true,
-            pagination: { el: ".organDetailSwiper .swiper-pagination", clickable: true },
-          });
-        }
-      }, 0);
-    }
-
-    function openOrganModal(organId) {
-      const data = ORGAN_DATA[organId];
-      if (!data) return;
-      updateModalContent(data);
-      if (window.Fancybox) {
-        Fancybox.show([{ src: "#organModal", type: "inline" }], {
-          dragToClose: false,
-          animated: true,
-        });
-      }
+      result.hidden = false;
+      result.classList.remove("is-visible");
+      window.requestAnimationFrame(function () {
+        result.classList.add("is-visible");
+        result.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      addLog("Deep scan complete: " + data.name + " data expanded.");
     }
 
     function buildOrganIndex() {
@@ -500,32 +482,6 @@ let guideSwiper = null;
 
       $("#organIndex").html(html).on("click", ".organ-index-item", function () {
         selectOrgan($(this).data("organ-id"));
-      });
-    }
-
-    function buildGuideSlides() {
-      const slides = Object.entries(ORGAN_DATA).map(([id, data]) => {
-        return (
-          '<div class="swiper-slide">' +
-            '<button type="button" class="guide-slide" data-organ-id="' + id + '">' +
-              "<strong><i class='" + data.icon + "'></i> " + data.name + "</strong>" +
-              "<p>" + data.functionShort + "</p>" +
-            "</button>" +
-          "</div>"
-        );
-      }).join("");
-
-      $("#organGuideSlides").html(slides).on("click", ".guide-slide", function () {
-        selectOrgan($(this).data("organ-id"));
-      });
-    }
-
-    function initGuideSwiper() {
-      if (!window.Swiper) return;
-      guideSwiper = new Swiper(".organGuideSwiper", {
-        loop: true,
-        spaceBetween: 10,
-        pagination: { el: ".organGuideSwiper .swiper-pagination", clickable: true },
       });
     }
 
@@ -546,40 +502,8 @@ let guideSwiper = null;
       });
     }
 
-    function bindQuiz() {
-      const quizBank = [
-        { q: "Which organ drives systemic and pulmonary circulation?", a: "Heart", c: ["Brain", "Heart", "Liver"] },
-        { q: "Which organ is the primary site of gas exchange?", a: "Lungs", c: ["Lungs", "Stomach", "Pancreas"] },
-        { q: "Which organ performs detoxification and bile production?", a: "Liver", c: ["Trachea", "Liver", "Brain"] },
-        { q: "Which organ regulates blood glucose using insulin?", a: "Pancreas", c: ["Stomach", "Pancreas", "Blood vessels"] },
-      ];
-
-      let answer = "";
-
-      $("#quizBtn").on("click", function () {
-        const item = quizBank[Math.floor(Math.random() * quizBank.length)];
-        answer = item.a;
-        $("#quizCard").addClass("active");
-        $("#quizQuestion").text(item.q);
-        $("#quizFeedback").text("");
-        $("#quizChoices").html(item.c.sort(() => Math.random() - 0.5).map((choice) => {
-          return '<button type="button" class="quiz-choice">' + choice + "</button>";
-        }).join(""));
-        addLog("Anatomy quiz generated.");
-      });
-
-      $("#quizChoices").on("click", ".quiz-choice", function () {
-        const correct = $(this).text().trim() === answer;
-        $(this).addClass(correct ? "correct" : "wrong");
-        $("#quizFeedback").text(correct ? "Correct. Anatomy pathway reinforced." : "Not quite. Correct answer: " + answer + ".");
-        addLog(correct ? "Quiz answer accepted." : "Quiz answer reviewed.");
-      });
-    }
-
-    function initClockAndVitals() {
+    function initVitals() {
       setInterval(function () {
-        const now = new Date();
-        $("#bioClock").text(now.toTimeString().slice(0, 8));
         updateRadials();
       }, 1000);
 
@@ -642,6 +566,7 @@ let guideSwiper = null;
       updateOpacity();
       applyBodyTransform();
       $simView.removeClass("heatmap-mode guided-mode");
+      $("#deepScanResult").prop("hidden", true).removeClass("is-visible");
       $(".tab-btn").removeClass("active").filter(function () {
         return $(this).text().trim().toLowerCase() === "organs";
       }).addClass("active");
@@ -742,8 +667,8 @@ let guideSwiper = null;
       return '<div class="mini-vital"><span>' + label + '</span><strong>' + value + "</strong></div>";
     }
 
-    function detailSlide(label, value) {
-      return '<div class="swiper-slide"><div class="detail-slide"><span>' + label + "</span><p>" + value + "</p></div></div>";
+    function scanDetail(label, value) {
+      return '<article class="deep-scan-detail"><span>' + label + "</span><p>" + value + "</p></article>";
     }
 
     function dataIdByName(name) {

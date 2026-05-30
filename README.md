@@ -63,20 +63,6 @@ WEB-DESAIN-SITEFEST/
 - `assets/css/global.css` adalah file tema utama. Warna inti dikelola dengan variable seperti `--primary`, `--secondary`, `--background`, `--surface`, `--text-main`, `--text-muted`, `--border`, dan `--accent`.
 - `assets/js/main.js` berisi utility global seperti custom cursor.
 
-## Teknologi dan Library
-
-- HTML5
-- CSS3
-- JavaScript vanilla
-- Canvas API
-- Inline SVG untuk visual simulasi tertentu
-- Boxicons untuk icon
-- Google Fonts: Space Grotesk, Bebas Neue, dan Space Mono
-
-## Cara Menjalankan Project
-
-Project dapat dijalankan langsung dengan membuka `landingpage.html` di browser. Project ini tidak membutuhkan framework, bundler, build step, atau server lokal.
-
 ## Catatan Pengembangan
 
 - Sistem warna sudah dipusatkan di `assets/css/global.css` dan halaman lain menggunakan variable agar tema lebih konsisten.

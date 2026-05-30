@@ -1,3 +1,6 @@
+<!-- --------------------------------------------------
+     Challenge Mode Page
+-------------------------------------------------- -->
 <!DOCTYPE html>
 <html lang="id">
   <head>
@@ -13,11 +16,17 @@
     />
   </head>
   <body class="challenge-page">
+    <!-- --------------------------------------------------
+         Decorative Background
+    -------------------------------------------------- -->
     <div class="cursor" id="cursor"></div>
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="grid-bg"></div>
     <div class="scan-line"></div>
 
+    <!-- --------------------------------------------------
+         Mission Result Modals
+    -------------------------------------------------- -->
     <div class="modal-overlay" id="successModal">
       <div class="challenge-success-modal">
         <div class="modal-icon"><i class="bx bx-trophy"></i></div>
@@ -43,9 +52,18 @@
       </div>
     </div>
 
+    <!-- --------------------------------------------------
+         Toast Notification
+    -------------------------------------------------- -->
     <div class="toast" id="toast"></div>
 
+    <!-- --------------------------------------------------
+         Application Shell
+    -------------------------------------------------- -->
     <div class="app">
+      <!-- --------------------------------------------------
+           Sidebar Navigation
+      -------------------------------------------------- -->
       <aside class="sidebar">
         <a href="dashboard.html" class="sidebar-logo">
           <div class="sidebar-logo-icon">
@@ -83,7 +101,13 @@
         </nav>
       </aside>
 
+      <!-- --------------------------------------------------
+           Main Content
+      -------------------------------------------------- -->
       <div class="main">
+        <!-- --------------------------------------------------
+             Topbar Header
+        -------------------------------------------------- -->
         <header class="topbar">
           <div>
             <div class="topbar-title">CHALLENGE MODE</div>
@@ -94,6 +118,9 @@
           </div>
         </header>
 
+        <!-- --------------------------------------------------
+             Challenge Workspace
+        -------------------------------------------------- -->
         <div class="content challenge-content">
           <div class="page-header">
             <div>
@@ -117,6 +144,9 @@
           </div>
 
           <div class="challenge-workspace">
+            <!-- --------------------------------------------------
+                 Challenge Selector
+            -------------------------------------------------- -->
             <aside class="challenge-selector-panel panel-card">
               <div class="panel-header">
                 <span class="panel-header-icon"><i class="bx bx-book-open"></i></span>
@@ -142,6 +172,9 @@
               </div>
             </aside>
 
+            <!-- --------------------------------------------------
+                 Active Challenge Arena
+            -------------------------------------------------- -->
             <section class="challenge-arena">
               <div class="panel-card" style="margin-bottom:16px;">
                 <div class="panel-header">
@@ -151,6 +184,9 @@
                 </div>
               </div>
 
+              <!-- --------------------------------------------------
+                   Challenge Lab Panels
+              -------------------------------------------------- -->
               <div class="challenge-stage">
 <!-- --------------------------------------------------
      LAB 1: KIMIA
@@ -161,7 +197,7 @@
        Mission Header
   -------------------------------------------------- -->
   <div class="mission-header">
-    <div class="mission-icon">⚗️</div>
+    <div class="mission-icon"><i class="bx bx-test-tube" aria-hidden="true"></i></div>
     <div>
       <div class="mission-title">THE CHEMICAL MASTERMIND — MISI NETRALISASI LIMBAH</div>
       <div class="mission-desc">// OBJECTIVE: Netralkan larutan limbah hingga pH = 7.0 sebelum waktu habis</div>
@@ -180,7 +216,7 @@
     <div class="card-title"><div class="dot"></div>SENYAWA TERSEDIA</div>
 
     <div class="compound-item" id="comp-hcl" onclick="selectCompound('HCl')">
-      <div class="compound-icon">🧪</div>
+      <div class="compound-icon"><i class="bx bx-test-tube" aria-hidden="true"></i></div>
       <div class="compound-info">
         <div class="compound-name">HCl</div>
         <div class="compound-ph">Asam Kuat — pH <span>1.0</span></div>
@@ -189,7 +225,7 @@
     </div>
 
     <div class="compound-item" id="comp-h2so4" onclick="selectCompound('H₂SO₄')">
-      <div class="compound-icon">🔴</div>
+      <div class="compound-icon"><i class="bx bx-droplet icon-acid" aria-hidden="true"></i></div>
       <div class="compound-info">
         <div class="compound-name">H₂SO₄</div>
         <div class="compound-ph">Asam Kuat — pH <span>0.5</span></div>
@@ -198,7 +234,7 @@
     </div>
 
     <div class="compound-item" id="comp-naoh" onclick="selectCompound('NaOH')">
-      <div class="compound-icon">🔵</div>
+      <div class="compound-icon"><i class="bx bx-droplet icon-base" aria-hidden="true"></i></div>
       <div class="compound-info">
         <div class="compound-name">NaOH</div>
         <div class="compound-ph">Basa Kuat — pH <span>13.0</span></div>
@@ -207,7 +243,7 @@
     </div>
 
     <div class="compound-item" id="comp-nh3" onclick="selectCompound('NH₃')">
-      <div class="compound-icon">🟡</div>
+      <div class="compound-icon"><i class="bx bx-circle icon-weak-base" aria-hidden="true"></i></div>
       <div class="compound-info">
         <div class="compound-name">NH₃</div>
         <div class="compound-ph">Basa Lemah — pH <span>11.0</span></div>
@@ -216,7 +252,7 @@
     </div>
 
     <div class="compound-item" id="comp-ch3cooh" onclick="selectCompound('CH₃COOH')">
-      <div class="compound-icon">🟢</div>
+      <div class="compound-icon"><i class="bx bx-circle icon-weak-acid" aria-hidden="true"></i></div>
       <div class="compound-info">
         <div class="compound-name">CH₃COOH</div>
         <div class="compound-ph">Asam Lemah — pH <span>3.0</span></div>
@@ -225,7 +261,7 @@
     </div>
 
     <div class="compound-item" id="comp-h2o" onclick="selectCompound('H₂O')">
-      <div class="compound-icon">💧</div>
+      <div class="compound-icon"><i class="bx bx-water" aria-hidden="true"></i></div>
       <div class="compound-info">
         <div class="compound-name">H₂O (Aquades)</div>
         <div class="compound-ph">Netral — pH <span>7.0</span></div>
@@ -314,14 +350,15 @@
           <div class="stat-value" id="reaction-count" style="color:var(--neon-green);">0</div>
         </div>
       </div>
-      <button class="activate-btn" onclick="activateMix()">⚡ MIX & REACT</button>
+      <button class="activate-btn" onclick="activateMix()"><i class="bx bx-bolt-circle" aria-hidden="true"></i> MIX & REACT</button>
       <button class="reset-btn" onclick="resetChem()">↺ RESET EXPERIMENT</button>
     </div>
   </div>
 
-</div><!-- --------------------------------------------------
-     end lab-chem
--------------------------------------------------- -->
+  <!-- --------------------------------------------------
+       End Chemistry Lab
+  -------------------------------------------------- -->
+</div>
 
 <!-- --------------------------------------------------
      LAB 2: FISIKA
@@ -329,7 +366,7 @@
 <div class="lab-panel" id="lab-phys" data-lab="phys">
 
   <div class="mission-header">
-    <div class="mission-icon">⚡</div>
+    <div class="mission-icon"><i class="bx bx-bolt-circle" aria-hidden="true"></i></div>
     <div>
       <div class="mission-title">SHORT CIRCUIT SOLVER — POWER THE CITY</div>
       <div class="mission-desc">// OBJECTIVE: Susun rangkaian agar arus I berada di rentang 1.5A – 2.0A</div>
@@ -348,7 +385,7 @@
     <div class="card-title"><div class="dot" style="background:var(--neon-yellow);box-shadow:0 0 8px var(--neon-yellow);"></div>KOMPONEN</div>
 
     <div class="component-block" draggable="true" data-type="battery" data-voltage="9" ondragstart="dragComponent(event)">
-      <div class="component-icon">🔋</div>
+      <div class="component-icon"><i class="bx bx-battery" aria-hidden="true"></i></div>
       <div>
         <div class="component-name">Battery</div>
         <div class="component-spec">V = 9V</div>
@@ -357,7 +394,7 @@
     </div>
 
     <div class="component-block" draggable="true" data-type="resistor" data-resistance="5" ondragstart="dragComponent(event)">
-      <div class="component-icon">â¬›</div>
+      <div class="component-icon"><i class="bx bx-square" aria-hidden="true"></i></div>
       <div>
         <div class="component-name">Resistor 5Ω</div>
         <div class="component-spec">R = 5Ω</div>
@@ -366,7 +403,7 @@
     </div>
 
     <div class="component-block" draggable="true" data-type="resistor" data-resistance="3" ondragstart="dragComponent(event)">
-      <div class="component-icon">â¬›</div>
+      <div class="component-icon"><i class="bx bx-square" aria-hidden="true"></i></div>
       <div>
         <div class="component-name">Resistor 3Ω</div>
         <div class="component-spec">R = 3Ω</div>
@@ -375,7 +412,7 @@
     </div>
 
     <div class="component-block" draggable="true" data-type="resistor" data-resistance="1" ondragstart="dragComponent(event)">
-      <div class="component-icon">â¬›</div>
+      <div class="component-icon"><i class="bx bx-square" aria-hidden="true"></i></div>
       <div>
         <div class="component-name">Resistor 1Ω</div>
         <div class="component-spec">R = 1Ω</div>
@@ -384,7 +421,7 @@
     </div>
 
     <div class="component-block" draggable="true" data-type="lamp" data-resistance="2" ondragstart="dragComponent(event)">
-      <div class="component-icon">💡</div>
+      <div class="component-icon"><i class="bx bx-bulb" aria-hidden="true"></i></div>
       <div>
         <div class="component-name">Lamp LED</div>
         <div class="component-spec">Tol: 1.5–2.0A</div>
@@ -393,7 +430,7 @@
     </div>
 
     <div class="component-block" draggable="true" data-type="switch" ondragstart="dragComponent(event)">
-      <div class="component-icon">🔘</div>
+      <div class="component-icon"><i class="bx bx-power-off" aria-hidden="true"></i></div>
       <div>
         <div class="component-name">Switch</div>
         <div class="component-spec">On / Off</div>
@@ -402,7 +439,7 @@
     </div>
 
     <div style="margin-top:12px;padding:10px;background:var(--bg);border:1px solid var(--border);font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);line-height:1.8;">
-      💡 TIP: Seret komponen ke grid.<br>
+      <i class="bx bx-bulb" aria-hidden="true"></i> TIP: Seret komponen ke grid.<br>
       Susun: Battery → Resistor(s) → Lamp<br>
       Target: V/R_total = 1.5A – 2.0A
     </div>
@@ -466,18 +503,19 @@
 
     <div class="card lamp-display">
       <div class="card-title"><div class="dot" style="background:var(--neon-yellow);box-shadow:0 0 8px var(--neon-yellow);"></div>LAMP STATUS</div>
-      <div class="lamp-icon" id="lampIcon">💡</div>
+      <div class="lamp-icon" id="lampIcon"><i class="bx bx-bulb" aria-hidden="true"></i></div>
       <div class="lamp-status" id="lampStatus" style="color:var(--text-dim)">CIRCUIT INACTIVE</div>
       <div style="margin-top:8px;font-family:'Space Mono',monospace;font-size:9px;color:var(--text-dim);">Tolerance: 1.5A – 2.0A</div>
     </div>
 
-    <button class="circuit-switch-btn" id="circuitSwitch" onclick="toggleCircuit()">⚡ ACTIVATE CIRCUIT</button>
+    <button class="circuit-switch-btn" id="circuitSwitch" onclick="toggleCircuit()"><i class="bx bx-bolt-circle" aria-hidden="true"></i> ACTIVATE CIRCUIT</button>
     <button class="reset-btn" onclick="resetPhys()" style="width:100%;padding:12px;">↺ RESET CIRCUIT</button>
   </div>
 
-</div><!-- --------------------------------------------------
-     end lab-phys
--------------------------------------------------- -->
+  <!-- --------------------------------------------------
+       End Physics Lab
+  -------------------------------------------------- -->
+</div>
 
 <!-- --------------------------------------------------
      LAB 3: BIOLOGI
@@ -485,7 +523,7 @@
 <div class="lab-panel" id="lab-bio" data-lab="bio">
 
   <div class="mission-header">
-    <div class="mission-icon">🔬</div>
+    <div class="mission-icon"><i class="bx bx-scan" aria-hidden="true"></i></div>
     <div>
       <div class="mission-title">THE ANATOMY DETECTIVE — DIAGNOSIS PASIEN VIRTUAL</div>
       <div class="mission-desc">// OBJECTIVE: Pasang semua organ dengan benar & diagnosis 3 keluhan pasien</div>
@@ -507,11 +545,11 @@
       <div class="body-silhouette" id="bodySilhouette">
         <div class="body-head"></div>
         <div class="body-outline">
-          <div class="drop-zone" id="dz-brain" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'brain')">🧠</div>
-          <div class="drop-zone" id="dz-lung-l" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'lung-l')">🫁</div>
-          <div class="drop-zone" id="dz-lung-r" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'lung-r')">🫁</div>
-          <div class="drop-zone" id="dz-heart" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'heart')">â¤ï¸</div>
-          <div class="drop-zone" id="dz-stomach" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'stomach')">🫃</div>
+          <div class="drop-zone" id="dz-brain" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'brain')"><i class="bx bx-brain" aria-hidden="true"></i></div>
+          <div class="drop-zone" id="dz-lung-l" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'lung-l')"><i class="bx bx-wind" aria-hidden="true"></i></div>
+          <div class="drop-zone" id="dz-lung-r" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'lung-r')"><i class="bx bx-wind" aria-hidden="true"></i></div>
+          <div class="drop-zone" id="dz-heart" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'heart')"><i class="bx bx-heart" aria-hidden="true"></i></div>
+          <div class="drop-zone" id="dz-stomach" ondragover="allowDrop(event)" ondrop="dropOrgan(event,'stomach')"><i class="bx bx-capsule" aria-hidden="true"></i></div>
         </div>
       </div>
 
@@ -526,23 +564,23 @@
     -------------------------------------------------- -->
     <div class="card organs-tray">
       <div class="organ-item" id="organ-heart" draggable="true" data-organ="heart" ondragstart="dragOrgan(event)">
-        <div class="organ-emoji">â¤ï¸</div>
+        <div class="organ-emoji"><i class="bx bx-heart" aria-hidden="true"></i></div>
         <div class="organ-label">JANTUNG</div>
       </div>
       <div class="organ-item" id="organ-lung-l" draggable="true" data-organ="lung-l" ondragstart="dragOrgan(event)">
-        <div class="organ-emoji">🫁</div>
+        <div class="organ-emoji"><i class="bx bx-wind" aria-hidden="true"></i></div>
         <div class="organ-label">PARU-L</div>
       </div>
       <div class="organ-item" id="organ-lung-r" draggable="true" data-organ="lung-r" ondragstart="dragOrgan(event)">
-        <div class="organ-emoji">🫁</div>
+        <div class="organ-emoji"><i class="bx bx-wind" aria-hidden="true"></i></div>
         <div class="organ-label">PARU-R</div>
       </div>
       <div class="organ-item" id="organ-stomach" draggable="true" data-organ="stomach" ondragstart="dragOrgan(event)">
-        <div class="organ-emoji">🫃</div>
+        <div class="organ-emoji"><i class="bx bx-capsule" aria-hidden="true"></i></div>
         <div class="organ-label">LAMBUNG</div>
       </div>
       <div class="organ-item" id="organ-brain" draggable="true" data-organ="brain" ondragstart="dragOrgan(event)">
-        <div class="organ-emoji">🧠</div>
+        <div class="organ-emoji"><i class="bx bx-brain" aria-hidden="true"></i></div>
         <div class="organ-label">OTAK</div>
       </div>
     </div>
@@ -553,7 +591,7 @@
   -------------------------------------------------- -->
   <div class="diagnosis-panel">
     <div class="card patient-card">
-      <div class="patient-avatar">🧑‍⚕️</div>
+      <div class="patient-avatar"><i class="bx bx-clinic" aria-hidden="true"></i></div>
       <div class="patient-name">PASIEN: BUDI SANTOSO</div>
       <div class="patient-age">USIA: 45 TAHUN | ID: PT-0042</div>
       <div class="vital-row"><span class="vital-name">HEART RATE</span><span class="vital-val abnormal" id="bio-hr">112 BPM ↑</span></div>
@@ -567,22 +605,22 @@
       <div class="card-title"><div class="dot" style="background:var(--neon-purple);box-shadow:0 0 8px var(--neon-purple);"></div>OBSERVATION LOG</div>
 
       <div class="complaint-item active-complaint" id="complaint-1" data-organ="lung-l" onclick="scanComplaint(1,'lung-l')">
-        <div class="complaint-icon">😮‍💨</div>
+        <div class="complaint-icon"><i class="bx bx-wind" aria-hidden="true"></i></div>
         <div class="complaint-text">"Sesak napas parah, sulit bernapas sejak 2 hari"</div>
-        <div class="complaint-status" id="cs-1">🔍</div>
+        <div class="complaint-status" id="cs-1"><i class="bx bx-search" aria-hidden="true"></i></div>
       </div>
       <div class="complaint-item" id="complaint-2" data-organ="heart" onclick="scanComplaint(2,'heart')">
-        <div class="complaint-icon">💓</div>
+        <div class="complaint-icon"><i class="bx bx-heart" aria-hidden="true"></i></div>
         <div class="complaint-text">"Nyeri dada kiri, detak jantung tidak teratur"</div>
-        <div class="complaint-status" id="cs-2">🔍</div>
+        <div class="complaint-status" id="cs-2"><i class="bx bx-search" aria-hidden="true"></i></div>
       </div>
       <div class="complaint-item" id="complaint-3" data-organ="stomach" onclick="scanComplaint(3,'stomach')">
-        <div class="complaint-icon">🤢</div>
+        <div class="complaint-icon"><i class="bx bx-sad" aria-hidden="true"></i></div>
         <div class="complaint-text">"Mual parah dan nyeri ulu hati setelah makan"</div>
-        <div class="complaint-status" id="cs-3">🔍</div>
+        <div class="complaint-status" id="cs-3"><i class="bx bx-search" aria-hidden="true"></i></div>
       </div>
 
-      <button class="scan-btn" onclick="activateScan()">🔬 ACTIVATE SCAN TOOL</button>
+      <button class="scan-btn" onclick="activateScan()"><i class="bx bx-scan" aria-hidden="true"></i> ACTIVATE SCAN TOOL</button>
     </div>
   </div>
 
@@ -637,9 +675,10 @@
     <button class="reset-btn" onclick="resetBio()" style="width:100%;padding:12px;">↺ RESET EXPERIMENT</button>
   </div>
 
-</div><!-- --------------------------------------------------
-     end lab-bio
--------------------------------------------------- -->
+  <!-- --------------------------------------------------
+       End Biology Lab
+  -------------------------------------------------- -->
+</div>
               </div>
             </section>
           </div>
@@ -647,6 +686,9 @@
       </div>
     </div>
 
+    <!-- --------------------------------------------------
+         Script Includes
+    -------------------------------------------------- -->
     <script src="assets/js/main.js"></script>
     <script src="assets/js/challenge.js"></script>
   </body>
