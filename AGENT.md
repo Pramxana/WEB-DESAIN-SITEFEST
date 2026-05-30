@@ -483,22 +483,82 @@ Aktifkan alat scan             → Activate Scan Tool
 
 ---
 
-## 13. Responsive Design
+## 13. Mobile Compatibility dan Responsive Design
 
-Website harus tetap nyaman dibuka di layar kecil.
+Eksperika harus dapat digunakan pada desktop, tablet, dan mobile karena visi project adalah membuat laboratorium virtual yang lebih mudah diakses, ringan, dan tidak bergantung pada perangkat besar. Tampilan desktop tetap menjadi versi utama, tetapi pengalaman mobile tidak boleh rusak, terpotong, atau sulit digunakan.
 
-### Aturan Responsive
+### Prinsip Mobile-First untuk Eksperika
 
-- Sidebar boleh berubah menjadi layout lebih ringkas di layar kecil.
-- Card dan panel harus bisa turun ke satu kolom.
-- Jangan biarkan content overflow horizontal.
-- Canvas atau simulasi harus memiliki ukuran yang fleksibel.
-- Font heading besar di landing page harus diturunkan ukurannya di mobile.
-- Button group harus bisa wrap.
+- Semua halaman wajib tetap terbaca dan dapat digunakan pada layar kecil.
+- Jangan biarkan konten keluar dari layar secara horizontal.
+- Jangan mengunci layout hanya untuk desktop.
+- Simulasi harus tetap bisa dipahami meskipun beberapa fitur kompleks perlu disederhanakan pada mobile.
+- Ukuran teks, tombol, card, dan area interaksi harus nyaman untuk sentuhan jari.
+- Elemen penting seperti Start Challenge, Reset, Mix & React, Activate Circuit, dan Activate Scan Tool harus tetap terlihat jelas di mobile.
+- Jika layout desktop menggunakan banyak kolom, ubah menjadi satu kolom atau stacked layout di mobile.
+- Prioritaskan performa ringan agar website tetap nyaman dibuka pada perangkat rendah.
 
-Gunakan breakpoint yang konsisten, misalnya:
+### Sidebar dan Navigasi Mobile
+
+- Sidebar desktop boleh berubah menjadi sidebar collapsible, drawer menu, bottom navigation, atau compact top navigation pada layar kecil.
+- Jangan biarkan sidebar memakan terlalu banyak lebar layar mobile.
+- Menu aktif tetap harus terlihat jelas.
+- Navigasi utama seperti Home, Chemistry Lab, Physics Lab, Biology Lab, dan Challenge tetap harus mudah dijangkau.
+- Jika sidebar dibuat collapsible, pastikan tombol buka/tutup jelas dan memiliki icon Boxicons yang konsisten.
+- Breadcrumb boleh diperkecil atau disederhanakan di mobile, tetapi jangan sampai membingungkan user.
+
+### Layout Halaman Mobile
+
+- Card dan panel harus turun menjadi satu kolom pada mobile.
+- Gunakan `grid-template-columns: 1fr` atau flex column untuk layout yang semula multi-kolom.
+- Gunakan spacing yang cukup agar elemen tidak terlalu rapat.
+- Hindari tinggi fixed yang membuat konten terpotong.
+- Gunakan `max-width: 100%`, `overflow-x: hidden`, dan ukuran yang fleksibel untuk media, canvas, panel, dan simulasi.
+- Jika perlu scroll, gunakan scroll vertikal yang natural. Hindari scroll horizontal kecuali benar-benar dibutuhkan untuk canvas/simulasi.
+
+### Touch Interaction
+
+- Ukuran tombol dan area klik minimal nyaman untuk touch interaction.
+- Jangan mengandalkan hover sebagai satu-satunya feedback, karena hover tidak bekerja dengan baik di mobile.
+- Setiap hover state harus memiliki alternatif active, selected, disabled, atau tap feedback.
+- Drag & drop pada mobile harus diuji. Jika sulit digunakan, sediakan alternatif tap-to-select lalu tap-to-place.
+- Untuk Challenge Mode, user mobile harus tetap bisa menyelesaikan misi tanpa mouse.
+
+### Simulasi Lab pada Mobile
+
+#### Chemistry Lab dan Chemistry Challenge
+
+- Panel compound, beaker, pH meter, status, dan action button harus tersusun rapi pada layar kecil.
+- Daftar compound boleh menjadi accordion, horizontal scroll terkontrol, atau stacked cards.
+- Tombol `+ ADD`, `MIX & REACT`, dan `RESET EXPERIMENT` harus mudah ditekan.
+- pH meter dan beaker tidak boleh keluar dari container.
+- Teks status dan log harus tetap terbaca.
+
+#### Physics Lab dan Physics Challenge
+
+- Circuit grid harus menyesuaikan ukuran layar.
+- Komponen seperti Battery, Resistor, Lamp, dan Switch harus tetap mudah dipilih di mobile.
+- Jika drag & drop sulit di mobile, gunakan fallback interaction seperti tap component lalu tap grid cell.
+- Komponen yang sudah digunakan tetap harus disabled/redup dan kembali aktif saat dihapus.
+- Panel oscilloscope, lamp status, dan calculation result boleh turun ke bawah circuit grid.
+
+#### Biology Lab dan Biology Challenge
+
+- Anatomy View harus selalu muat di dalam panel.
+- Tubuh/manekin tidak boleh melewati batas canvas pada mobile maupun desktop.
+- Drop zone organ harus cukup besar untuk touch interaction.
+- Jika drag & drop sulit di mobile, gunakan fallback tap-to-place.
+- Tombol `ACTIVATE SCAN TOOL`, observation log, diagnosis, mission progress, dan mistake tracker harus tetap mudah digunakan.
+
+### Breakpoint Standar
+
+Gunakan breakpoint yang konsisten di seluruh CSS:
 
 ```css
+@media (max-width: 1200px) {
+  /* Small desktop / large tablet layout */
+}
+
 @media (max-width: 1024px) {
   /* Tablet layout */
 }
@@ -512,6 +572,31 @@ Gunakan breakpoint yang konsisten, misalnya:
 }
 ```
 
+### Mobile Performance
+
+- Hindari animasi berat pada mobile.
+- Gunakan animasi ringan seperti opacity, transform, atau glow sederhana.
+- Jangan menambahkan library baru hanya untuk memperbaiki layout mobile.
+- Load library hanya pada halaman yang membutuhkannya.
+- Optimalkan ukuran gambar dan hindari asset besar yang tidak diperlukan.
+- Custom cursor boleh dinonaktifkan pada perangkat touch agar tidak mengganggu performa dan UX.
+
+### Checklist Mobile
+
+Sebelum perubahan dianggap selesai, pastikan:
+
+- [ ] Tidak ada horizontal overflow pada layar mobile.
+- [ ] Sidebar tidak menutupi konten utama secara permanen.
+- [ ] Semua tombol utama mudah ditekan.
+- [ ] Font heading dan body tetap terbaca.
+- [ ] Card dan panel turun menjadi satu kolom jika layar sempit.
+- [ ] Chemistry beaker dan pH meter tidak keluar dari panel.
+- [ ] Physics circuit grid tetap bisa digunakan.
+- [ ] Biology Anatomy View tetap muat di canvas.
+- [ ] Challenge Mode tetap bisa diselesaikan di mobile.
+- [ ] Hover effect memiliki alternatif tap/active feedback.
+- [ ] Tidak ada error di console saat dibuka dari mobile viewport.
+
 ---
 
 ## 14. Library dan Dependency
@@ -522,6 +607,8 @@ Project saat ini menggunakan:
 Boxicons v2.1.4
 Google Fonts
 jQuery v3.7.1
+FancyBox v5.0.36
+SwiperJS v11.1.5
 TypedJS v2.1.0
 ```
 
@@ -551,6 +638,8 @@ Sebelum menyimpan atau mengirim perubahan, pastikan:
 - [ ] JS tidak memiliki logic duplikat yang tidak perlu.
 - [ ] Link antarhalaman berfungsi.
 - [ ] Responsive layout tidak rusak.
+- [ ] Mobile layout tidak memiliki horizontal overflow.
+- [ ] Simulasi utama tetap dapat digunakan di mobile atau memiliki fallback interaksi.
 - [ ] Tidak ada error di console browser.
 - [ ] README.md diperbarui jika ada perubahan struktur atau fitur.
 
