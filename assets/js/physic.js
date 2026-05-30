@@ -308,14 +308,14 @@ function drawCapacitor(ctx, x, y, V, I) {
   ctx.shadowColor = "rgba(34,211,238,0.5)";
   
   // --------------------------------------------------
-  // Plate kiri
+  // Left plate
   // --------------------------------------------------
   ctx.strokeStyle = `rgba(34,211,238,${0.4 + charge * 0.5})`;
   ctx.lineWidth = 3;
   ctx.beginPath(); ctx.moveTo(x-6, y-20); ctx.lineTo(x-6, y+20); ctx.stroke();
   
   // --------------------------------------------------
-  // Plate kanan
+  // Right plate
   // --------------------------------------------------
   ctx.beginPath(); ctx.moveTo(x+6, y-20); ctx.lineTo(x+6, y+20); ctx.stroke();
   
@@ -329,7 +329,7 @@ function drawCapacitor(ctx, x, y, V, I) {
   }
   
   // --------------------------------------------------
-  // Wire kiri-kanan
+  // Left-to-right wire
   // --------------------------------------------------
   ctx.strokeStyle = "rgba(34,211,238,0.4)"; ctx.lineWidth = 1.5;
   ctx.beginPath(); ctx.moveTo(x-20, y); ctx.lineTo(x-6, y); ctx.stroke();

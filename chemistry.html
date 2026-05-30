@@ -102,14 +102,10 @@
                     <div class="page-sub">Realtime chemical reaction simulation &middot; pH Level &middot; Temperature &middot; Gas Output</div>
                   </div>
                   <div class="page-actions">
-                    <a class="btn btn-yellow btn-sm" href="challenge.html">
+                    <a class="btn btn-yellow btn-sm" href="challenge.html?mode=chemistry">
                       <i class="bx bx-trophy"></i>
                       Challenge Mode
                     </a>
-                    <button class="btn btn-primary btn-sm" type="button" onclick="runMix()">
-                      <i class="bx bx-play"></i>
-                      Run Experiment
-                    </button>
                   </div>
                 </div>
           
@@ -314,8 +310,9 @@
                                 <defs>
                                   <clipPath id="liq-clip"><rect x="20" y="18" width="110" height="147" rx="2"/></clipPath>
                                   <linearGradient id="liq-grad" x1="0" y1="0" x2="1" y2="0">
-                                    <stop offset="0%" stop-color="rgba(34,211,238,0.65)"/>
-                                    <stop offset="100%" stop-color="rgba(14,165,233,0.45)"/>
+                                    <stop id="liq-stop-start" offset="0%" stop-color="var(--accent)"/>
+                                    <stop id="liq-stop-mid" offset="52%" stop-color="var(--primary)"/>
+                                    <stop id="liq-stop-end" offset="100%" stop-color="var(--secondary)"/>
                                   </linearGradient>
                                   <filter id="gf"><feGaussianBlur stdDeviation="2.5" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
                                 </defs>
@@ -391,7 +388,7 @@
                               <span class="status-pill pill-low" id="sp-temp2">LOW</span>
                             </div>
                           </div>
-                          <div class="meter-bar"><div class="meter-fill" id="bar-temp" style="width:25%;background:linear-gradient(90deg,var(--blue-accent),var(--cyan));"></div></div>
+                          <div class="meter-bar"><div class="meter-fill" id="bar-temp" style="width:25%;background:linear-gradient(90deg,var(--primary),var(--accent));"></div></div>
                         </div>
           
                         <div class="meter-card">
@@ -402,7 +399,7 @@
                               <span class="meter-unit">mol/s</span>
                             </div>
                           </div>
-                          <div class="meter-bar"><div class="meter-fill" id="bar-rate" style="width:0%;background:linear-gradient(90deg,var(--cyan-dim),var(--cyan));"></div></div>
+                          <div class="meter-bar"><div class="meter-fill" id="bar-rate" style="width:0%;background:linear-gradient(90deg,rgba(var(--accent-rgb),0.35),var(--accent));"></div></div>
                           <div class="meter-foot"><span class="status-pill pill-low" id="sp-rate">SLOW</span></div>
                         </div>
           
@@ -414,7 +411,7 @@
                               <span class="meter-unit">mL</span>
                             </div>
                           </div>
-                          <div class="meter-bar"><div class="meter-fill" id="bar-gas" style="width:0%;background:linear-gradient(90deg,var(--green),var(--green-bright));"></div></div>
+                          <div class="meter-bar"><div class="meter-fill" id="bar-gas" style="width:0%;background:linear-gradient(90deg,var(--secondary),var(--secondary-light));"></div></div>
                           <div class="meter-foot"><span id="sp-gas" style="font-family:var(--font-mono);font-size:0.48rem;color:var(--text-muted);">NONE</span></div>
                         </div>
                       </div>

@@ -7,9 +7,17 @@ const challengeInitState = { chem: false, phys: false, bio: false };
 const challengeLabels = {
   chem: 'Chemistry Challenge',
   phys: 'Physics Challenge',
-  bio: 'Biology Challenge',
-  all: 'All Challenges'
+  bio: 'Biology Challenge'
 };
+const challengeModeAliases = {
+  chemistry: 'chem',
+  physics: 'phys',
+  biology: 'bio',
+  chem: 'chem',
+  phys: 'phys',
+  bio: 'bio'
+};
+const challengeURLModes = { chem: 'chemistry', phys: 'physics', bio: 'biology' };
 function bxIcon(name, extraClass = '') {
   const className = extraClass ? `bx ${name} ${extraClass}` : `bx ${name}`;
   return `<i class="${className}" aria-hidden="true"></i>`;
@@ -20,29 +28,21 @@ function bxIconText(name, text, extraClass = '') {
 }
 
 
-function markActiveSelector(tab) {
+function activateChallengeCard(tab) {
   document.querySelectorAll('.tab-btn').forEach((button) => {
     button.classList.toggle('active', button.dataset.tab === tab);
+    button.setAttribute('aria-selected', button.dataset.tab === tab ? 'true' : 'false');
   });
 }
 
 function showChallengePanel(tab) {
   const panels = document.querySelectorAll('.lab-panel');
-  const stage = document.querySelector('.challenge-stage');
-  if (stage) stage.classList.toggle('all-mode', tab === 'all');
-
   panels.forEach((panel) => {
-    const shouldShow = tab === 'all' || panel.dataset.lab === tab;
-    panel.classList.toggle('active', shouldShow);
+    panel.classList.toggle('active', panel.dataset.lab === tab);
   });
 }
 
 function initChallenge(tab) {
-  if (tab === 'all') {
-    ['chem', 'phys', 'bio'].forEach(initChallenge);
-    return;
-  }
-
   if (challengeInitState[tab]) return;
   if (tab === 'chem') ChemState.init();
   if (tab === 'phys') PhysState.init();
@@ -50,19 +50,36 @@ function initChallenge(tab) {
   challengeInitState[tab] = true;
 }
 
-function switchTab(tab) {
-  const selectedTab = tab || 'chem';
+function getChallengeModeFromURL() {
+  const mode = new URLSearchParams(window.location.search).get('mode');
+  return challengeModeAliases[mode] || 'chem';
+}
+
+function setChallengeMode(tab, updateURL = false) {
+  const selectedTab = challengeModeAliases[tab] || 'chem';
   activeTab = selectedTab;
-  markActiveSelector(selectedTab);
+  document.body.dataset.challengeMode = challengeURLModes[selectedTab];
+  activateChallengeCard(selectedTab);
   showChallengePanel(selectedTab);
   initChallenge(selectedTab);
+  syncChallengeInteractions(selectedTab);
 
   const activeLabel = document.getElementById('activeChallengeLabel');
   if (activeLabel) activeLabel.textContent = challengeLabels[selectedTab] || 'Challenge Mode';
+
+  if (updateURL) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('mode', challengeURLModes[selectedTab]);
+    window.history.replaceState({}, '', url);
+  }
+}
+
+function switchTab(tab) {
+  setChallengeMode(tab, true);
 }
 
 function initChallengePage() {
-  switchTab('chem');
+  setChallengeMode(getChallengeModeFromURL());
 }
 function showToast(msg, type = 'info', duration = 3000) {
   const t = document.getElementById('toast');
@@ -82,7 +99,7 @@ function backToLab() {
   } else if (activeTab === 'bio') {
     window.location.href = 'biology.html';
   } else {
-    window.location.href = 'dashboard.html'; // Halaman cadangan jika tab tidak dikenali
+    window.location.href = 'dashboard.html'; // Fallback page if the tab is not recognized
   }
 }
 
@@ -113,24 +130,12 @@ function spawnConfetti() {
 }
 
 function resetCurrentLab() {
-  // 1. Hentikan timer yang sedang berjalan
-  stopTimer(`${activeTab}-timer`);
-  
-  // 2. Kembalikan status challenge menjadi belum dimulai
-  challengeStarted[activeTab] = false;
-
-  // 3. Kembalikan teks waktu ke nilai default masing-masing lab
-  if (activeTab === 'chem') document.getElementById('chem-timer').textContent = '03:00';
-  if (activeTab === 'phys') document.getElementById('phys-timer').textContent = '05:00';
-  if (activeTab === 'bio') document.getElementById('bio-timer').textContent = '04:00';
-
-  // 4. Reset status eksperimen di dalam lab
   if (activeTab === 'chem') {
-    resetChem();
+    resetChemistryChallenge();
   } else if (activeTab === 'phys') {
-    resetPhys();
+    resetPhysicsChallenge();
   } else {
-    resetBio();
+    resetBiologyChallenge();
   }
 }
 
@@ -152,63 +157,142 @@ function startTimer(id, seconds, onExpire) {
   update();
   timerIntervals[id] = setInterval(update, 1000);
 }
-function stopTimer(id) { if (timerIntervals[id]) clearInterval(timerIntervals[id]); }
+function stopTimer(id) {
+  if (timerIntervals[id]) {
+    clearInterval(timerIntervals[id]);
+    delete timerIntervals[id];
+  }
+}
 
 const challengeStarted = { chem: false, phys: false, bio: false };
+const challengeTimerDefaults = {
+  chem: { id: 'chem-timer', text: '03:00' },
+  phys: { id: 'phys-timer', text: '05:00' },
+  bio: { id: 'bio-timer', text: '04:00' }
+};
 
-function startChallengeTimer() {
+function isChallengeActive(tab = activeTab) {
+  return challengeStarted[tab] === true;
+}
+
+function validateChallengeStarted(tab = activeTab) {
+  if (isChallengeActive(tab)) return true;
+  showToast('Press Start Challenge first to begin the mission.', 'error');
+  return false;
+}
+
+function resetChallengeActivation(tab) {
+  const timer = challengeTimerDefaults[tab];
+  stopTimer(timer.id);
+  challengeStarted[tab] = false;
+  document.getElementById(timer.id).textContent = timer.text;
+  document.getElementById(timer.id).classList.remove('danger');
+  document.getElementById('successModal').classList.remove('show');
+  document.getElementById('failedModal').classList.remove('show');
+  document.getElementById('badgeAward').textContent = 'BADGE EARNED';
+  disableChallengeInteractions(tab);
+}
+
+// --------------------------------------------------
+// CHALLENGE INTERACTION STATE
+// --------------------------------------------------
+function setElementInteractionState(selector, enabled) {
+  document.querySelectorAll(selector).forEach((element) => {
+    element.classList.toggle('interaction-disabled', !enabled);
+    element.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+  });
+}
+
+function disableChallengeInteractions(tab) {
+  const panel = document.getElementById(`lab-${tab}`);
+  if (panel) panel.classList.add('challenge-locked');
+  if (tab === 'chem') setElementInteractionState('#lab-chem .add-btn, #lab-chem .activate-btn', false);
+  if (tab === 'phys') {
+    setElementInteractionState('.component-block', false);
+    updateComponentAvailability();
+  }
+  if (tab === 'bio') setElementInteractionState('.organ-item', false);
+}
+
+function enableChallengeInteractions(tab) {
+  const panel = document.getElementById(`lab-${tab}`);
+  if (panel) panel.classList.remove('challenge-locked');
+  if (tab === 'chem') setElementInteractionState('#lab-chem .add-btn, #lab-chem .activate-btn', true);
+  if (tab === 'phys') {
+    setElementInteractionState('.component-block', true);
+    updateComponentAvailability();
+  }
+  if (tab === 'bio') setElementInteractionState('.organ-item', true);
+}
+
+function syncChallengeInteractions(tab = activeTab) {
+  if (isChallengeActive(tab)) enableChallengeInteractions(tab);
+  else disableChallengeInteractions(tab);
+}
+
+function startChallenge() {
   if (challengeStarted[activeTab]) return; 
   challengeStarted[activeTab] = true;
+  enableChallengeInteractions(activeTab);
   
   if (activeTab === 'chem') {
+    ChemState.isChallengeStarted = true;
     startTimer('chem-timer', 180, () => {
-      if (!ChemState.isCompleted) openModal('failed', 'TIME OUT!', 'Waktu habis. Limbah masih belum dinetralkan.', null);
+      if (!ChemState.isCompleted) openModal('failed', 'TIME OUT!', 'Time is up. The acid waste has not been neutralized.', null);
     });
-    addChemLog('TARGET: pH 7.0 ± 0.5 | Volume minimal 200 mL', 'info');
+    addChemLog('TARGET: pH 7.0 ± 0.5 | Minimum volume: 200 mL', 'info');
   } else if (activeTab === 'phys') {
+    PhysState.isChallengeStarted = true;
     startTimer('phys-timer', 300, () => {
-      if (!PhysState.isCompleted) openModal('failed', 'TIME OUT!', 'Waktu habis. Kota masih gelap gulita!');
+      if (!PhysState.isCompleted) openModal('failed', 'TIME OUT!', 'Time is up. The city is still dark.');
     });
   } else if (activeTab === 'bio') {
+    BioState.isChallengeStarted = true;
     startTimer('bio-timer', 240, () => {
-      if (!BioState.isCompleted) openModal('failed', 'TIME OUT!', 'Waktu habis. Pasien belum terdiagnosis!');
+      if (!BioState.isCompleted) openModal('failed', 'TIME OUT!', 'Time is up. The patient has not been diagnosed.');
     });
   }
 }
 
 // --------------------------------------------------
-// LAB 1: KIMIA — STATE MANAGEMENT
+// LAB 1: CHEMISTRY — STATE MANAGEMENT
 // --------------------------------------------------
 const ChemState = {
-  activeMission: "NETRALISASI_LIMBAH",
+  activeMission: "ACID_WASTE_NEUTRALIZATION",
   isCompleted: false,
+  isChallengeStarted: false,
   score: 0,
   volume: 50,       // mL, starts with 50mL waste
+  reactedVolume: 50,
   targetVolume: 200,
   currentpH: 1.0,
   dominantCompound: "HCl",
   compoundsAdded: 1,
   reactions: 0,
-  addedList: [],    // track what was added
+  addedList: [],    // compounds that have completed mixing
+  pendingCompounds: [],
 
   init() {
     this.reset();
-    addChemLog('Sistem diinisialisasi. Limbah asam terdeteksi.', 'info');
-    addChemLog('TARGET: pH 7.0 ± 0.5 | Volume minimal 200 mL', 'info');
+    addChemLog('System initialized. Acid waste detected.', 'info');
+    addChemLog('TARGET: pH 7.0 ± 0.5 | Minimum volume: 200 mL', 'info');
   },
 
   reset() {
     this.isCompleted = false;
+    this.isChallengeStarted = false;
     this.volume = 50;
+    this.reactedVolume = 50;
     this.currentpH = 1.0;
     this.dominantCompound = "HCl";
     this.compoundsAdded = 1;
     this.reactions = 0;
     this.addedList = [{name:'HCl', ph:1.0, type:'acid'}];
-    this.updateUI();
+    this.pendingCompounds = [];
+    this.updateUI({ spawnBubble: false });
   },
 
-  updateUI() {
+  updateUI({ spawnBubble = true } = {}) {
     const pH = this.currentpH;
     // --------------------------------------------------
     // pH color
@@ -245,7 +329,7 @@ const ChemState = {
     // --------------------------------------------------
     // bubbles
     // --------------------------------------------------
-    this.spawnBubbles(phColor);
+    if (spawnBubble) this.spawnBubbles(phColor);
   },
 
   spawnBubbles(color) {
@@ -263,25 +347,30 @@ const ChemState = {
   checkWinCondition() {
     const targetVolumeReached = this.volume >= this.targetVolume;
     if (Math.abs(this.currentpH - 7.0) <= 0.5 && targetVolumeReached) {
+      if (!validateChallengeStarted('chem')) {
+        addChemLog('Target reached, but the mission is not active. Press Start Challenge to validate the result.', 'info');
+        return false;
+      }
       this.isCompleted = true;
       stopTimer('chem-timer');
       localStorage.setItem('badge_molecular_expert', 'true');
-      addChemLog(bxIconText('bx-check', 'NETRALISASI BERHASIL! pH = ' + this.currentpH.toFixed(1)), 'success');
-      setTimeout(() => openModal('success', 'MISSION COMPLETE!', `Limbah berhasil dinetralkan! pH = ${this.currentpH.toFixed(1)}\nVolume final: ${this.volume} mL`, 'MOLECULAR EXPERT BADGE'), 600);
+      addChemLog(bxIconText('bx-check', 'NEUTRALIZATION SUCCESSFUL! pH = ' + this.currentpH.toFixed(1)), 'success');
+      setTimeout(() => openModal('success', 'MISSION COMPLETE!', `Waste neutralized successfully! pH = ${this.currentpH.toFixed(1)}\nFinal volume: ${this.volume} mL`, 'MOLECULAR EXPERT BADGE'), 600);
       return true;
     }
     return false;
   },
 
   checkFailCondition(newPH) {
+    if (!isChallengeActive('chem')) return false;
     if (newPH < 0.3 || newPH > 13.5) {
       const beaker = document.getElementById('beakerContainer');
       beaker.classList.add('shake');
       setTimeout(() => beaker.classList.remove('shake'), 600);
       this.spawnSmoke();
-      addChemLog(bxIconText('bx-error', 'BAHAYA! Konsentrasi ekstrem — eksperimen tidak aman!'), 'error');
+      addChemLog(bxIconText('bx-error', 'DANGER! Extreme concentration — unsafe experiment!'), 'error');
       setTimeout(() => {
-        openModal('failed', 'EXPERIMENT FAILED', 'Konsentrasi zat terlalu ekstrem.\nTabung reaksi tidak aman! Reset dan coba strategi lain.');
+        openModal('failed', 'EXPERIMENT FAILED', 'The concentration is too extreme.\nThe test tube is unsafe! Reset and try another strategy.');
       }, 800);
       return true;
     }
@@ -307,70 +396,117 @@ function mixCompounds(compoundA, compoundB) {
   // Simple pH averaging with some chemistry logic
   // --------------------------------------------------
   const reactions = {
-    'HCl+NaOH': { product: 'NaCl + H₂O', resultPH: 7.0, note: 'Netralisasi sempurna!' },
-    'H₂SO₄+NaOH': { product: 'Na₂SO₄ + H₂O', resultPH: 7.0, note: 'Netralisasi asam sulfat.' },
-    'HCl+NH₃': { product: 'NH₄Cl', resultPH: 5.5, note: 'Garam ammonium terbentuk.' },
-    'CH₃COOH+NaOH': { product: 'CH₃COONa + H₂O', resultPH: 8.9, note: 'Buffer asetat terbentuk.' },
+    'HCl+NaOH': { product: 'NaCl + H₂O', resultPH: 7.0, note: 'Complete neutralization!' },
+    'H₂SO₄+NaOH': { product: 'Na₂SO₄ + H₂O', resultPH: 7.0, note: 'Sulfuric acid neutralization.' },
+    'HCl+NH₃': { product: 'NH₄Cl', resultPH: 5.5, note: 'Ammonium salt formed.' },
+    'CH₃COOH+NaOH': { product: 'CH₃COONa + H₂O', resultPH: 8.9, note: 'Acetate buffer formed.' },
   };
   const key = `${compoundA}+${compoundB}`;
   const key2 = `${compoundB}+${compoundA}`;
   return reactions[key] || reactions[key2] || null;
 }
 
-function addCompound(name, ph, type) {
+// --------------------------------------------------
+// CHEMISTRY MIX QUEUE
+// --------------------------------------------------
+const compoundCardIds = {
+  HCl: 'comp-hcl',
+  'H₂SO₄': 'comp-h2so4',
+  NaOH: 'comp-naoh',
+  'NH₃': 'comp-nh3',
+  'CH₃COOH': 'comp-ch3cooh',
+  'H₂O': 'comp-h2o'
+};
+
+function renderPendingCompounds() {
+  document.querySelectorAll('.compound-item').forEach((item) => item.classList.remove('selected'));
+  ChemState.pendingCompounds.forEach((compound) => {
+    const card = document.getElementById(compoundCardIds[compound.name]);
+    if (card) card.classList.add('selected');
+  });
+}
+
+function addCompoundToQueue(name, ph, type) {
+  if (!validateChallengeStarted('chem')) return;
   if (ChemState.isCompleted) return;
-  const prevPH = ChemState.currentpH;
-  const prevVol = ChemState.volume;
-  const addVol = 25; // each addition = 25mL
-
-  // --------------------------------------------------
-  // pH calculation: volume-weighted average
-  // --------------------------------------------------
-  const newVol = prevVol + addVol;
-  let newPH = (prevPH * prevVol + ph * addVol) / newVol;
-  newPH = Math.max(0, Math.min(14, newPH));
-
-  // --------------------------------------------------
-  // Check for known reaction combos
-  // --------------------------------------------------
-  if (ChemState.addedList.length > 0) {
-    const lastCompound = ChemState.addedList[ChemState.addedList.length - 1];
-    const rxn = mixCompounds(lastCompound.name, name);
-    if (rxn) {
-      addChemLog(`${bxIcon('bx-test-tube')} REAKSI: ${lastCompound.name} + ${name} → ${rxn.product} | ${rxn.note}`, 'success');
-      ChemState.reactions++;
-      // --------------------------------------------------
-      // Pull toward reaction pH more aggressively
-      // --------------------------------------------------
-      newPH = (newPH + rxn.resultPH) / 2;
-    }
-  }
-
-  if (ChemState.checkFailCondition(newPH)) { return; }
-
-  ChemState.currentpH = parseFloat(newPH.toFixed(1));
-  ChemState.volume = newVol;
+  const addVol = 25;
+  ChemState.pendingCompounds.push({ name, ph, type, volume: addVol });
+  ChemState.volume += addVol;
   ChemState.compoundsAdded++;
-  ChemState.dominantCompound = name;
-  ChemState.addedList.push({name, ph, type});
+  ChemState.dominantCompound = `PENDING: ${name}`;
+  addChemLog(`+ ${name} added to queue (${addVol}mL). pH remains ${ChemState.currentpH.toFixed(1)} until MIX & REACT.`, 'info');
+  renderPendingCompounds();
+  ChemState.updateUI({ spawnBubble: false });
+}
 
-  addChemLog(`+ ${name} ditambahkan (${addVol}mL). pH: ${prevPH.toFixed(1)} → ${ChemState.currentpH.toFixed(1)}`, type === 'acid' ? 'error' : type === 'base' ? 'info' : 'success');
-  ChemState.updateUI();
+function calculatePendingPHChange() {
+  let nextPH = ChemState.currentpH;
+  let mixedVolume = ChemState.reactedVolume;
+  let previousCompound = ChemState.addedList[ChemState.addedList.length - 1];
+  const detectedReactions = [];
 
+  ChemState.pendingCompounds.forEach((compound) => {
+    const nextVolume = mixedVolume + compound.volume;
+    nextPH = (nextPH * mixedVolume + compound.ph * compound.volume) / nextVolume;
+    const reaction = previousCompound ? mixCompounds(previousCompound.name, compound.name) : null;
+
+    if (reaction) {
+      detectedReactions.push({ previousCompound, compound, reaction });
+      nextPH = (nextPH + reaction.resultPH) / 2;
+    }
+
+    mixedVolume = nextVolume;
+    previousCompound = compound;
+  });
+
+  return {
+    currentpH: Math.max(0, Math.min(14, parseFloat(nextPH.toFixed(1)))),
+    mixedVolume,
+    detectedReactions
+  };
+}
+
+function validateChallengeProgress() {
   if (!ChemState.checkWinCondition() && ChemState.volume >= ChemState.targetVolume) {
-    addChemLog(`Volume ${ChemState.volume}mL tercapai. pH masih ${ChemState.currentpH.toFixed(1)} — butuh penyesuaian lebih.`, 'info');
+    addChemLog(`Volume ${ChemState.volume}mL reached. pH is still ${ChemState.currentpH.toFixed(1)} — further adjustment required.`, 'info');
   }
 }
 
-function activateMix() {
-  if (ChemState.addedList.length < 2) { showToast('Tambahkan minimal 2 senyawa terlebih dahulu!', 'error'); return; }
-  addChemLog(bxIconText('bx-bolt-circle', 'MIXING ACTIVATED — Kalkulasi reaksi dijalankan...'), 'info');
+function mixAndReact() {
+  if (!validateChallengeStarted('chem')) return;
+  if (ChemState.pendingCompounds.length === 0) {
+    showToast('Add at least one compound first.', 'error');
+    return;
+  }
+
+  const queuedCompounds = [...ChemState.pendingCompounds];
+  const result = calculatePendingPHChange();
+  addChemLog(bxIconText('bx-bolt-circle', 'MIXING ACTIVATED — Calculating reaction...'), 'info');
+
   // --------------------------------------------------
   // Simulate mixing effect
   // --------------------------------------------------
   const beaker = document.getElementById('beakerContainer');
-  beaker.style.animation = 'none';
-  setTimeout(() => { beaker.style.animation = ''; ChemState.checkWinCondition(); }, 100);
+  beaker.classList.remove('shake');
+  void beaker.offsetWidth;
+  beaker.classList.add('shake');
+  setTimeout(() => beaker.classList.remove('shake'), 600);
+
+  result.detectedReactions.forEach(({ previousCompound, compound, reaction }) => {
+    addChemLog(`${bxIcon('bx-test-tube')} REACTION: ${previousCompound.name} + ${compound.name} → ${reaction.product} | ${reaction.note}`, 'success');
+  });
+
+  ChemState.pendingCompounds = [];
+  ChemState.addedList.push(...queuedCompounds);
+  ChemState.reactedVolume = result.mixedVolume;
+  ChemState.currentpH = result.currentpH;
+  ChemState.reactions += result.detectedReactions.length || 1;
+  ChemState.dominantCompound = queuedCompounds[queuedCompounds.length - 1].name;
+  renderPendingCompounds();
+  ChemState.updateUI();
+
+  if (ChemState.checkFailCondition(ChemState.currentpH)) return;
+  validateChallengeProgress();
 }
 
 function addChemLog(msg, type = '') {
@@ -384,24 +520,29 @@ function addChemLog(msg, type = '') {
   log.scrollTop = log.scrollHeight;
 }
 
-function resetChem() {
-  ChemState.reset();
+function resetChemistryChallenge() {
+  resetChallengeActivation('chem');
+  document.querySelectorAll('.bubble, .smoke-particle').forEach((particle) => particle.remove());
   document.getElementById('reactionLog').innerHTML = '';
   ChemState.init();
+  renderPendingCompounds();
 }
 
 // --------------------------------------------------
-// LAB 2: FISIKA — STATE MANAGEMENT
+// LAB 2: PHYSICS — STATE MANAGEMENT
 // --------------------------------------------------
 const PhysState = {
   isCompleted: false,
+  isChallengeStarted: false,
   circuitOn: false,
   voltage: 9,
   components: {}, // cellId -> {type, resistance, voltage, icon}
+  usedComponents: new Set(),
 
   init() {
     this.buildGrid();
     this.drawOscWave(false);
+    updateComponentAvailability();
   },
 
   buildGrid() {
@@ -442,11 +583,12 @@ const PhysState = {
   },
 
   checkCircuit() {
+    if (!validateChallengeStarted('phys')) return;
     const calc = this.calcOhm();
     this.updateOhmDisplay(calc);
 
     if (!calc.hasBattery || !calc.hasLamp) {
-      showToast('Rangkaian tidak lengkap! Butuh Battery + Lamp minimal.', 'error'); return;
+      showToast('Incomplete circuit! Add at least a Battery and Lamp.', 'error'); return;
     }
 
     if (calc.R === 0) {
@@ -460,7 +602,7 @@ const PhysState = {
       document.getElementById('oscStatus').innerHTML = `// ${bxIcon('bx-error')} SHORT CIRCUIT DETECTED — R = 0Ω`;
       document.getElementById('oscStatus').style.color = 'var(--neon-red)';
       this.drawOscWave('overload');
-      openModal('failed', 'SHORT CIRCUIT!', 'Resistansi = 0Ω! Arus tak terbatas merusak rangkaian.\nTambahkan resistor untuk membatasi arus.');
+      openModal('failed', 'SHORT CIRCUIT!', 'Resistance = 0Ω! Infinite current will damage the circuit.\nAdd a resistor to limit the current.');
       return;
     }
 
@@ -470,7 +612,7 @@ const PhysState = {
       document.getElementById('lampStatus').style.color = 'var(--neon-red)';
       document.getElementById('lampIcon').classList.add('overload');
       this.drawOscWave('overload');
-      openModal('failed', 'LAMP OVERLOADED!', `Arus ${calc.I.toFixed(2)}A melebihi toleransi!\nGunakan lebih banyak resistor.`);
+      openModal('failed', 'LAMP OVERLOADED!', `Current ${calc.I.toFixed(2)}A exceeds the tolerance!\nAdd more resistors.`);
       return;
     }
 
@@ -485,22 +627,22 @@ const PhysState = {
       document.getElementById('lampStatus').innerHTML = `PERFECT! I = ${calc.I.toFixed(2)}A ${bxIcon('bx-check')}`;
       document.getElementById('lampStatus').style.color = 'var(--neon-green)';
       this.drawOscWave('normal', calc.I);
-      document.getElementById('oscStatus').innerHTML = `// ${bxIcon('bx-check')} STABLE — I = ${calc.I.toFixed(2)}A — DALAM TOLERANSI`;
+      document.getElementById('oscStatus').innerHTML = `// ${bxIcon('bx-check')} STABLE — I = ${calc.I.toFixed(2)}A — WITHIN TOLERANCE`;
       document.getElementById('oscStatus').style.color = 'var(--neon-green)';
       localStorage.setItem('badge_circuit_master', 'true');
-      setTimeout(() => openModal('success', 'POWER RESTORED!', `Arus ${calc.I.toFixed(2)}A dalam rentang toleransi.\nLampu menyala — Kota bercahaya kembali!`, 'CIRCUIT MASTER BADGE'), 600);
+      setTimeout(() => openModal('success', 'POWER RESTORED!', `Current ${calc.I.toFixed(2)}A is within tolerance.\nLamp is on — The city is powered again!`, 'CIRCUIT MASTER BADGE'), 600);
     } else {
       // --------------------------------------------------
       // Not optimal
       // --------------------------------------------------
       document.getElementById('lampIcon').innerHTML = bxIcon('bx-bulb');
       document.getElementById('lampIcon').className = 'lamp-icon';
-      document.getElementById('lampStatus').textContent = `I = ${calc.I.toFixed(2)}A — DI LUAR TOLERANSI`;
+      document.getElementById('lampStatus').textContent = `I = ${calc.I.toFixed(2)}A — OUTSIDE TOLERANCE`;
       document.getElementById('lampStatus').style.color = 'var(--neon-yellow)';
       this.drawOscWave('weak', calc.I);
       document.getElementById('oscStatus').innerHTML = `// ${bxIcon('bx-error')} I = ${calc.I.toFixed(2)}A — Target: 1.5–2.0A`;
       document.getElementById('oscStatus').style.color = 'var(--neon-yellow)';
-      showToast(`Arus ${calc.I.toFixed(2)}A — Sesuaikan resistor hingga 1.5–2.0A!`, 'error');
+      showToast(`Current ${calc.I.toFixed(2)}A — Adjust resistance until the current is between 1.5–2.0A!`, 'error');
     }
   },
 
@@ -524,17 +666,83 @@ const PhysState = {
 
 let dragData = null;
 
+// --------------------------------------------------
+// Physics component availability
+// --------------------------------------------------
+function isComponentUsed(componentId) {
+  return PhysState.usedComponents.has(componentId);
+}
+
+function resetComponentVisualState(component) {
+  component.classList.remove('is-used', 'component-disabled', 'disabled');
+  component.removeAttribute('disabled');
+  component.style.removeProperty('opacity');
+  component.style.removeProperty('filter');
+  component.setAttribute('draggable', 'true');
+}
+
+function updateComponentAvailability() {
+  document.querySelectorAll('.component-block').forEach((component) => {
+    const componentId = component.dataset.componentId;
+    const isUsed = isComponentUsed(componentId);
+    const isDisabled = !isChallengeActive('phys') || isUsed;
+    if (isUsed) {
+      component.classList.add('is-used', 'component-disabled');
+      component.setAttribute('draggable', 'false');
+    } else {
+      resetComponentVisualState(component);
+    }
+    component.setAttribute('aria-disabled', isDisabled ? 'true' : 'false');
+  });
+}
+
+function markComponentAsUsed(componentId) {
+  PhysState.usedComponents.add(componentId);
+  updateComponentAvailability();
+}
+
+function markComponentAsAvailable(componentId) {
+  PhysState.usedComponents.delete(componentId);
+  updateComponentAvailability();
+}
+
 function dragComponent(e) {
-  dragData = { type: e.currentTarget.dataset.type, resistance: parseFloat(e.currentTarget.dataset.resistance||0), voltage: parseFloat(e.currentTarget.dataset.voltage||0) };
-  e.currentTarget.style.opacity = '0.5';
-  setTimeout(() => e.currentTarget.style.opacity = '1', 100);
+  if (!validateChallengeStarted('phys')) {
+    e.preventDefault();
+    dragData = null;
+    return;
+  }
+  const componentId = e.currentTarget.dataset.componentId;
+  if (isComponentUsed(componentId)) {
+    e.preventDefault();
+    dragData = null;
+    showToast('This component is already placed in the circuit. Remove it from the grid to use it again.', 'error');
+    return;
+  }
+  dragData = { componentId, type: e.currentTarget.dataset.type, resistance: parseFloat(e.currentTarget.dataset.resistance||0), voltage: parseFloat(e.currentTarget.dataset.voltage||0) };
+  const component = e.currentTarget;
+  component.style.opacity = '0.5';
+  setTimeout(() => component.style.removeProperty('opacity'), 100);
 }
 
 function dropComponent(e, cellIdx) {
   e.preventDefault();
+  if (!validateChallengeStarted('phys')) {
+    dragData = null;
+    return;
+  }
   if (!dragData) return;
   const cell = document.getElementById(`cell-${cellIdx}`);
-  if (cell.textContent.trim() && !cell.querySelector('.remove-cell')) return; // occupied
+  if (cell.classList.contains('has-component')) {
+    showToast('This circuit slot is already occupied. Remove the existing component first.', 'error');
+    dragData = null;
+    return;
+  }
+  if (isComponentUsed(dragData.componentId)) {
+    showToast('This component is already placed in the circuit. Remove it from the grid to use it again.', 'error');
+    dragData = null;
+    return;
+  }
 
   const icons = { battery:'bx-battery', resistor:'bx-square', lamp:'bx-bulb', switch:'bx-power-off' };
   const labels = { battery:`${dragData.voltage}V`, resistor:`${dragData.resistance}Ω`, lamp:'LED', switch:'SW' };
@@ -545,6 +753,7 @@ function dropComponent(e, cellIdx) {
   cell.classList.add('has-component');
 
   PhysState.components[cellIdx] = { ...dragData };
+  markComponentAsUsed(dragData.componentId);
   PhysState.updateOhmDisplay(PhysState.calcOhm());
   dragData = null;
 
@@ -556,9 +765,12 @@ function dropComponent(e, cellIdx) {
 
 function removeCell(idx) {
   const cell = document.getElementById(`cell-${idx}`);
+  const component = PhysState.components[idx];
+  if (!component) return;
   cell.innerHTML = '';
   cell.classList.remove('has-component');
   delete PhysState.components[idx];
+  markComponentAsAvailable(component.componentId);
   PhysState.updateOhmDisplay(PhysState.calcOhm());
   drawWires();
 }
@@ -578,6 +790,7 @@ function drawWires() {
 }
 
 function toggleCircuit() {
+  if (!validateChallengeStarted('phys')) return;
   const btn = document.getElementById('circuitSwitch');
   PhysState.circuitOn = !PhysState.circuitOn;
   if (PhysState.circuitOn) {
@@ -597,10 +810,13 @@ function toggleCircuit() {
   }
 }
 
-function resetPhys() {
+function resetPhysicsChallenge() {
+  resetChallengeActivation('phys');
   PhysState.isCompleted = false;
+  PhysState.isChallengeStarted = false;
   PhysState.circuitOn = false;
   PhysState.components = {};
+  PhysState.usedComponents = new Set();
   PhysState.buildGrid();
   PhysState.updateOhmDisplay({ V: 9, R: 0, I: 0, hasBattery: false, hasLamp: false });
   document.getElementById('lampIcon').innerHTML = bxIcon('bx-bulb');
@@ -620,10 +836,11 @@ function resetPhys() {
 }
 
 // --------------------------------------------------
-// LAB 3: BIOLOGI — STATE MANAGEMENT
+// LAB 3: BIOLOGY — STATE MANAGEMENT
 // --------------------------------------------------
 const BioState = {
   isCompleted: false,
+  isChallengeStarted: false,
   mistakes: 0,
   maxMistakes: 3,
   organsPlaced: 0,
@@ -638,7 +855,7 @@ const BioState = {
 
   init() {
     this.reset();
-   
+    initBiologyDragDrop();
   },
 
   reset() {
@@ -651,6 +868,7 @@ const BioState = {
     this.activeScanComplaint = null;
     this.selectedComplaint = null;
     this.isCompleted = false;
+    this.isChallengeStarted = false;
     this.updateUI();
   },
 
@@ -680,17 +898,19 @@ const BioState = {
 
   checkWin() {
     if (this.organsPlaced >= this.totalOrgans && this.diagnosedComplaints >= this.totalComplaints) {
+      if (!validateChallengeStarted('bio')) return false;
       this.isCompleted = true;
       stopTimer('bio-timer');
       localStorage.setItem('badge_anatomy_detective', 'true');
-      setTimeout(() => openModal('success', 'DIAGNOSIS COMPLETE!', 'Semua organ terpasang dengan benar.\n3 keluhan pasien berhasil didiagnosis!', 'ANATOMY DETECTIVE BADGE'), 600);
+      setTimeout(() => openModal('success', 'DIAGNOSIS COMPLETE!', 'All organs were placed correctly.\n3 patient complaints were diagnosed successfully!', 'ANATOMY DETECTIVE BADGE'), 600);
     }
   },
 
   checkFail() {
     if (this.mistakes >= this.maxMistakes) {
+      if (!validateChallengeStarted('bio')) return false;
       stopTimer('bio-timer');
-      openModal('failed', 'TOO MANY ERRORS!', '3 kesalahan fatal! Penempatan organ yang salah bisa membahayakan pasien.');
+      openModal('failed', 'TOO MANY ERRORS!', '3 critical mistakes! Incorrect organ placement could endanger the patient.');
     }
   }
 };
@@ -701,19 +921,54 @@ const BioState = {
 const organDropMap = { 'heart': 'dz-heart', 'lung-l': 'dz-lung-l', 'lung-r': 'dz-lung-r', 'stomach': 'dz-stomach', 'brain': 'dz-brain' };
 
 function dragOrgan(e) {
+  if (!validateChallengeStarted('bio')) {
+    e.preventDefault();
+    dragData = null;
+    return;
+  }
   dragData = { organId: e.currentTarget.dataset.organ };
   e.dataTransfer.setData('text/plain', e.currentTarget.dataset.organ);
+  e.currentTarget.classList.add('dragging');
+  highlightOrganDropZones(e.currentTarget.dataset.organ);
 }
 
-function allowDrop(e) { e.preventDefault(); }
+function clearOrganDropFeedback() {
+  document.querySelectorAll('.drop-zone').forEach((zone) => {
+    zone.classList.remove('drop-ready', 'drop-match', 'drag-over');
+  });
+}
 
-function dropOrgan(e, dzOrgan) {
+function highlightOrganDropZones(organId) {
+  clearOrganDropFeedback();
+  document.querySelectorAll('.drop-zone:not(.filled)').forEach((zone) => {
+    zone.classList.add('drop-ready');
+    zone.classList.toggle('drop-match', zone.id === organDropMap[organId]);
+  });
+}
+
+function endOrganDrag() {
+  document.querySelectorAll('.organ-item.dragging').forEach((organ) => organ.classList.remove('dragging'));
+  clearOrganDropFeedback();
+  dragData = null;
+}
+
+function allowDrop(e) {
   e.preventDefault();
-  const droppedOrgan = dragData ? dragData.organId : e.dataTransfer.getData('text/plain');
-  if (!droppedOrgan) return;
+  const zone = e.target.closest ? e.target.closest('.drop-zone') : null;
+  document.querySelectorAll('.drop-zone.drag-over').forEach((item) => item.classList.remove('drag-over'));
+  if (zone && !zone.classList.contains('filled')) zone.classList.add('drag-over');
+}
 
+function handleOrganDrop(droppedOrgan, dzOrgan) {
+  if (!validateChallengeStarted('bio')) {
+    endOrganDrag();
+    return;
+  }
   const dzEl = document.getElementById(`dz-${dzOrgan}`);
-  if (BioState.placedOrgans.has(dzOrgan)) return; // already filled
+  if (!droppedOrgan || !dzEl || BioState.placedOrgans.has(dzOrgan)) {
+    endOrganDrag();
+    return;
+  }
 
   if (droppedOrgan === dzOrgan) {
     // --------------------------------------------------
@@ -728,8 +983,8 @@ function dropOrgan(e, dzOrgan) {
     // --------------------------------------------------
     const organEl = document.getElementById(`organ-${droppedOrgan}`);
     if (organEl) organEl.classList.add('placed');
-    addScanLog(`${bxIcon('bx-check')} ${droppedOrgan.toUpperCase()} terpasang dengan benar!`, 'success');
-    showToast(`${droppedOrgan} ? Posisi tepat!`, 'success');
+    addScanLog(`${bxIcon('bx-check')} ${droppedOrgan.toUpperCase()} placed correctly!`, 'success');
+    showToast(`${droppedOrgan} placed correctly!`, 'success');
   } else {
     // --------------------------------------------------
     // WRONG!
@@ -737,47 +992,103 @@ function dropOrgan(e, dzOrgan) {
     BioState.mistakes++;
     dzEl.classList.add('wrong');
     setTimeout(() => dzEl.classList.remove('wrong'), 600);
-    addScanLog(`${bxIcon('bx-x')} Salah! ${droppedOrgan} bukan di sini.`, 'error');
-    showToast('Organ salah posisi! Coba lagi.', 'error');
+    addScanLog(`${bxIcon('bx-x')} Incorrect! ${droppedOrgan} does not belong here.`, 'error');
+    showToast('Incorrect organ placement. Try again.', 'error');
     BioState.checkFail();
   }
 
-  dragData = null;
+  endOrganDrag();
   BioState.updateUI();
   BioState.checkWin();
+}
+
+function dropOrgan(e, dzOrgan) {
+  e.preventDefault();
+  e.stopPropagation();
+  const droppedOrgan = dragData ? dragData.organId : e.dataTransfer.getData('text/plain');
+  handleOrganDrop(droppedOrgan, dzOrgan);
+}
+
+function dropOrganNearZone(e) {
+  e.preventDefault();
+  const droppedOrgan = dragData ? dragData.organId : e.dataTransfer.getData('text/plain');
+  if (!droppedOrgan) return;
+
+  const availableZones = [...document.querySelectorAll('.drop-zone:not(.filled)')];
+  const nearestZone = availableZones
+    .map((zone) => {
+      const rect = zone.getBoundingClientRect();
+      const distance = Math.hypot(e.clientX - (rect.left + rect.width / 2), e.clientY - (rect.top + rect.height / 2));
+      return { zone, distance, tolerance: Math.max(92, Math.max(rect.width, rect.height) * 1.35) };
+    })
+    .sort((a, b) => a.distance - b.distance)[0];
+
+  if (nearestZone && nearestZone.distance <= nearestZone.tolerance) {
+    handleOrganDrop(droppedOrgan, nearestZone.zone.id.replace('dz-', ''));
+    return;
+  }
+
+  showToast('Move the organ closer to the highlighted target area.', 'error');
+  endOrganDrag();
+}
+
+function initBiologyDragDrop() {
+  document.querySelectorAll('.drop-zone').forEach((zone) => {
+    if (zone.dataset.dragReady === 'true') return;
+    zone.dataset.dragReady = 'true';
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  });
 }
 
 // --------------------------------------------------
 // Complaint scanning
 // --------------------------------------------------
 function scanComplaint(complaintNum, targetOrgan) {
+  if (!validateChallengeStarted('bio')) return;
   if (!BioState.scanActive) {
-    showToast('Aktifkan Scan Tool terlebih dahulu!', 'error'); return;
+    showToast('Activate the scan tool first to perform a diagnosis.', 'error'); return;
   }
   if (BioState.diagnosedSet.has(complaintNum)) return;
 
   BioState.selectedComplaint = { num: complaintNum, organ: targetOrgan };
-  addScanLog(`>> Keluhan #${complaintNum} dipilih — Organ target: ${targetOrgan.toUpperCase()}`);
-  addScanLog(`>> Menunggu konfirmasi diagnosis...`);
+  addScanLog(`>> Complaint #${complaintNum} selected — Target organ: ${targetOrgan.toUpperCase()}`);
+  addScanLog(`>> Waiting for diagnosis confirmation...`);
 
   // --------------------------------------------------
-  // Auto-diagnose if we're scanning
+  // Validate the selected diagnosis after the scan animation
   // --------------------------------------------------
-  setTimeout(() => {
-    if (BioState.placedOrgans.has(targetOrgan) || BioState.scanActive) {
-      BioState.diagnosedSet.add(complaintNum);
-      BioState.diagnosedComplaints++;
-      document.getElementById(`complaint-${complaintNum}`).classList.add('diagnosed');
-      document.getElementById(`cs-${complaintNum}`).innerHTML = bxIcon('bx-check');
-      addScanLog(`${bxIcon('bx-check')} DIAGNOSIS CONFIRMED — Keluhan #${complaintNum}: ${targetOrgan.toUpperCase()}`, 'success');
-      showToast(`Diagnosis #${complaintNum} berhasil!`, 'success');
-      BioState.updateUI();
-      BioState.checkWin();
-    }
-  }, 800);
+  setTimeout(() => validateDiagnosis(complaintNum, targetOrgan), 800);
 }
 
-function activateScan() {
+function validateDiagnosis(complaintNum, targetOrgan) {
+  if (!validateChallengeStarted('bio')) return;
+  if (!BioState.scanActive) {
+    showToast('Activate the scan tool first to perform a diagnosis.', 'error');
+    return;
+  }
+  if (BioState.diagnosedSet.has(complaintNum)) return;
+
+  if (!BioState.placedOrgans.has(targetOrgan)) {
+    BioState.mistakes++;
+    addScanLog(`${bxIcon('bx-x')} DIAGNOSIS FAILED — Place ${targetOrgan.toUpperCase()} correctly first.`, 'error');
+    showToast('Place the target organ correctly before confirming a diagnosis.', 'error');
+    BioState.updateUI();
+    BioState.checkFail();
+    return;
+  }
+
+  BioState.diagnosedSet.add(complaintNum);
+  BioState.diagnosedComplaints++;
+  document.getElementById(`complaint-${complaintNum}`).classList.add('diagnosed');
+  document.getElementById(`cs-${complaintNum}`).innerHTML = bxIcon('bx-check');
+  addScanLog(`${bxIcon('bx-check')} DIAGNOSIS CONFIRMED — Complaint #${complaintNum}: ${targetOrgan.toUpperCase()}`, 'success');
+  showToast(`Diagnosis #${complaintNum} confirmed.`, 'success');
+  BioState.updateUI();
+  BioState.checkWin();
+}
+
+function activateScanTool() {
+  if (!validateChallengeStarted('bio')) return;
   BioState.scanActive = !BioState.scanActive;
   const btn = document.querySelector('.scan-btn');
   if (BioState.scanActive) {
@@ -785,8 +1096,8 @@ function activateScan() {
     btn.style.borderColor = 'var(--neon-green)';
     btn.style.color = 'var(--neon-green)';
     addScanLog('>> SCAN TOOL ACTIVATED');
-    addScanLog('>> Klik keluhan pasien untuk mendiagnosis');
-    showToast('Scan Tool aktif! Klik keluhan untuk diagnosa.', 'success');
+    addScanLog('>> Select a patient complaint to diagnose');
+    showToast('Scan tool active. Select a complaint to diagnose.', 'success');
   } else {
     btn.innerHTML = bxIconText('bx-scan', 'ACTIVATE SCAN TOOL');
     btn.style.borderColor = 'var(--neon-purple)';
@@ -806,7 +1117,8 @@ function addScanLog(msg, type = 'info') {
   log.scrollTop = log.scrollHeight;
 }
 
-function resetBio() {
+function resetBiologyChallenge() {
+  resetChallengeActivation('bio');
   BioState.reset();
   // --------------------------------------------------
   // Reset organ items
@@ -816,7 +1128,7 @@ function resetBio() {
   // Reset drop zones
   // --------------------------------------------------
   document.querySelectorAll('.drop-zone').forEach(dz => {
-    dz.classList.remove('correct','filled','wrong','active');
+    dz.classList.remove('correct','filled','wrong','active','drop-ready','drop-match','drag-over');
   });
   // --------------------------------------------------
   // Reset complaints

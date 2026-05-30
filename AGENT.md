@@ -38,6 +38,9 @@ WEB-DESAIN-SITEFEST/
 │   │   ├── challenge.css
 │   │   └── boxicons.min.css
 │   ├── js/
+│   │   ├── vendor/
+│   │   │   └── jquery.min.js
+│   │   │   └── typed.umd.js
 │   │   ├── main.js
 │   │   ├── landingpage.js
 │   │   ├── dashboard.js
@@ -436,7 +439,51 @@ UX harus mudah dipahami dan tidak membingungkan pengguna.
 
 ---
 
-## 12. Responsive Design
+## 12. Konsistensi Bahasa
+
+Seluruh bahasa yang tampil pada website harus menggunakan **bahasa Inggris** agar project terlihat profesional, konsisten, dan tidak mencampur bahasa Indonesia dengan bahasa Inggris dalam satu UI.
+
+### Aturan Bahasa UI
+
+- Gunakan bahasa Inggris untuk semua teks yang terlihat oleh user.
+- Jangan mencampur bahasa Indonesia dan bahasa Inggris dalam label, tombol, card, panel, alert, modal, tooltip, status, atau breadcrumb.
+- Jika satu halaman menggunakan bahasa Inggris, seluruh halaman lain juga harus menggunakan bahasa Inggris.
+- Teks seperti judul section, subtitle, deskripsi fitur, status challenge, error message, empty state, dan success message wajib ditulis dalam bahasa Inggris.
+- Hindari istilah campuran seperti `Mulai Challenge`, `Senyawa Tersedia`, `Tekan Start Challenge terlebih dahulu`, atau `Misi berhasil`. Ubah menjadi bahasa Inggris yang jelas.
+
+### Contoh Penulisan yang Disarankan
+
+Gunakan pola berikut sebagai acuan:
+
+```txt
+Mulai Challenge                → Start Challenge
+Senyawa Tersedia               → Available Compounds
+Tambahkan minimal satu senyawa → Add at least one compound first
+Tekan Start Challenge dahulu   → Press Start Challenge first
+Misi berhasil                  → Mission Complete
+Misi gagal                     → Mission Failed
+Waktu tersisa                  → Time Remaining
+Kembali ke Lab                 → Back to Lab
+Pilih diagnosis                → Select Diagnosis
+Aktifkan alat scan             → Activate Scan Tool
+```
+
+### Aturan Bahasa Kode
+
+- Nama class, id, function, variable, dan data attribute harus menggunakan bahasa Inggris.
+- Gunakan penamaan yang deskriptif seperti `startChallenge()`, `resetChallengeState()`, `availableCompounds`, `missionProgress`, dan `scanToolActive`.
+- Hindari penamaan campuran seperti `tombolStart`, `daftarSenyawa`, `warnaCairan`, atau `statusMisi`.
+- Komentar kode boleh tetap singkat, tetapi sebaiknya menggunakan bahasa Inggris agar konsisten dengan nama function dan struktur project.
+
+### Aturan Bahasa Dokumentasi
+
+- README.md dan dokumentasi teknis boleh menggunakan bahasa Indonesia jika ditujukan untuk presentasi sekolah, tetapi teks UI dan kode tetap harus berbahasa Inggris.
+- Jika README.md dibuat untuk publik atau GitHub, utamakan bahasa Inggris.
+- Jika ada dokumentasi campuran, pisahkan dengan jelas antara bagian penjelasan lokal dan bagian teknis.
+
+---
+
+## 13. Responsive Design
 
 Website harus tetap nyaman dibuka di layar kecil.
 
@@ -467,7 +514,7 @@ Gunakan breakpoint yang konsisten, misalnya:
 
 ---
 
-## 13. Library dan Dependency
+## 14. Library dan Dependency
 
 Project saat ini menggunakan:
 
@@ -475,8 +522,6 @@ Project saat ini menggunakan:
 Boxicons v2.1.4
 Google Fonts
 jQuery v3.7.1
-FancyBox v5.0.36
-SwiperJS v11.1.5
 TypedJS v2.1.0
 ```
 
@@ -490,7 +535,7 @@ TypedJS v2.1.0
 
 ---
 
-## 14. Checklist Sebelum Commit
+## 15. Checklist Sebelum Commit
 
 Sebelum menyimpan atau mengirim perubahan, pastikan:
 
@@ -511,7 +556,7 @@ Sebelum menyimpan atau mengirim perubahan, pastikan:
 
 ---
 
-## 15. Checklist Refactor Visual
+## 16. Checklist Refactor Visual
 
 Saat merapikan visual, lakukan hal berikut:
 
@@ -528,7 +573,7 @@ Saat merapikan visual, lakukan hal berikut:
 
 ---
 
-## 16. Checklist README.md
+## 17. Checklist README.md
 
 Jika README.md dibuat atau diperbarui, wajib memuat:
 
@@ -545,7 +590,7 @@ Jika README.md dibuat atau diperbarui, wajib memuat:
 
 ---
 
-## 17. Batasan untuk AI Agent
+## 18. Batasan untuk AI Agent
 
 AI agent yang mengerjakan project ini harus mengikuti batasan berikut:
 
@@ -562,7 +607,7 @@ AI agent yang mengerjakan project ini harus mengikuti batasan berikut:
 
 ---
 
-## 18. Prioritas Pengerjaan
+## 19. Prioritas Pengerjaan
 
 Jika agent diminta merapikan project, ikuti urutan prioritas berikut:
 
@@ -579,7 +624,7 @@ Jika agent diminta merapikan project, ikuti urutan prioritas berikut:
 
 ---
 
-## 19. Contoh Prompt untuk Agent
+## 20. Contoh Prompt untuk Agent
 
 Gunakan prompt berikut jika ingin meminta AI agent mengerjakan project ini:
 
@@ -596,7 +641,140 @@ Setelah selesai, jelaskan perubahan penting yang dilakukan dan update README.md 
 
 ---
 
-## 20. Catatan Akhir
+## 21. Alur Challenge Mode dan Validasi Interaksi
+
+Bagian ini menjadi panduan urutan interaksi untuk seluruh challenge. AGENT.md hanya mengatur alur dan prinsip validasi. Detail implementasi teknis tetap dikerjakan di `challenge.js` dan `challenge.css`.
+
+### Prinsip Umum Challenge
+
+- Semua challenge wajib memiliki tombol `START CHALLENGE` sebagai langkah awal.
+- Sebelum `START CHALLENGE` ditekan, user tidak boleh bisa menyelesaikan misi.
+- Timer hanya boleh berjalan setelah `START CHALLENGE` ditekan.
+- Status menang/kalah hanya boleh divalidasi setelah challenge aktif.
+- Jika user mencoba menjalankan aksi utama sebelum challenge dimulai, tampilkan feedback seperti:
+  - `Tekan Start Challenge terlebih dahulu untuk memulai misi.`
+- Reset challenge wajib mengembalikan semua state ke kondisi awal dan membuat user harus menekan `START CHALLENGE` lagi.
+- Panel `Available Challenges` di halaman Challenge bersifat static sebagai navigasi antar challenge.
+- Panel `Available Challenges` hanya menampilkan:
+  - Chemistry Challenge
+  - Physics Challenge
+  - Biology Challenge
+- Jangan menampilkan `All Challenges`.
+
+### Alur Chemistry Challenge
+
+Urutan interaksi Chemistry Challenge:
+
+```txt
+User membuka Chemistry Challenge
+→ User menekan START CHALLENGE
+→ Timer mulai berjalan
+→ User memilih senyawa dengan tombol + ADD
+→ Senyawa masuk ke pending compound / mix queue
+→ pH belum berubah
+→ User menekan MIX & REACT
+→ Sistem menghitung perubahan pH
+→ Sistem memperbarui warna cairan, pH meter, volume, dan status
+→ Sistem mengecek target pH hanya jika challenge sudah dimulai
+→ Jika target tercapai, tampilkan mission complete
+```
+
+Aturan Chemistry Challenge:
+
+- Tombol `+ ADD` hanya menambahkan bahan ke daftar sementara.
+- Nilai pH tidak boleh berubah ketika tombol `+ ADD` ditekan.
+- Nilai pH hanya boleh berubah ketika tombol `MIX & REACT` ditekan.
+- `MISSION COMPLETE` hanya boleh muncul jika `START CHALLENGE` sudah ditekan.
+- Gunakan tema Chemistry dengan `--accent-rgb`.
+
+### Alur Physics Challenge
+
+Urutan interaksi Physics Challenge:
+
+```txt
+User membuka Physics Challenge
+→ User menekan START CHALLENGE
+→ Timer mulai berjalan
+→ User boleh melakukan drag & drop komponen ke circuit grid
+→ User menyusun Battery, Resistor, Lamp, dan Switch
+→ User menekan ACTIVATE CIRCUIT
+→ Sistem menghitung tegangan, hambatan, dan arus
+→ Sistem mengecek target arus 1.5A - 2.0A
+→ Jika rangkaian sesuai, tampilkan mission complete
+```
+
+Aturan Physics Challenge:
+
+- Sebelum `START CHALLENGE` ditekan, user tidak boleh melakukan drag & drop komponen.
+- Sebelum `START CHALLENGE` ditekan, tombol `ACTIVATE CIRCUIT` tidak boleh memvalidasi keberhasilan misi.
+- Jika user mencoba mengaktifkan rangkaian sebelum challenge dimulai, tampilkan feedback.
+- Gunakan tema Physics dengan `--primary-rgb`.
+
+### Alur Biology Challenge
+
+Urutan interaksi Biology Challenge:
+
+```txt
+User membuka Biology Challenge
+→ User menekan START CHALLENGE
+→ Timer mulai berjalan
+→ User boleh melakukan drag & drop organ ke Anatomy View
+→ User menekan ACTIVATE SCAN TOOL
+→ Scan tool aktif
+→ User memilih atau memeriksa observation log / keluhan pasien
+→ Sistem menampilkan informasi diagnosis
+→ User menentukan diagnosis pasien
+→ Sistem mengecek organ dan diagnosis
+→ Jika organ benar dan diagnosis benar, tampilkan mission complete
+```
+
+Aturan Biology Challenge:
+
+- Sebelum `START CHALLENGE` ditekan, user tidak boleh melakukan drag & drop organ.
+- Sebelum `START CHALLENGE` ditekan, tombol `ACTIVATE SCAN TOOL` tidak boleh menjalankan diagnosis.
+- User wajib mengaktifkan `SCAN TOOL` terlebih dahulu sebelum proses diagnosis dinilai.
+- Diagnosis tidak boleh dianggap benar jika scan tool belum aktif.
+- Anatomy View harus menampilkan tubuh/manekin yang muat di dalam canvas.
+- Tubuh/manekin tidak boleh melewati batas panel Anatomy View.
+- Drop zone organ harus jelas, mudah dijangkau, dan tidak terlalu berdekatan.
+- Berikan feedback visual saat drag & drop, misalnya glow, border highlight, atau perubahan warna drop zone.
+- Gunakan tema Biology dengan `--secondary-rgb`.
+
+### Validasi State yang Disarankan
+
+Gunakan state yang jelas agar challenge mudah dikontrol:
+
+```js
+let isChallengeStarted = false;
+let isScanToolActive = false;
+let pendingCompounds = [];
+let placedComponents = [];
+let placedOrgans = [];
+```
+
+Nama state boleh disesuaikan dengan kode yang sudah ada, tetapi maknanya harus tetap jelas.
+
+### Reset Challenge
+
+Reset pada challenge harus mengembalikan:
+
+- Status `isChallengeStarted`.
+- Timer.
+- Progress.
+- Score atau mission status.
+- Pending compound pada Chemistry.
+- pH, volume, warna cairan, dan status reaksi.
+- Komponen circuit pada Physics.
+- Status circuit, arus, tegangan, hambatan, oscilloscope, dan lamp status.
+- Posisi organ pada Biology.
+- Status scan tool, diagnosis, organ placed, mistake tracker, dan mission progress.
+- Modal mission complete atau mission failed.
+
+Setelah reset, user wajib menekan `START CHALLENGE` lagi untuk memulai misi.
+
+---
+
+## 22. Catatan Akhir
 
 Project Eksperika harus terasa sebagai satu produk yang utuh. Setiap halaman boleh memiliki karakter sesuai topiknya, tetapi tetap harus menggunakan bahasa visual yang sama: warna neon science lab, dark interface, Boxicons, sidebar konsisten, topbar konsisten, card/panel konsisten, dan komentar kode yang rapi.
 

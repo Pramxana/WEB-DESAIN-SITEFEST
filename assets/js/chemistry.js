@@ -3,7 +3,7 @@
 // --------------------------------------------------
 const S = {
   rxnType:'acid-base', selChem:null,
-  liquidLevel:0, liquidColor:'rgba(0,229,255,0.35)',
+  liquidLevel:0, liquidColor:'rgba(var(--accent-rgb),0.35)',
   ph:7.0, temp:25, conc:5.0, strength:50,
   rate:0, gas:0,
   isMixing:false, isPoured:false,
@@ -138,7 +138,7 @@ function updateTempStatus(v) {
 function updateBarTemp(v) {
   const bar=$('bar-temp');
   bar.style.width=(v)+'%';
-  bar.style.background=v<30?'linear-gradient(90deg,var(--blue-accent),var(--cyan))':v<=60?'linear-gradient(90deg,var(--cyan-dim),var(--green))':'linear-gradient(90deg,var(--yellow),var(--orange))';
+  bar.style.background=v<30?'linear-gradient(90deg,var(--primary),var(--accent))':v<=60?'linear-gradient(90deg,var(--accent),var(--secondary))':'linear-gradient(90deg,var(--warning),var(--orange))';
 }
 
 // --------------------------------------------------
@@ -157,16 +157,69 @@ let surfInt=null;
 function setLiquid(pct, color) {
   const h=(pct/100)*147, y=165-h;
   const lr=$('liq-rect'), ls=$('liq-surface'), lsh=$('liq-shimmer');
-  lr.setAttribute('y',y); lr.setAttribute('height',h); lr.setAttribute('fill',color);
+  lr.setAttribute('y',y); lr.setAttribute('height',h); lr.setAttribute('fill',S.isMixing?'url(#liq-grad)':color);
   lsh.setAttribute('y',y); lsh.setAttribute('opacity',pct>5?'1':'0');
-  if(surfInt) clearInterval(surfInt);
+  if(surfInt) {
+    clearInterval(surfInt);
+    surfInt=null;
+  }
+  if(pct<=0) {
+    ls.setAttribute('d','');
+    ls.setAttribute('fill','transparent');
+    return;
+  }
   let ph=0;
   surfInt=setInterval(()=>{
     ph+=0.07;
     const w1=8*Math.sin(ph), w2=7*Math.sin(ph*1.3+1);
     ls.setAttribute('d',`M20 ${y+w1} Q55 ${y-4+w2} 75 ${y+w1} Q100 ${y+4+w2} 130 ${y+w1} L130 ${y+3} Q100 ${y+7+w2} 75 ${y+3} Q55 ${y-1+w2} 20 ${y+3} Z`);
-    ls.setAttribute('fill',color.replace(/[\d.]+\)$/,'0.4)'));
+    ls.setAttribute('fill',S.isMixing?'rgba(var(--accent-rgb),0.4)':color.replace(/[\d.]+\)$/,'0.4)'));
   },50);
+}
+
+// --------------------------------------------------
+// MIXING COLOR EFFECTS
+// --------------------------------------------------
+const mixingPalettes=[
+  ['var(--primary)','var(--accent)','var(--secondary)'],
+  ['var(--accent)','var(--secondary)','var(--warning)'],
+  ['var(--purple)','var(--accent)','var(--primary)'],
+  ['var(--danger-bright)','var(--orange)','var(--warning)'],
+  ['var(--secondary)','var(--accent)','var(--purple-light)']
+];
+let mixingPaletteIndex=0, mixingColorInt=null, mixingStopTimer=null, reactionCompleteTimer=null;
+function updateReactionColor(){
+  const palette=mixingPalettes[mixingPaletteIndex%mixingPalettes.length];
+  $('liq-stop-start').setAttribute('stop-color',palette[0]);
+  $('liq-stop-mid').setAttribute('stop-color',palette[1]);
+  $('liq-stop-end').setAttribute('stop-color',palette[2]);
+  if(S.liquidLevel>0) $('liq-rect').setAttribute('fill','url(#liq-grad)');
+  mixingPaletteIndex++;
+}
+function stopMixingEffects(){
+  if(mixingColorInt){clearInterval(mixingColorInt);mixingColorInt=null;}
+  if(mixingStopTimer){clearTimeout(mixingStopTimer);mixingStopTimer=null;}
+  $('beaker-svg').classList.remove('is-mixing');
+  $('glow-ring').classList.remove('mixing');
+  $('rxn-badge').classList.remove('mixing');
+  if(S.rxnType!=='gas-reaction') stopBubbles();
+}
+function startMixingEffects(){
+  stopMixingEffects();
+  $('beaker-svg').classList.add('is-mixing');
+  $('glow-ring').classList.add('mixing');
+  $('rxn-badge').classList.add('mixing');
+  if(S.rxnType!=='gas-reaction') startBubbles(320);
+  updateReactionColor();
+  mixingColorInt=setInterval(updateReactionColor,560);
+  mixingStopTimer=setTimeout(stopMixingEffects,3400);
+}
+function resetReactionColor(){
+  stopMixingEffects();
+  mixingPaletteIndex=0;
+  $('liq-stop-start').setAttribute('stop-color','var(--accent)');
+  $('liq-stop-mid').setAttribute('stop-color','var(--primary)');
+  $('liq-stop-end').setAttribute('stop-color','var(--secondary)');
 }
 
 // --------------------------------------------------
@@ -196,7 +249,9 @@ function startBubbles(iv){
   bubbleInt={s:setInterval(spawnBubble,iv),d:setInterval(drawBubbles,30)};
 }
 function stopBubbles(){
-  if(bubbleInt){clearInterval(bubbleInt.s);clearInterval(bubbleInt.d);bubbleInt=null;ctx.clearRect(0,0,150,190);bubbles=[];}
+  if(bubbleInt){clearInterval(bubbleInt.s);clearInterval(bubbleInt.d);bubbleInt=null;}
+  bubbles=[];
+  ctx.clearRect(0,0,150,190);
 }
 
 // --------------------------------------------------
@@ -217,7 +272,7 @@ function updatePHDisplay(ph){
   bar.style.width=pct+'%';
   if(ph<7){bar.style.background='linear-gradient(90deg,var(--red),var(--orange))';sp.textContent='ACIDIC';sp.className='status-pill pill-acidic';r.textContent='ACIDIC';r.style.color='var(--red)';}
   else if(ph===7){bar.style.background='linear-gradient(90deg,var(--green),var(--cyan))';sp.textContent='NEUTRAL';sp.className='status-pill pill-neutral';r.textContent='NEUTRAL';r.style.color='var(--green)';}
-  else{bar.style.background='linear-gradient(90deg,var(--purple),var(--blue-accent))';sp.textContent='BASIC';sp.className='status-pill pill-basic';r.textContent='BASIC';r.style.color='var(--purple)';}
+  else{bar.style.background='linear-gradient(90deg,var(--purple),var(--primary))';sp.textContent='BASIC';sp.className='status-pill pill-basic';r.textContent='BASIC';r.style.color='var(--purple)';}
 }
 function calcColor(){
   if(S.chemAdded.includes('indicator')){
@@ -229,7 +284,7 @@ function calcColor(){
   if(S.chemAdded.includes('acid')) return 'rgba(255,80,60,0.3)';
   if(S.chemAdded.includes('base')) return 'rgba(168,85,247,0.3)';
   if(S.chemAdded.includes('water')) return 'rgba(79,195,247,0.25)';
-  return 'rgba(0,229,255,0.35)';
+  return 'rgba(var(--accent-rgb),0.35)';
 }
 function getColorName(){
   const ph=S.ph;
@@ -302,6 +357,7 @@ function runMix(){
   addLog('Initiating reaction mix...','info');
   $('rxn-badge').textContent='REACTING...'; $('rxn-badge').classList.add('on');
   recalc();
+  startMixingEffects();
   const ph=S.ph;
   if(ph<7) addLog(`pH stabilized at ${ph.toFixed(1)} — acidic.`,'danger');
   else if(ph===7) addLog('pH balanced at neutral 7.0.','ok');
@@ -312,28 +368,48 @@ function runMix(){
   addLog('Reaction completed.','ok');
   $('r-rxn').textContent=S.rxnType==='acid-base'?'NEUTRALIZATION':S.rxnType==='ph-test'?'PH DETECTION':'GAS EVOLUTION';
   setHint('mixed');
-  setTimeout(()=>$('rxn-badge').textContent='REACTION COMPLETE',1000);
+  if(reactionCompleteTimer) clearTimeout(reactionCompleteTimer);
+  reactionCompleteTimer=setTimeout(()=>$('rxn-badge').textContent='REACTION COMPLETE',1000);
 }
 
 // --------------------------------------------------
 // RESET
 // --------------------------------------------------
-function resetChamber(silent=false){
-  S.selChem=null; S.liquidLevel=0; S.liquidColor='rgba(0,229,255,0.35)';
+function resetChemistryState(){
+  S.selChem=null; S.liquidLevel=0; S.liquidColor='rgba(var(--accent-rgb),0.35)';
+  S.temp=25; S.conc=5.0; S.strength=50;
   S.ph=7.0; S.rate=0; S.gas=0; S.isMixing=false; S.isPoured=false;
   S.chemAdded=[]; S.lastMsg='';
+}
+function resetParameterControls(){
+  $('sl-conc').value='50'; $('sv-conc').textContent='5.0 mol/L';
+  $('sl-temp').value='25'; $('sv-temp').textContent='25°C';
+  $('sl-str').value='50'; $('sv-str').textContent='50%';
+}
+function resetLiveMeter(){
+  updatePHDisplay(7.0);
+  $('m-temp').textContent='25°C'; updateTempStatus(25); updateBarTemp(25);
+  $('m-rate').textContent='0.0'; $('bar-rate').style.width='0%';
+  $('bar-rate').style.background='linear-gradient(90deg,rgba(var(--accent-rgb),0.35),var(--accent))';
+  $('sp-rate').textContent='SLOW'; $('sp-rate').className='status-pill pill-low';
+  $('m-gas').textContent='0.0'; $('bar-gas').style.width='0%';
+  $('bar-gas').style.background='linear-gradient(90deg,var(--secondary),var(--secondary-light))';
+  $('sp-gas').textContent='NONE'; $('sp-gas').style.color='var(--text-muted)';
+  $('r-sol').textContent='DISTILLED H₂O'; $('r-col').textContent='CLEAR'; $('r-rxn').textContent='NONE';
+  $('rxn-badge').textContent='CHAMBER IDLE'; $('rxn-badge').classList.remove('on');
+  $('sb-ph').textContent='7.0'; $('sb-rate').textContent='0.0 mol/s'; $('sb-temp').textContent='25°C';
+}
+function resetChamber(silent=false){
+  resetChemistryState();
+  if(reactionCompleteTimer){clearTimeout(reactionCompleteTimer);reactionCompleteTimer=null;}
+  resetReactionColor();
   setLiquid(0,S.liquidColor);
-  if(surfInt) clearInterval(surfInt);
   stopBubbles(); showVapor(false,false); setGlow(false);
   document.querySelectorAll('.reagent-btn').forEach(b=>b.classList.remove('selected'));
   ['acid','base','indicator','water'].forEach(c=>{const b=$('bot-'+c);if(b)b.classList.remove('sel');});
   $('sel-label').textContent='— NO CHEMICAL SELECTED —'; $('sel-label').classList.remove('on');
-  updatePHDisplay(7.0);
-  $('m-temp').textContent='25°C'; $('m-rate').textContent='0.0'; $('m-gas').textContent='0.0';
-  $('bar-rate').style.width='0%'; $('bar-gas').style.width='0%';
-  $('r-sol').textContent='DISTILLED H₂O'; $('r-col').textContent='CLEAR'; $('r-rxn').textContent='NONE';
-  $('rxn-badge').textContent='CHAMBER IDLE'; $('rxn-badge').classList.remove('on');
-  $('sb-ph').textContent='7.0'; $('sb-rate').textContent='0.0 mol/s'; $('sb-temp').textContent='25°C';
+  resetParameterControls();
+  resetLiveMeter();
   if(!silent) addLog('Chamber reset. Ready for new experiment.','info');
   setHint('idle');
 }
@@ -342,6 +418,5 @@ function resetChamber(silent=false){
 // INIT
 // --------------------------------------------------
 setLiquid(0,S.liquidColor);
-updatePHDisplay(7.0);
-updateTempStatus(25);
-updateBarTemp(25);
+resetParameterControls();
+resetLiveMeter();

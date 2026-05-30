@@ -27,6 +27,9 @@ WEB-DESAIN-SITEFEST/
 │   │   ├── challenge.css
 │   │   └── boxicons.min.css
 │   ├── js/
+│   │   ├── vendor/
+│   │   │   └── jquery.min.js
+│   │   │   └── typed.ums.js
 │   │   ├── main.js
 │   │   ├── landingpage.js
 │   │   ├── dashboard.js
