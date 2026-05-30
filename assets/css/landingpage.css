@@ -871,6 +871,174 @@ section {
 }
 
 /* --------------------------------------------------
+   PROBLEM BACKGROUND
+-------------------------------------------------- */
+.problem-section {
+  background:
+    linear-gradient(rgba(var(--primary-rgb), 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--primary-rgb), 0.045) 1px, transparent 1px),
+    var(--black);
+  background-size: 32px 32px;
+  border-bottom: var(--border-strong);
+  color: var(--white);
+}
+
+.problem-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.problem-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+  column-gap: 3rem;
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.problem-header .section-tag {
+  grid-column: 1 / -1;
+}
+
+.problem-header .section-title {
+  margin-bottom: 0;
+}
+
+.problem-header .section-title span {
+  color: var(--primary);
+}
+
+.problem-header .section-desc {
+  max-width: 560px;
+  color: rgba(var(--text-main-rgb), 0.66);
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.problem-card {
+  --problem-accent: var(--primary);
+  position: relative;
+  min-height: 268px;
+  overflow: hidden;
+  padding: 26px 24px 30px;
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+  border-radius: var(--radius);
+  background: rgba(var(--surface-rgb), 0.78);
+  box-shadow: 5px 5px 0 rgba(var(--primary-rgb), 0.22);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.problem-card:nth-child(2) {
+  --problem-accent: var(--secondary);
+}
+
+.problem-card:nth-child(3) {
+  --problem-accent: var(--cyan);
+}
+
+.problem-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--problem-accent);
+  box-shadow: 7px 7px 0 rgba(var(--primary-rgb), 0.28);
+}
+
+.problem-card-number {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  color: var(--problem-accent);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.3rem;
+  line-height: 1;
+  opacity: 0.34;
+}
+
+.problem-icon-wrap {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 20px;
+  border: 1px solid rgba(var(--primary-rgb), 0.42);
+  border-radius: var(--radius);
+  background: rgba(var(--ink-rgb), 0.54);
+  color: var(--problem-accent);
+  font-size: 1.55rem;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.problem-card:hover .problem-icon-wrap {
+  background: var(--black);
+  color: var(--white);
+  box-shadow: 3px 3px 0 var(--problem-accent);
+}
+
+.problem-card h3 {
+  max-width: 250px;
+  margin-bottom: 12px;
+  color: var(--white);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.problem-card p {
+  color: rgba(var(--text-main-rgb), 0.62);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.problem-accent {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 58px;
+  height: 5px;
+  background: var(--problem-accent);
+}
+
+.problem-highlight {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 34px;
+  padding: 20px 22px;
+  border: var(--border-strong);
+  border-left: 6px solid var(--secondary);
+  border-radius: var(--radius);
+  background: rgba(var(--secondary-rgb), 0.1);
+  box-shadow: 6px 6px 0 var(--secondary);
+  color: var(--white);
+}
+
+.problem-highlight-icon {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--secondary-rgb), 0.58);
+  border-radius: var(--radius);
+  color: var(--secondary);
+  font-size: 1.45rem;
+}
+
+.problem-highlight p {
+  max-width: 980px;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+/* --------------------------------------------------
    STATS
 -------------------------------------------------- */
 .stats-section {
@@ -2226,6 +2394,10 @@ footer::before {
   .features-header {
     grid-template-columns: 1fr;
   }
+  .problem-header {
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+  }
   .features-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -2245,6 +2417,15 @@ footer::before {
   }
   .features-grid {
     grid-template-columns: 1fr;
+  }
+  .problem-grid {
+    grid-template-columns: 1fr;
+  }
+  .problem-card {
+    min-height: auto;
+  }
+  .problem-highlight {
+    align-items: flex-start;
   }
   .stats-grid {
     grid-template-columns: 1fr 1fr;
@@ -2266,4 +2447,109 @@ footer::before {
 .stars .bx {
   display: inline-block;
   line-height: 1;
+}
+
+/* --------------------------------------------------
+   Mobile Layout Refinements
+-------------------------------------------------- */
+@media (max-width: 768px) {
+  nav {
+    height: 60px;
+    padding: 0 4%;
+  }
+
+  .nav-logo {
+    gap: 8px;
+    font-size: 1.5rem;
+  }
+
+  .nav-logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .btn-nav {
+    min-height: 42px;
+    padding: 9px 11px;
+    font-size: 0.58rem;
+    letter-spacing: 1px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 92px 4% 58px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.4rem, 17vw, 5.4rem);
+  }
+
+  .hero p {
+    max-width: 100%;
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .hero-btns,
+  .cta-btns {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-btns .btn,
+  .cta-btns .btn {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  .section-title {
+    font-size: clamp(2.7rem, 13vw, 4.2rem);
+  }
+
+  .problem-highlight {
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+  }
+
+  .physics-section,
+  .bio-section,
+  .sim-section,
+  .testimonials-section {
+    overflow: hidden;
+  }
+
+  .testi-card {
+    padding: 28px 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  section { padding: 56px 4%; }
+
+  .stats-grid { grid-template-columns: 1fr; }
+
+  .stat-card { padding: 30px 20px; }
+
+  .problem-card,
+  .feature-card {
+    padding: 22px 18px 26px;
+  }
+
+  .nav-logo { font-size: 1.35rem; }
+
+  .btn-nav {
+    padding: 8px 9px;
+    font-size: 0.52rem;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  #heroParticles,
+  #ctaParticles {
+    display: none;
+  }
+
+  .reveal { transition-duration: 0.35s; }
 }

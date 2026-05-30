@@ -523,12 +523,151 @@ body:has(button:hover) .cursor {
    RESPONSIVE
 -------------------------------------------------- */
 @media (max-width: 900px) {
-  :root { --sidebar-w: 60px; }
+  :root { --sidebar-w: 0px; }
+
+  body.sidebar-open { overflow: hidden; }
+
+  .sidebar {
+    width: min(82vw, 280px);
+    transform: translateX(-102%);
+    transition: transform 0.25s ease;
+    z-index: 1000;
+    box-shadow: 16px 0 32px rgba(var(--ink-rgb), 0.48);
+  }
+
+  .sidebar.is-open { transform: translateX(0); }
+
   .sidebar-logo-text,
   .nav-item span:not(.nav-icon),
   .sidebar-section-label,
-  .sidebar-user-info { display: none; }
-  .sidebar-logo { justify-content: center; }
-  .nav-item { justify-content: center; padding: 12px; }
-  .sidebar-user { justify-content: center; }
+  .sidebar-user-info {
+    display: block;
+  }
+
+  .sidebar-logo {
+    justify-content: flex-start;
+    padding-right: 56px;
+  }
+
+  .nav-item {
+    justify-content: flex-start;
+    min-height: 44px;
+    padding: 11px 12px;
+  }
+
+  .main {
+    width: 100%;
+    min-width: 0;
+    margin-left: 0;
+  }
+
+  .topbar {
+    min-height: 58px;
+    height: auto;
+    gap: 10px;
+    padding: 8px 14px;
+  }
+
+  .topbar > div { min-width: 0; }
+
+  .topbar-title {
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+  }
+
+  .topbar-breadcrumb {
+    font-size: 0.48rem;
+    overflow-wrap: anywhere;
+  }
+
+  .content {
+    min-width: 0;
+    padding: 18px 14px 30px;
+  }
+
+  .mobile-menu-toggle,
+  .sidebar-close {
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    color: var(--text-main);
+    background: rgba(var(--surface-rgb), 0.94);
+    border: 1px solid rgba(var(--primary-rgb), 0.42);
+    cursor: pointer;
+  }
+
+  .mobile-menu-toggle {
+    display: inline-flex;
+    font-size: 1.45rem;
+  }
+
+  .sidebar-close {
+    position: absolute;
+    top: 14px;
+    right: 12px;
+    z-index: 2;
+    display: inline-flex;
+    font-size: 1.4rem;
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: block;
+    pointer-events: none;
+    background: rgba(var(--ink-rgb), 0.68);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .sidebar-overlay.is-visible {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .btn {
+    min-height: 44px;
+    justify-content: center;
+  }
+}
+
+.mobile-menu-toggle,
+.sidebar-close,
+.sidebar-overlay {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .mobile-menu-toggle,
+  .sidebar-close,
+  .sidebar-overlay {
+    display: flex;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  body { cursor: auto; }
+
+  .cursor,
+  .cursor-dot {
+    display: none;
+  }
+
+  a,
+  button,
+  .btn,
+  .nav-item,
+  input,
+  select {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar { padding: 7px 12px; }
+  .topbar-title { font-size: 1rem; }
+  .content { padding: 14px 12px 24px; }
 }
