@@ -34,7 +34,7 @@
         <div class="modal-sub" id="successSub">Selamat! Kamu telah berhasil menyelesaikan misi.</div>
         <div class="badge-award" id="badgeAward">BADGE EARNED</div>
         <div class="modal-actions">
-          <button class="modal-btn primary" type="button" onclick="closeModal('successModal')">BACK TO LAB</button>
+          <button class="modal-btn primary" type="button" onclick="backToLab()">BACK TO LAB</button>
           <a class="modal-btn secondary" href="dashboard.html">DASHBOARD</a>
         </div>
       </div>
@@ -132,11 +132,7 @@
               <div class="page-sub">Chemistry &middot; Physics &middot; Biology &middot; Realtime mission simulation</div>
             </div>
             <div class="page-actions">
-              <button class="btn btn-yellow btn-sm" type="button" onclick="switchTab('all')">
-                <i class="bx bx-grid-alt"></i>
-                All Challenges
-              </button>
-              <button class="btn btn-primary btn-sm" type="button" onclick="switchTab(activeTab === 'all' ? 'chem' : activeTab)">
+              <button class="btn btn-primary btn-sm" type="button" onclick="startChallengeTimer()">
                 <i class="bx bx-play"></i>
                 Start Challenge
               </button>

@@ -72,6 +72,21 @@ function showToast(msg, type = 'info', duration = 3000) {
 }
 
 // --------------------------------------------------
+// BACK TO LAB REDIRECTION
+// --------------------------------------------------
+function backToLab() {
+  if (activeTab === 'chem') {
+    window.location.href = 'chemistry.html';
+  } else if (activeTab === 'phys') {
+    window.location.href = 'physic.html';
+  } else if (activeTab === 'bio') {
+    window.location.href = 'biology.html';
+  } else {
+    window.location.href = 'dashboard.html'; // Halaman cadangan jika tab tidak dikenali
+  }
+}
+
+// --------------------------------------------------
 // MODAL
 // --------------------------------------------------
 function openModal(id, title, sub, badge = null) {
@@ -98,10 +113,25 @@ function spawnConfetti() {
 }
 
 function resetCurrentLab() {
-  if (activeTab === 'all') { resetChem(); resetPhys(); resetBio(); return; }
-  if (activeTab === 'chem') resetChem();
-  else if (activeTab === 'phys') resetPhys();
-  else resetBio();
+  // 1. Hentikan timer yang sedang berjalan
+  stopTimer(`${activeTab}-timer`);
+  
+  // 2. Kembalikan status challenge menjadi belum dimulai
+  challengeStarted[activeTab] = false;
+
+  // 3. Kembalikan teks waktu ke nilai default masing-masing lab
+  if (activeTab === 'chem') document.getElementById('chem-timer').textContent = '03:00';
+  if (activeTab === 'phys') document.getElementById('phys-timer').textContent = '05:00';
+  if (activeTab === 'bio') document.getElementById('bio-timer').textContent = '04:00';
+
+  // 4. Reset status eksperimen di dalam lab
+  if (activeTab === 'chem') {
+    resetChem();
+  } else if (activeTab === 'phys') {
+    resetPhys();
+  } else {
+    resetBio();
+  }
 }
 
 // --------------------------------------------------
@@ -124,6 +154,28 @@ function startTimer(id, seconds, onExpire) {
 }
 function stopTimer(id) { if (timerIntervals[id]) clearInterval(timerIntervals[id]); }
 
+const challengeStarted = { chem: false, phys: false, bio: false };
+
+function startChallengeTimer() {
+  if (challengeStarted[activeTab]) return; 
+  challengeStarted[activeTab] = true;
+  
+  if (activeTab === 'chem') {
+    startTimer('chem-timer', 180, () => {
+      if (!ChemState.isCompleted) openModal('failed', 'TIME OUT!', 'Waktu habis. Limbah masih belum dinetralkan.', null);
+    });
+    addChemLog('TARGET: pH 7.0 ± 0.5 | Volume minimal 200 mL', 'info');
+  } else if (activeTab === 'phys') {
+    startTimer('phys-timer', 300, () => {
+      if (!PhysState.isCompleted) openModal('failed', 'TIME OUT!', 'Waktu habis. Kota masih gelap gulita!');
+    });
+  } else if (activeTab === 'bio') {
+    startTimer('bio-timer', 240, () => {
+      if (!BioState.isCompleted) openModal('failed', 'TIME OUT!', 'Waktu habis. Pasien belum terdiagnosis!');
+    });
+  }
+}
+
 // --------------------------------------------------
 // LAB 1: KIMIA — STATE MANAGEMENT
 // --------------------------------------------------
@@ -141,9 +193,6 @@ const ChemState = {
 
   init() {
     this.reset();
-    startTimer('chem-timer', 180, () => {
-      if (!this.isCompleted) openModal('failed', 'TIME OUT!', 'Waktu habis. Limbah masih belum dinetralkan.', null);
-    });
     addChemLog('Sistem diinisialisasi. Limbah asam terdeteksi.', 'info');
     addChemLog('TARGET: pH 7.0 ± 0.5 | Volume minimal 200 mL', 'info');
   },
@@ -336,7 +385,6 @@ function addChemLog(msg, type = '') {
 }
 
 function resetChem() {
-  stopTimer('chem-timer');
   ChemState.reset();
   document.getElementById('reactionLog').innerHTML = '';
   ChemState.init();
@@ -353,9 +401,6 @@ const PhysState = {
 
   init() {
     this.buildGrid();
-    startTimer('phys-timer', 300, () => {
-      if (!this.isCompleted) openModal('failed', 'TIME OUT!', 'Waktu habis. Kota masih gelap gulita!');
-    });
     this.drawOscWave(false);
   },
 
@@ -553,7 +598,6 @@ function toggleCircuit() {
 }
 
 function resetPhys() {
-  stopTimer('phys-timer');
   PhysState.isCompleted = false;
   PhysState.circuitOn = false;
   PhysState.components = {};
@@ -594,9 +638,7 @@ const BioState = {
 
   init() {
     this.reset();
-    startTimer('bio-timer', 240, () => {
-      if (!this.isCompleted) openModal('failed', 'TIME OUT!', 'Waktu habis. Pasien belum terdiagnosis!');
-    });
+   
   },
 
   reset() {
@@ -765,7 +807,6 @@ function addScanLog(msg, type = 'info') {
 }
 
 function resetBio() {
-  stopTimer('bio-timer');
   BioState.reset();
   // --------------------------------------------------
   // Reset organ items
