@@ -453,6 +453,41 @@ body:has(button:hover) .cursor {
 .btn-sm { padding: 6px 14px; font-size: 0.7rem; }
 
 /* --------------------------------------------------
+   Boxicons Button Alignment
+-------------------------------------------------- */
+button > .bx,
+.btn > .bx,
+.nav-item > .bx,
+.action-btn > .bx,
+.act-btn > .bx,
+.activate-btn > .bx,
+.reset-btn > .bx,
+.scan-btn > .bx,
+.circuit-switch-btn > .bx,
+.modal-btn > .bx,
+.sim-run-btn > .bx {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.sim-run-btn,
+.action-btn,
+.act-btn,
+.activate-btn,
+.reset-btn,
+.scan-btn,
+.circuit-switch-btn,
+.modal-btn {
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+/* --------------------------------------------------
    FCARD
 -------------------------------------------------- */
 .fcard {
@@ -784,7 +819,93 @@ body:has(button:hover) .cursor {
     min-width: 0;
   }
 
-  .topbar { flex-wrap: wrap; }
+  .topbar {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .page-header,
+  .panel-header {
+    gap: 0.75rem;
+  }
+
+  .page-title {
+    margin-bottom: 0.75rem;
+    line-height: 1.05;
+    letter-spacing: 0.08em;
+  }
+
+  .page-sub {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.65;
+    letter-spacing: 0.02em;
+  }
+
+  .topbar-breadcrumb,
+  .page-tag,
+  .module-tag {
+    flex-wrap: wrap;
+    line-height: 1.45;
+    letter-spacing: 0.16em;
+    word-spacing: 0.2em;
+  }
+
+  .panel-header {
+    align-items: flex-start;
+  }
+
+  .panel-header-title,
+  .panel-header-badge {
+    line-height: 1.4;
+  }
+
+  .page-actions,
+  .page-header > div:last-child {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .btn,
+  .action-btn,
+  .act-btn,
+  .activate-btn,
+  .reset-btn,
+  .scan-btn,
+  .circuit-switch-btn,
+  .modal-btn,
+  .sim-run-btn {
+    gap: 0.55rem;
+    min-height: 44px;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .ctrl-row-label,
+  .slider-row,
+  .range-control {
+    gap: 0.65rem;
+  }
+
+  .ctrl-row-label {
+    flex-wrap: wrap;
+  }
+
+  .ctrl-row-label span:first-child,
+  .control-label,
+  .slider-label,
+  .range-label {
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+  }
+
+  .val,
+  .control-value,
+  .slider-value,
+  .range-value {
+    line-height: 1.2;
+    white-space: nowrap;
+  }
 
   .content > *,
   .page-header > *,
@@ -829,6 +950,19 @@ body:has(button:hover) .cursor {
   }
 
   .topbar-breadcrumb { font-size: 0.44rem; }
+
+  .page-title {
+    font-size: clamp(1.85rem, 10vw, 2.6rem);
+    line-height: 1;
+  }
+
+  .topbar-breadcrumb,
+  .page-tag,
+  .module-tag {
+    font-size: 0.5rem;
+    line-height: 1.5;
+    letter-spacing: 0.14em;
+  }
 
   .content { padding: 12px 10px 22px; }
 }

@@ -107,7 +107,9 @@ function toggleRun() {
   running = !running;
   const btnTop = document.getElementById("runBtnTop");
   const badge  = document.getElementById("runBadge");
-  btnTop.textContent    = running ? "⏸ Pause" : "▶ Run Simulation";
+  btnTop.innerHTML = running
+    ? '<i class="bx bx-pause" aria-hidden="true"></i><span>Pause</span>'
+    : '<i class="bx bx-play" aria-hidden="true"></i><span>Run Simulation</span>';
   badge.style.display   = running ? "flex" : "none";
   if (running) {
     setStep(Math.max(stepN, 3));
@@ -121,7 +123,8 @@ function toggleRun() {
 
 function resetLab() {
   running = false;
-  document.getElementById("runBtnTop").textContent = "▶ Run Simulation";
+  document.getElementById("runBtnTop").innerHTML =
+    '<i class="bx bx-play" aria-hidden="true"></i><span>Run Simulation</span>';
   document.getElementById("runBadge").style.display = "none";
   document.getElementById("voltSlider").value   = 12;
   document.getElementById("intResSlider").value = 0.5;

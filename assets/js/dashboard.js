@@ -305,7 +305,9 @@ function toggleMiniSim() {
   miniSimRunning = !miniSimRunning;
   const btn = document.getElementById("simRunBtn");
   const badge = document.getElementById("simStatusBadge");
-  btn.textContent = miniSimRunning ? "⏸ PAUSE" : "▶ RUN SIMULATION";
+  btn.innerHTML = miniSimRunning
+    ? '<i class="bx bx-pause" aria-hidden="true"></i><span>PAUSE</span>'
+    : '<i class="bx bx-play" aria-hidden="true"></i><span>RUN SIMULATION</span>';
   btn.classList.toggle("running", miniSimRunning);
   if (badge) badge.textContent = miniSimRunning ? "RUNNING" : "IDLE";
 }
