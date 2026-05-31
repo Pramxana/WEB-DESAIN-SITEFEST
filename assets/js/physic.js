@@ -378,6 +378,15 @@ function drawMain() {
   const { V, R1, R2, R3, Rt, I, P } = vals();
 
   // --------------------------------------------------
+  // Responsive Circuit Scale
+  // --------------------------------------------------
+  const circuitScale = Math.min(1, Math.max(0.58, (W - 24) / 500));
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.scale(circuitScale, circuitScale);
+  ctx.translate(-cx, -cy);
+
+  // --------------------------------------------------
   // Wire glow
   // --------------------------------------------------
   ctx.save();
@@ -461,6 +470,8 @@ function drawMain() {
     });
     if (stepN < 4) setStep(4);
   }
+
+  ctx.restore();
 
   // --------------------------------------------------
   // AC overlay

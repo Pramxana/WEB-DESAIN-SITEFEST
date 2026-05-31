@@ -778,6 +778,26 @@ body {
     min-height: 44px;
   }
 
+  .page-header > div:last-child {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .page-header > div:last-child .btn {
+    flex: 1 1 100%;
+    min-height: 44px;
+  }
+
+  .lab-layout,
+  .sim-wrap,
+  .formula-row,
+  .panel-card,
+  .oscillo-wrap {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .lab-layout { gap: 12px; }
 
   .tab-row,
@@ -791,16 +811,48 @@ body {
     min-height: 44px;
   }
 
-  .mode-strip {
-    max-width: 100%;
-    overflow-x: auto;
+  .sim-wrap { overflow: hidden; }
+
+  .sim-topbar {
+    height: auto;
+    min-height: 38px;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    padding: 8px 10px;
   }
+
+  .sim-label {
+    flex: 1 1 160px;
+    min-width: 0;
+    margin-left: 0;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .sim-running-badge { margin-left: 0; }
+
+  .mode-strip {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    overflow-x: hidden;
+  }
+
+  .mode-sep { display: none; }
 
   #mainCanvas {
     display: block;
+    width: 100%;
     max-width: 100%;
     height: auto;
-    min-height: 300px;
+    min-height: 0;
+  }
+
+  #oscilloCanvas {
+    display: block;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -810,8 +862,6 @@ body {
 
 @media (max-width: 390px) {
   .page-header { padding: 10px 0; }
-
-  #mainCanvas { min-height: 240px; }
 
   .mode-strip {
     flex-wrap: wrap;

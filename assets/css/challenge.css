@@ -1161,6 +1161,18 @@ body.challenge-page[data-challenge-mode="biology"] {
 
   .challenge-workspace,
   .challenge-arena {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .challenge-workspace > *,
+  .challenge-arena > *,
+  .reaction-chamber,
+  .beaker-area,
+  .circuit-canvas-wrap,
+  .body-canvas-wrap {
+    max-width: 100%;
     min-width: 0;
   }
 

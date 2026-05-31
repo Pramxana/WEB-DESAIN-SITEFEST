@@ -982,6 +982,29 @@ input[type="range"]::-webkit-slider-thumb {
 
   .lab-layout { gap: 12px; }
 
+  .lab-layout,
+  .panel-card,
+  .chamber-area,
+  .canvas-wrap,
+  .chamber-statusbar {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .chamber-topbar {
+    height: auto;
+    min-height: 42px;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding-block: 8px;
+  }
+
+  .chamber-title {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   .chamber-area {
     min-height: 500px;
     overflow: hidden;

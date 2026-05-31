@@ -1302,6 +1302,17 @@ input[type="range"]::-webkit-slider-thumb {
     grid-template-columns: 1fr;
   }
 
+  .sim-grid,
+  .sim-sidebar,
+  .sim-view,
+  .body-viewport,
+  .body-container,
+  .deep-scan-result {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .sim-sidebar {
     position: relative;
     top: auto;
@@ -1315,9 +1326,15 @@ input[type="range"]::-webkit-slider-thumb {
     top: auto;
     height: min(680px, 76vh);
     min-height: 400px;
+    overflow-x: hidden;
+  }
+
+  .body-container {
+    margin-inline: auto;
   }
 
   .human-body-svg {
+    max-width: 100%;
     max-height: 560px;
   }
 
