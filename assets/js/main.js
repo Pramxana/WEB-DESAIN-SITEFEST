@@ -57,7 +57,7 @@
 
   topbar.prepend(menuButton);
   sidebar.prepend(closeButton);
-  document.body.append(overlay);
+  sidebar.after(overlay);
 
   function setSidebarOpen(isOpen) {
     sidebar.classList.toggle("is-open", isOpen);
