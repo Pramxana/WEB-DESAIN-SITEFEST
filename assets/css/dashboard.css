@@ -242,3 +242,16 @@ body {
 
   .sim-run-btn.running { animation-duration: 1s; }
 }
+
+@media (max-width:390px) {
+  .welcome-card { padding: 18px 14px; }
+
+  .welcome-stats { gap: 12px; }
+
+  .welcome-title { font-size: clamp(1.9rem, 11vw, 2.8rem); }
+
+  .sim-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

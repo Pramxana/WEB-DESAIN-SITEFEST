@@ -9,7 +9,16 @@
   const cursor = document.getElementById("cursor");
   const cursorDot = document.getElementById("cursorDot");
   if (!cursor || !cursorDot) return;
-  if (window.matchMedia("(pointer: coarse)").matches) return;
+
+  const isTouchDevice = window.matchMedia(
+    "(hover: none), (pointer: coarse), (max-width: 768px)"
+  ).matches;
+
+  if (isTouchDevice) {
+    cursor.remove();
+    cursorDot.remove();
+    return;
+  }
 
   document.addEventListener("mousemove", (e) => {
     cursorDot.style.transform = `translate(${e.clientX - 2}px, ${e.clientY - 2}px)`;
@@ -55,6 +64,7 @@
     overlay.classList.toggle("is-visible", isOpen);
     document.body.classList.toggle("sidebar-open", isOpen);
     menuButton.setAttribute("aria-expanded", String(isOpen));
+    overlay.setAttribute("aria-hidden", String(!isOpen));
   }
 
   menuButton.addEventListener("click", () => setSidebarOpen(true));

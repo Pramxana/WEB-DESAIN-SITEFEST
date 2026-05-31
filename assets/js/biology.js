@@ -276,6 +276,9 @@ const ANATOMY_ZOOM_MAX = 2;
     const $tooltip = $("#organTooltip");
     const $organInfo = $("#organInfo");
     const $organStatusPanel = $("#organStatusPanel");
+    const useDesktopPointerEffects = !window.matchMedia(
+      "(hover: none), (pointer: coarse), (max-width: 768px)"
+    ).matches;
 
     buildOrganIndex();
     initTypedStatus();
@@ -302,20 +305,22 @@ const ANATOMY_ZOOM_MAX = 2;
           "aria-label": data.name,
         });
 
-        $group.on("mouseenter", function (event) {
-          $group.addClass("hovered");
-          $("#focusLabel").text(data.name.toUpperCase());
-          showTooltip(data, event);
-        });
+        if (useDesktopPointerEffects) {
+          $group.on("mouseenter", function (event) {
+            $group.addClass("hovered");
+            $("#focusLabel").text(data.name.toUpperCase());
+            showTooltip(data, event);
+          });
 
-        $group.on("mousemove", function (event) {
-          updateTooltipPos(event);
-        });
+          $group.on("mousemove", function (event) {
+            updateTooltipPos(event);
+          });
 
-        $group.on("mouseleave", function () {
-          $group.removeClass("hovered");
-          $tooltip.removeClass("visible");
-        });
+          $group.on("mouseleave", function () {
+            $group.removeClass("hovered");
+            $tooltip.removeClass("visible");
+          });
+        }
 
         $group.on("click keydown", function (event) {
           if (event.type === "keydown" && event.key !== "Enter" && event.key !== " ") return;
@@ -327,17 +332,19 @@ const ANATOMY_ZOOM_MAX = 2;
       // --------------------------------------------------
       // Anatomy Viewer Pointer
       // --------------------------------------------------
-      $simView.on("mouseenter", function (event) {
-        showScanCursor(event);
-      });
+      if (useDesktopPointerEffects) {
+        $simView.on("mouseenter", function (event) {
+          showScanCursor(event);
+        });
 
-      $simView.on("mousemove", function (event) {
-        showScanCursor(event);
-      });
+        $simView.on("mousemove", function (event) {
+          showScanCursor(event);
+        });
 
-      $simView.on("mouseleave", function () {
-        hideScanCursor();
-      });
+        $simView.on("mouseleave", function () {
+          hideScanCursor();
+        });
+      }
     }
 
     function bindControls() {

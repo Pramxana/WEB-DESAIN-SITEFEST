@@ -130,6 +130,10 @@ nav::after {
   border-color: var(--primary);
   color: var(--primary);
 }
+.landing-menu-toggle,
+.landing-menu-overlay {
+  display: none;
+}
 .btn-nav {
   background: var(--black);
   color: var(--white);
@@ -2455,10 +2459,12 @@ footer::before {
 @media (max-width: 768px) {
   nav {
     height: 60px;
+    gap: 8px;
     padding: 0 4%;
   }
 
   .nav-logo {
+    margin-right: auto;
     gap: 8px;
     font-size: 1.5rem;
   }
@@ -2469,11 +2475,80 @@ footer::before {
   }
 
   .btn-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     min-height: 42px;
     padding: 9px 11px;
     font-size: 0.58rem;
     letter-spacing: 1px;
   }
+
+  .landing-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    border: var(--border-strong);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--black);
+    font-size: 1.35rem;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 1002;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 10px 4% 16px;
+    border-bottom: var(--border-strong);
+    background: rgba(var(--text-main-rgb), 0.98);
+    box-shadow: 0 10px 0 rgba(var(--ink-rgb), 0.12);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    visibility: hidden;
+  }
+
+  .nav-links.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .nav-links a {
+    display: block;
+    min-height: 44px;
+    padding: 13px 4px;
+  }
+
+  .landing-menu-overlay {
+    position: fixed;
+    inset: 60px 0 0;
+    z-index: 999;
+    display: block;
+    background: rgba(var(--ink-rgb), 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .landing-menu-overlay.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body.landing-nav-open { overflow: hidden; }
 
   .hero {
     min-height: auto;
@@ -2520,6 +2595,53 @@ footer::before {
     overflow: hidden;
   }
 
+  .physics-inner > *,
+  .bio-inner > *,
+  .sim-inner > *,
+  .sim-body > *,
+  .features-grid > *,
+  .problem-grid > *,
+  .testi-grid > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .elec-frame,
+  .bio-frame,
+  .sim-dashboard {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .elec-canvas-wrap {
+    height: clamp(190px, 62vw, 280px);
+  }
+
+  #elecCanvas {
+    width: 100%;
+    height: 100%;
+  }
+
+  .bio-body {
+    flex-direction: column;
+    padding: 14px;
+  }
+
+  .anatomy-canvas-wrap {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 340px;
+  }
+
+  .bio-side-panel {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .sim-body {
+    grid-template-columns: 1fr;
+  }
+
   .testi-card {
     padding: 28px 22px;
   }
@@ -2537,11 +2659,52 @@ footer::before {
     padding: 22px 18px 26px;
   }
 
-  .nav-logo { font-size: 1.35rem; }
+  .elec-controls,
+  .sim-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-logo {
+    gap: 6px;
+    font-size: 1.28rem;
+    letter-spacing: 2px;
+  }
+
+  .nav-logo-icon {
+    width: 34px;
+    height: 34px;
+  }
 
   .btn-nav {
-    padding: 8px 9px;
+    width: 42px;
+    min-width: 42px;
+    padding: 8px;
     font-size: 0.52rem;
+  }
+
+  .btn-nav span { display: none; }
+}
+
+@media (max-width: 390px) {
+  nav { padding: 0 10px; }
+
+  .nav-logo {
+    font-size: 1.18rem;
+    letter-spacing: 1.5px;
+  }
+
+  .hero {
+    padding: 86px 12px 50px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 16vw, 4rem);
+    overflow-wrap: anywhere;
+  }
+
+  .section-title {
+    font-size: clamp(2.35rem, 12vw, 3.3rem);
+    overflow-wrap: anywhere;
   }
 }
 

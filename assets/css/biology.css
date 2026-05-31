@@ -1375,4 +1375,39 @@ input[type="range"]::-webkit-slider-thumb {
 
 @media (hover: none), (pointer: coarse) {
   .scan-line { animation-duration: 3.8s; }
+
+  .viewport-light { display: none !important; }
+
+  .sim-view.scan-cursor-active { cursor: auto; }
+}
+
+@media (max-width: 390px) {
+  .page-header { padding: 10px 0; }
+
+  .sim-view {
+    height: min(560px, 70vh);
+    min-height: 420px;
+  }
+
+  .human-body-svg {
+    width: min(100%, 290px);
+    max-height: 470px;
+  }
+
+  .scan-hud {
+    min-width: 0;
+    max-width: calc(100% - 20px);
+    padding: 6px 8px;
+    font-size: 0.46rem;
+  }
+
+  .scan-hud-top {
+    top: 10px;
+    left: 10px;
+  }
+
+  .scan-hud-bottom {
+    right: 10px;
+    bottom: 10px;
+  }
 }

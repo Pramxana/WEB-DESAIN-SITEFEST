@@ -7,7 +7,7 @@
 // --------------------------------------------------
 (function () {
   const c = document.getElementById("welcomeParticles");
-  if (!c) return;
+  if (!c || window.matchMedia("(hover: none), (pointer: coarse), (max-width: 768px)").matches) return;
   const ctx = c.getContext("2d");
 
   function rs() {

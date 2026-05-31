@@ -29,17 +29,27 @@
         </div>
         EKSPERIKA
       </a>
-      <ul class="nav-links">
+      <ul class="nav-links" id="landingNavigation">
         <li><a href="#hero">Home</a></li>
         <li><a href="#simulations">Simulations</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
       </ul>
-      <a href="dashboard.html" class="btn-nav">
+      <button
+        class="landing-menu-toggle"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-controls="landingNavigation"
+        aria-expanded="false"
+      >
+        <i class="bx bx-menu" aria-hidden="true"></i>
+      </button>
+      <a href="dashboard.html" class="btn-nav" aria-label="Start Experiment">
         <i class="bx bx-test-tube"></i>
-        Start Experiment</a
+        <span>Start Experiment</span></a
       >
     </nav>
+    <div class="landing-menu-overlay" aria-hidden="true"></div>
 
     <!-- --------------------------------------------------
         HERO

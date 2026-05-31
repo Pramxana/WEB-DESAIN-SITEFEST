@@ -807,3 +807,19 @@ body {
 @media (hover: none), (pointer: coarse) {
   .sim-run-btn.running { animation-duration: 1s; }
 }
+
+@media (max-width: 390px) {
+  .page-header { padding: 10px 0; }
+
+  #mainCanvas { min-height: 240px; }
+
+  .mode-strip {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    overflow-x: hidden;
+  }
+
+  .mode-sep { display: none; }
+
+  #oscilloCanvas { height: 52px; }
+}

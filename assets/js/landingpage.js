@@ -2,12 +2,16 @@
 // landingpage.JS — index.html
 // --------------------------------------------------
 
+const useLightweightMobileEffects = window.matchMedia(
+  "(hover: none), (pointer: coarse), (max-width: 768px)"
+).matches;
+
 // --------------------------------------------------
 // HERO PARTICLES
 // --------------------------------------------------
 (function () {
   const canvas = document.getElementById("heroParticles");
-  if (!canvas) return;
+  if (!canvas || useLightweightMobileEffects) return;
   const ctx = canvas.getContext("2d");
   let particles = [];
 
@@ -130,7 +134,7 @@
 // --------------------------------------------------
 (function () {
   const canvas = document.getElementById("molCanvas");
-  if (!canvas) return;
+  if (!canvas || useLightweightMobileEffects) return;
   const parent = canvas.parentElement;
   canvas.width = parent.offsetWidth;
   canvas.height = parent.offsetHeight;
@@ -283,6 +287,7 @@ createBubbles("bubblesC", "rgba(139,92,246,0.5)");
   const canvas = document.getElementById("elecCanvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
+  const animateElectricity = !useLightweightMobileEffects;
   let voltage = 12, resistance = 4, current = voltage / resistance, particles = [];
 
   const circuitPath = [
@@ -372,7 +377,7 @@ createBubbles("bubblesC", "rgba(139,92,246,0.5)");
       ctx.fill(); ctx.shadowBlur = 0;
     });
 
-    requestAnimationFrame(draw);
+    if (animateElectricity) requestAnimationFrame(draw);
   }
 
   initParticles();
@@ -392,6 +397,7 @@ createBubbles("bubblesC", "rgba(139,92,246,0.5)");
     document.getElementById("currVal").textContent = current.toFixed(1) + "A";
     document.getElementById("currMeter").style.width = Math.min(100, (current / 10) * 100) + "%";
     initParticles();
+    if (!animateElectricity) draw();
   };
 })();
 
@@ -400,7 +406,7 @@ createBubbles("bubblesC", "rgba(139,92,246,0.5)");
 // --------------------------------------------------
 (function () {
   const canvas = document.getElementById("bioParticles");
-  if (!canvas) return;
+  if (!canvas || useLightweightMobileEffects) return;
   const parent = canvas.parentElement;
   canvas.width = parent.offsetWidth;
   canvas.height = parent.offsetHeight;
@@ -461,7 +467,7 @@ function setBioSys(el, sys) {
       d += ` L ${x} ${y}`;
     }
     simWavePath.setAttribute("d", d);
-    requestAnimationFrame(animWave);
+    if (!useLightweightMobileEffects) requestAnimationFrame(animWave);
   }
   animWave();
 
@@ -476,6 +482,7 @@ function setBioSys(el, sys) {
     btn.style.boxShadow = simRunning
       ? "0 0 20px rgba(16,185,129,0.5)"
       : "0 0 15px rgba(14,165,233,0.3)";
+    if (useLightweightMobileEffects) animWave();
   };
 })();
 
@@ -484,7 +491,7 @@ function setBioSys(el, sys) {
 // --------------------------------------------------
 (function () {
   const canvas = document.getElementById("ctaParticles");
-  if (!canvas) return;
+  if (!canvas || useLightweightMobileEffects) return;
   const ctx = canvas.getContext("2d");
   function resize() {
     canvas.width = canvas.offsetWidth;
@@ -564,3 +571,43 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
     if (t) { e.preventDefault(); t.scrollIntoView({ behavior: "smooth" }); }
   });
 });
+
+// --------------------------------------------------
+// MOBILE LANDING NAVIGATION
+// --------------------------------------------------
+(function () {
+  const menuButton = document.querySelector(".landing-menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+  const overlay = document.querySelector(".landing-menu-overlay");
+  if (!menuButton || !navLinks || !overlay) return;
+
+  function setLandingNavigationOpen(isOpen) {
+    navLinks.classList.toggle("is-open", isOpen);
+    overlay.classList.toggle("is-visible", isOpen);
+    document.body.classList.toggle("landing-nav-open", isOpen);
+    menuButton.setAttribute("aria-expanded", String(isOpen));
+    overlay.setAttribute("aria-hidden", String(!isOpen));
+    menuButton.setAttribute(
+      "aria-label",
+      isOpen ? "Close navigation menu" : "Open navigation menu"
+    );
+  }
+
+  menuButton.addEventListener("click", () => {
+    setLandingNavigationOpen(!navLinks.classList.contains("is-open"));
+  });
+
+  overlay.addEventListener("click", () => setLandingNavigationOpen(false));
+
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setLandingNavigationOpen(false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setLandingNavigationOpen(false);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) setLandingNavigationOpen(false);
+  });
+})();

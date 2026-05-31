@@ -1174,7 +1174,8 @@ body.challenge-page[data-challenge-mode="biology"] {
 
   .circuit-canvas-wrap {
     max-width: 100%;
-    overflow-x: auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow-x: hidden;
   }
 
   .organ-tray {
@@ -1193,11 +1194,51 @@ body.challenge-page[data-challenge-mode="biology"] {
     width: calc(100vw - 24px);
     max-width: 420px;
   }
+
+  .component-block.tap-selected,
+  .organ-item.tap-selected {
+    border-color: var(--neon-blue);
+    background: rgba(var(--primary-rgb), 0.12);
+    box-shadow: 0 0 14px rgba(var(--primary-rgb), 0.24);
+  }
+
+  .remove-cell { opacity: 1 !important; }
 }
 
 @media (hover: none), (pointer: coarse) {
   .dragging,
   .drop-zone-active {
     animation-duration: 1.2s;
+  }
+}
+
+@media (max-width: 390px) {
+  .page-header { padding: 10px 0; }
+
+  .circuit-canvas-wrap {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px;
+    padding: 8px;
+  }
+
+  .circuit-cell { min-height: 56px; }
+
+  .ohm-values { grid-template-columns: 1fr; }
+
+  .body-canvas-wrap {
+    min-height: 430px;
+    padding-inline: 6px;
+  }
+
+  .body-silhouette {
+    width: min(190px, 100%);
+    height: 290px;
+  }
+
+  .organs-tray { gap: 6px; }
+
+  .organ-item {
+    width: 68px;
+    height: 72px;
   }
 }

@@ -105,14 +105,28 @@
   padding: 0;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
 
 body {
+  width: 100%;
+  max-width: 100%;
   font-family: var(--font-body);
   color: var(--white);
   overflow-x: hidden;
   min-height: 100vh;
   cursor: none;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
 }
 
 /* --------------------------------------------------
@@ -648,21 +662,22 @@ body:has(button:hover) .cursor {
   }
 }
 
-@media (hover: none), (pointer: coarse) {
-  body { cursor: auto; }
-
-  .cursor,
-  .cursor-dot {
-    display: none;
+@media (hover: none), (pointer: coarse), (max-width: 768px) {
+  * {
+    cursor: auto !important;
   }
 
-  a,
-  button,
-  .btn,
-  .nav-item,
-  input,
-  select {
-    cursor: pointer;
+  .custom-cursor,
+  .cursor,
+  .cursor-dot,
+  .cursor-outline,
+  #cursor,
+  #customCursor,
+  #cursorDot {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 }
 
@@ -670,4 +685,66 @@ body:has(button:hover) .cursor {
   .topbar { padding: 7px 12px; }
   .topbar-title { font-size: 1rem; }
   .content { padding: 14px 12px 24px; }
+}
+
+@media (max-width: 768px) {
+  .app,
+  .main,
+  .content,
+  .topbar,
+  .page-header,
+  .page-actions,
+  .panel-body,
+  .panel-card {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .topbar { flex-wrap: wrap; }
+
+  .content > *,
+  .page-header > *,
+  .page-actions > *,
+  .lab-layout > *,
+  .sim-grid > *,
+  .challenge-workspace > *,
+  .challenge-arena > *,
+  .lab-panel > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  span {
+    overflow-wrap: anywhere;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .sidebar { width: min(88vw, 280px); }
+
+  .topbar {
+    gap: 8px;
+    padding: 6px 10px;
+  }
+
+  .topbar-title {
+    font-size: 0.92rem;
+    letter-spacing: 1.5px;
+  }
+
+  .topbar-breadcrumb { font-size: 0.44rem; }
+
+  .content { padding: 12px 10px 22px; }
 }
