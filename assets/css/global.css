@@ -543,10 +543,12 @@ body:has(button:hover) .cursor {
 
   .sidebar {
     width: min(82vw, 280px);
+    background: rgba(var(--surface-rgb), 0.98);
+    border-right: 1px solid rgba(var(--primary-rgb), 0.34);
     transform: translateX(-102%);
     transition: transform 0.25s ease;
     z-index: 1000;
-    box-shadow: 16px 0 32px rgba(var(--ink-rgb), 0.48);
+    box-shadow: 18px 0 50px rgba(var(--ink-rgb), 0.58);
   }
 
   .sidebar.is-open { transform: translateX(0); }
@@ -563,10 +565,73 @@ body:has(button:hover) .cursor {
     padding-right: 56px;
   }
 
+  .sidebar-logo-text {
+    color: var(--text-main);
+    opacity: 1;
+  }
+
+  .sidebar-logo-text span {
+    color: rgba(var(--accent-rgb), 0.72);
+    opacity: 1;
+  }
+
+  .sidebar-section-label {
+    color: rgba(var(--text-muted-rgb), 0.78);
+    opacity: 1;
+  }
+
   .nav-item {
     justify-content: flex-start;
     min-height: 44px;
     padding: 11px 12px;
+    color: rgba(var(--text-main-rgb), 0.72);
+    opacity: 1;
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .nav-item .nav-icon {
+    color: rgba(var(--text-main-rgb), 0.64);
+    opacity: 1;
+  }
+
+  .nav-item span {
+    color: inherit;
+    opacity: 1;
+  }
+
+  .nav-item.active,
+  .nav-item.selected,
+  .nav-item[aria-current="page"] {
+    color: var(--cyan);
+    background: rgba(var(--primary-rgb), 0.14);
+    border-color: rgba(var(--primary-rgb), 0.4);
+    box-shadow:
+      inset 4px 0 0 var(--primary),
+      0 0 20px rgba(var(--primary-rgb), 0.14);
+  }
+
+  .nav-item.active::before,
+  .nav-item.selected::before,
+  .nav-item[aria-current="page"]::before {
+    opacity: 1;
+  }
+
+  .nav-item.active .nav-icon,
+  .nav-item.active span,
+  .nav-item.selected .nav-icon,
+  .nav-item.selected span,
+  .nav-item[aria-current="page"] .nav-icon,
+  .nav-item[aria-current="page"] span {
+    color: var(--cyan);
+    opacity: 1;
+  }
+
+  .nav-item:hover,
+  .nav-item:active {
+    color: var(--text-main);
+    background: rgba(var(--primary-rgb), 0.09);
+    border-color: rgba(var(--primary-rgb), 0.26);
   }
 
   .main {
@@ -610,6 +675,7 @@ body:has(button:hover) .cursor {
     background: rgba(var(--surface-rgb), 0.94);
     border: 1px solid rgba(var(--primary-rgb), 0.42);
     cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
   }
 
   .mobile-menu-toggle {
@@ -624,6 +690,15 @@ body:has(button:hover) .cursor {
     z-index: 2;
     display: inline-flex;
     font-size: 1.4rem;
+  }
+
+  .mobile-menu-toggle:hover,
+  .mobile-menu-toggle:active,
+  .sidebar-close:hover,
+  .sidebar-close:active {
+    color: var(--cyan);
+    background: rgba(var(--primary-rgb), 0.15);
+    border-color: rgba(var(--primary-rgb), 0.58);
   }
 
   .sidebar-overlay {
