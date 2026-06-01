@@ -1,2 +1,3 @@
 node_modules/
-AGENT.md
+package-lock.json
+package.json
