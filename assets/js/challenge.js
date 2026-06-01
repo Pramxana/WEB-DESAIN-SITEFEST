@@ -541,6 +541,7 @@ const PhysState = {
 
   init() {
     this.buildGrid();
+    initPhysicsTapPlacement();
     this.drawOscWave(false);
     updateComponentAvailability();
   },
@@ -554,6 +555,7 @@ const PhysState = {
       cell.id = `cell-${i}`;
       cell.ondragover = allowDrop;
       cell.ondrop = e => dropComponent(e, i);
+      cell.addEventListener('click', () => handleCircuitCellTap(i));
       grid.appendChild(cell);
     }
   },
@@ -669,12 +671,60 @@ let dragData = null;
 // --------------------------------------------------
 // Physics component availability
 // --------------------------------------------------
+function createComponentDragData(component) {
+  return {
+    componentId: component.dataset.componentId,
+    type: component.dataset.type,
+    resistance: parseFloat(component.dataset.resistance || 0),
+    voltage: parseFloat(component.dataset.voltage || 0)
+  };
+}
+
+function clearComponentTapSelection() {
+  document.querySelectorAll('.component-block.tap-selected').forEach((component) => {
+    component.classList.remove('tap-selected');
+  });
+}
+
+function selectComponentForPlacement(component) {
+  if (!validateChallengeStarted('phys')) return;
+  const componentId = component.dataset.componentId;
+  if (isComponentUsed(componentId)) {
+    showToast('This component is already placed in the circuit. Remove it from the grid to use it again.', 'error');
+    return;
+  }
+  clearComponentTapSelection();
+  dragData = createComponentDragData(component);
+  component.classList.add('tap-selected');
+  showToast('Component selected. Tap an empty circuit slot to place it.', 'info');
+}
+
+function initPhysicsTapPlacement() {
+  document.querySelectorAll('.component-block').forEach((component) => {
+    if (component.dataset.tapReady === 'true') return;
+    component.dataset.tapReady = 'true';
+    component.setAttribute('role', 'button');
+    component.setAttribute('tabindex', '0');
+    component.addEventListener('click', () => selectComponentForPlacement(component));
+    component.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      selectComponentForPlacement(component);
+    });
+  });
+}
+
+function handleCircuitCellTap(cellIdx) {
+  if (!dragData || !dragData.componentId) return;
+  dropComponent({ preventDefault() {} }, cellIdx);
+}
+
 function isComponentUsed(componentId) {
   return PhysState.usedComponents.has(componentId);
 }
 
 function resetComponentVisualState(component) {
-  component.classList.remove('is-used', 'component-disabled', 'disabled');
+  component.classList.remove('is-used', 'component-disabled', 'disabled', 'tap-selected');
   component.removeAttribute('disabled');
   component.style.removeProperty('opacity');
   component.style.removeProperty('filter');
@@ -719,7 +769,8 @@ function dragComponent(e) {
     showToast('This component is already placed in the circuit. Remove it from the grid to use it again.', 'error');
     return;
   }
-  dragData = { componentId, type: e.currentTarget.dataset.type, resistance: parseFloat(e.currentTarget.dataset.resistance||0), voltage: parseFloat(e.currentTarget.dataset.voltage||0) };
+  clearComponentTapSelection();
+  dragData = createComponentDragData(e.currentTarget);
   const component = e.currentTarget;
   component.style.opacity = '0.5';
   setTimeout(() => component.style.removeProperty('opacity'), 100);
@@ -749,12 +800,13 @@ function dropComponent(e, cellIdx) {
 
   cell.innerHTML = `<i class="bx ${icons[dragData.type]} circuit-cell-icon" aria-hidden="true"></i>
     <span class="cell-label">${labels[dragData.type]}</span>
-    <button class="remove-cell" onclick="removeCell(${cellIdx})"><i class="bx bx-x" aria-hidden="true"></i></button>`;
+    <button class="remove-cell" aria-label="Remove component" onclick="event.stopPropagation(); removeCell(${cellIdx})"><i class="bx bx-x" aria-hidden="true"></i></button>`;
   cell.classList.add('has-component');
 
   PhysState.components[cellIdx] = { ...dragData };
   markComponentAsUsed(dragData.componentId);
   PhysState.updateOhmDisplay(PhysState.calcOhm());
+  clearComponentTapSelection();
   dragData = null;
 
   // --------------------------------------------------
@@ -817,6 +869,8 @@ function resetPhysicsChallenge() {
   PhysState.circuitOn = false;
   PhysState.components = {};
   PhysState.usedComponents = new Set();
+  clearComponentTapSelection();
+  dragData = null;
   PhysState.buildGrid();
   PhysState.updateOhmDisplay({ V: 9, R: 0, I: 0, hasBattery: false, hasLamp: false });
   document.getElementById('lampIcon').innerHTML = bxIcon('bx-bulb');
@@ -947,7 +1001,9 @@ function highlightOrganDropZones(organId) {
 }
 
 function endOrganDrag() {
-  document.querySelectorAll('.organ-item.dragging').forEach((organ) => organ.classList.remove('dragging'));
+  document.querySelectorAll('.organ-item.dragging, .organ-item.tap-selected').forEach((organ) => {
+    organ.classList.remove('dragging', 'tap-selected');
+  });
   clearOrganDropFeedback();
   dragData = null;
 }
@@ -1037,7 +1093,38 @@ function initBiologyDragDrop() {
     if (zone.dataset.dragReady === 'true') return;
     zone.dataset.dragReady = 'true';
     zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('click', () => {
+      if (!dragData || !dragData.organId) return;
+      handleOrganDrop(dragData.organId, zone.id.replace('dz-', ''));
+    });
   });
+
+  document.querySelectorAll('.organ-item').forEach((organ) => {
+    if (organ.dataset.tapReady === 'true') return;
+    organ.dataset.tapReady = 'true';
+    organ.setAttribute('role', 'button');
+    organ.setAttribute('tabindex', '0');
+    organ.addEventListener('click', () => selectOrganForPlacement(organ));
+    organ.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      selectOrganForPlacement(organ);
+    });
+  });
+}
+
+function selectOrganForPlacement(organ) {
+  if (!validateChallengeStarted('bio')) return;
+  const organId = organ.dataset.organ;
+  if (BioState.placedOrgans.has(organId)) {
+    showToast('This organ is already placed in the anatomy view.', 'error');
+    return;
+  }
+  endOrganDrag();
+  dragData = { organId };
+  organ.classList.add('tap-selected');
+  highlightOrganDropZones(organId);
+  showToast('Organ selected. Tap the highlighted anatomy target.', 'info');
 }
 
 // --------------------------------------------------

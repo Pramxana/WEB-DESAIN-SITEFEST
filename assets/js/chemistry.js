@@ -11,6 +11,7 @@ const S = {
 };
 
 const $ = id => document.getElementById(id);
+const chevronIcon = '<i class="bx bx-chevron-right" aria-hidden="true"></i>';
 
 // --------------------------------------------------
 // NAV
@@ -61,9 +62,9 @@ const setHint = k => $('hint-body').textContent = hints[k]||hints.idle;
 // REACTION TYPE
 // --------------------------------------------------
 const rxnFormulas = {
-  'acid-base':'<div class="formula-head">▸ CONCEPT FORMULA</div><div class="formula-line"><span class="f-hl">Acid</span> <span class="f-eq">+</span> <span class="f-hl">Base</span> <span class="f-eq">→</span> Salt <span class="f-eq">+</span> H₂O</div><div class="formula-head" style="margin-top:5px">▸ ION REACTION</div><div class="formula-line"><span class="f-hl">H⁺</span> <span class="f-eq">+</span> <span class="f-hl">OH⁻</span> <span class="f-eq">→</span> H₂O</div>',
-  'ph-test':'<div class="formula-head">▸ PH INDICATOR</div><div class="formula-line">Indicator detects <span class="f-hl">H⁺</span> / <span class="f-hl">OH⁻</span> concentration</div><div class="formula-head" style="margin-top:5px">▸ COLOR CHANGE</div><div class="formula-line"><span class="f-hl">pH &lt;7</span> <span class="f-eq">→</span> Red (Acidic)</div><div class="formula-line"><span class="f-hl">pH =7</span> <span class="f-eq">→</span> Green (Neutral)</div><div class="formula-line"><span class="f-hl">pH &gt;7</span> <span class="f-eq">→</span> Blue (Basic)</div>',
-  'gas-reaction':'<div class="formula-head">▸ GAS FORMULA</div><div class="formula-line"><span class="f-hl">Acid</span> <span class="f-eq">+</span> Carbonate <span class="f-eq">→</span> CO₂ <span class="f-eq">+</span> H₂O</div><div class="formula-head" style="margin-top:5px">▸ GAS OUTPUT</div><div class="formula-line">Bubble rate <span class="f-hl">↑</span> with concentration</div>'
+  'acid-base':`<div class="formula-head">${chevronIcon} CONCEPT FORMULA</div><div class="formula-line"><span class="f-hl">Acid</span> <span class="f-eq">+</span> <span class="f-hl">Base</span> <span class="f-eq">→</span> Salt <span class="f-eq">+</span> H₂O</div><div class="formula-head" style="margin-top:5px">${chevronIcon} ION REACTION</div><div class="formula-line"><span class="f-hl">H⁺</span> <span class="f-eq">+</span> <span class="f-hl">OH⁻</span> <span class="f-eq">→</span> H₂O</div>`,
+  'ph-test':`<div class="formula-head">${chevronIcon} PH INDICATOR</div><div class="formula-line">Indicator detects <span class="f-hl">H⁺</span> / <span class="f-hl">OH⁻</span> concentration</div><div class="formula-head" style="margin-top:5px">${chevronIcon} COLOR CHANGE</div><div class="formula-line"><span class="f-hl">pH &lt;7</span> <span class="f-eq">→</span> Red (Acidic)</div><div class="formula-line"><span class="f-hl">pH =7</span> <span class="f-eq">→</span> Green (Neutral)</div><div class="formula-line"><span class="f-hl">pH &gt;7</span> <span class="f-eq">→</span> Blue (Basic)</div>`,
+  'gas-reaction':`<div class="formula-head">${chevronIcon} GAS FORMULA</div><div class="formula-line"><span class="f-hl">Acid</span> <span class="f-eq">+</span> Carbonate <span class="f-eq">→</span> CO₂ <span class="f-eq">+</span> H₂O</div><div class="formula-head" style="margin-top:5px">${chevronIcon} GAS OUTPUT</div><div class="formula-line">Bubble rate <span class="f-hl">increases</span> with concentration</div>`
 };
 const rxnBadges={'acid-base':'ACID BASE MODE','ph-test':'PH TEST MODE','gas-reaction':'GAS REACTION MODE'};
 function setRxn(btn) {
@@ -85,7 +86,7 @@ function selectChem(btn) {
   btn.classList.add('selected');
   S.selChem=btn.dataset.chem;
   highlightBottle(S.selChem);
-  $('sel-label').textContent='▸ '+S.selChem.toUpperCase()+' SELECTED';
+  $('sel-label').innerHTML=chevronIcon+' '+S.selChem.toUpperCase()+' SELECTED';
   $('sel-label').classList.add('on');
   addLog(S.selChem.charAt(0).toUpperCase()+S.selChem.slice(1)+' selected.','warn');
   setHint(S.selChem==='indicator'?'indicator':'selected');
@@ -94,7 +95,7 @@ function selectChem2(chem) {
   S.selChem=chem;
   document.querySelectorAll('.reagent-btn').forEach(b=>b.classList.toggle('selected',b.dataset.chem===chem));
   highlightBottle(chem);
-  $('sel-label').textContent='▸ '+chem.toUpperCase()+' SELECTED';
+  $('sel-label').innerHTML=chevronIcon+' '+chem.toUpperCase()+' SELECTED';
   $('sel-label').classList.add('on');
   addLog(chem.charAt(0).toUpperCase()+chem.slice(1)+' selected.','warn');
   setHint(chem==='indicator'?'indicator':'selected');
@@ -407,7 +408,7 @@ function resetChamber(silent=false){
   stopBubbles(); showVapor(false,false); setGlow(false);
   document.querySelectorAll('.reagent-btn').forEach(b=>b.classList.remove('selected'));
   ['acid','base','indicator','water'].forEach(c=>{const b=$('bot-'+c);if(b)b.classList.remove('sel');});
-  $('sel-label').textContent='— NO CHEMICAL SELECTED —'; $('sel-label').classList.remove('on');
+  $('sel-label').textContent='-- NO CHEMICAL SELECTED --'; $('sel-label').classList.remove('on');
   resetParameterControls();
   resetLiveMeter();
   if(!silent) addLog('Chamber reset. Ready for new experiment.','info');

@@ -1,15 +1,15 @@
 ﻿<!-- --------------------------------------------------
      DASHBOARD
 -------------------------------------------------- -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eksperika | Lab OS Dashboard</title>
-    <link rel="stylesheet" href="assets/css/boxicons.min.css">
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/boxicons.min.css" />
+    <link rel="stylesheet" href="assets/css/global.css" />
+    <link rel="stylesheet" href="assets/css/dashboard.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
@@ -38,7 +38,7 @@
         <div class="sidebar-section-label">Navigation</div>
 
         <nav class="sidebar-nav">
-          <a class="nav-item active">
+          <a class="nav-item active" aria-current="page">
             <i class="bx bx-home nav-icon"></i>
             <span>Home</span>
           </a>
@@ -112,7 +112,9 @@
                   <div class="wstat-lbl">Badges</div>
                 </div>
               </div>
-              <a href="chemistry.html" class="btn btn-primary"><i class="bx bx-play"></i>Continue Experiment</a>
+              <a href="chemistry.html" class="btn btn-primary"
+                ><i class="bx bx-play"></i>Continue Experiment</a
+              >
             </div>
             <div class="welcome-visual">
               <canvas id="welcomeViz" width="200" height="140"></canvas>
@@ -160,7 +162,9 @@
                       ></div>
                     </div>
                   </div>
-                  <a href="chemistry.html" class="btn btn-ghost btn-sm">Open <i class="bx bx-right-arrow-alt"></i></a>
+                  <a href="chemistry.html" class="btn btn-ghost btn-sm"
+                    >Open <i class="bx bx-right-arrow-alt"></i
+                  ></a>
                 </div>
               </div>
             </div>
@@ -197,7 +201,9 @@
                       ></div>
                     </div>
                   </div>
-                  <a href="physic.html" class="btn btn-ghost btn-sm">Open <i class="bx bx-right-arrow-alt"></i></a>
+                  <a href="physic.html" class="btn btn-ghost btn-sm"
+                    >Open <i class="bx bx-right-arrow-alt"></i
+                  ></a>
                 </div>
               </div>
             </div>
@@ -234,7 +240,9 @@
                       ></div>
                     </div>
                   </div>
-                  <a href="biology.html" class="btn btn-ghost btn-sm">Open <i class="bx bx-right-arrow-alt"></i></a>
+                  <a href="biology.html" class="btn btn-ghost btn-sm"
+                    >Open <i class="bx bx-right-arrow-alt"></i
+                  ></a>
                 </div>
               </div>
             </div>
@@ -324,7 +332,9 @@
                           style="width: 100%"
                         ></div>
                       </div>
-                      <span class="exp-pct" style="color: #10b981"><i class="bx bx-check" aria-hidden="true"></i></span>
+                      <span class="exp-pct" style="color: #10b981"
+                        ><i class="bx bx-check" aria-hidden="true"></i
+                      ></span>
                     </div>
                   </div>
                   <span class="tag tag-green" style="font-size: 0.45rem"
@@ -423,9 +433,13 @@
                     <div class="sml">Amp</div>
                   </div>
                 </div>
-                <button class="sim-run-btn" id="simRunBtn" onclick="toggleMiniSim()">
-                  <i class="bx bx-play"></i>
-                  RUN SIMULATION
+                <button
+                  class="sim-run-btn"
+                  id="simRunBtn"
+                  onclick="toggleMiniSim()"
+                >
+                  <i class="bx bx-play" aria-hidden="true"></i>
+                  <span>RUN SIMULATION</span>
                 </button>
               </div>
             </div>

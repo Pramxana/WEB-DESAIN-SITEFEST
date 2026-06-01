@@ -1,15 +1,15 @@
 <!-- --------------------------------------------------
      PHYSIC
 -------------------------------------------------- -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eksperika | Physics Lab</title>
     <link rel="stylesheet" href="assets/css/boxicons.min.css" />
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/physic.css">
+    <link rel="stylesheet" href="assets/css/global.css" />
+    <link rel="stylesheet" href="assets/css/physic.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
@@ -31,7 +31,7 @@
           </div>
           <div class="sidebar-logo-text">
             EKSPERIKA
-            <span>Lab OS v3.0</span>
+            <span>Lab OS</span>
           </div>
         </a>
 
@@ -46,7 +46,7 @@
             <i class="bx bx-test-tube nav-icon"></i>
             <span>Chemistry Lab</span>
           </a>
-          <a class="nav-item active">
+          <a class="nav-item active" aria-current="page">
             <i class="bx bx-bolt-circle nav-icon"></i>
             <span>Physics Lab</span>
           </a>
@@ -59,7 +59,6 @@
             <span>Challenge</span>
           </a>
         </nav>
-
       </aside>
 
       <!-- --------------------------------------------------
@@ -97,7 +96,10 @@
               </div>
             </div>
             <div style="display: flex; gap: 8px; align-items: center">
-              <a class="btn btn-yellow btn-sm" href="challenge.html?mode=physics">
+              <a
+                class="btn btn-yellow btn-sm"
+                href="challenge.html?mode=physics"
+              >
                 <i class="bx bx-trophy"></i>
                 Challenge Mode
               </a>
@@ -106,8 +108,8 @@
                 id="runBtnTop"
                 onclick="toggleRun()"
               >
-              <i class="bx bx-play"></i>  
-              Run Simulation
+                <i class="bx bx-play" aria-hidden="true"></i>
+                <span>Run Simulation</span>
               </button>
             </div>
           </div>
@@ -125,7 +127,9 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon"><i class="bx bx-bolt-circle"></i></div>
+                  <div class="panel-header-icon">
+                    <i class="bx bx-bolt-circle"></i>
+                  </div>
                   <span class="panel-header-title">Circuit Type</span>
                 </div>
                 <div class="panel-body" style="padding-bottom: 10px">
@@ -157,7 +161,9 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon"><i class="bx bx-bolt-circle"></i></div>
+                  <div class="panel-header-icon">
+                    <i class="bx bx-bolt-circle"></i>
+                  </div>
                   <span class="panel-header-title">Power Source</span>
                   <span class="panel-header-badge" id="srcType">DC</span>
                 </div>
@@ -211,7 +217,9 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon"><i class="bx bx-power-off"></i></div>
+                  <div class="panel-header-icon">
+                    <i class="bx bx-power-off"></i>
+                  </div>
                   <span class="panel-header-title">Resistors</span>
                 </div>
                 <div class="panel-body">
@@ -271,7 +279,9 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon"><i class="bx bx-wrench"></i></div>
+                  <div class="panel-header-icon">
+                    <i class="bx bx-wrench"></i>
+                  </div>
                   <span class="panel-header-title">Components</span>
                 </div>
                 <div class="panel-body">
@@ -287,7 +297,8 @@
                       class="comp-btn active"
                       onclick="this.classList.toggle('active')"
                     >
-                      <span class="comp-icon"><i class="bx bx-tachometer"></i></span
+                      <span class="comp-icon"
+                        ><i class="bx bx-tachometer"></i></span
                       ><span class="comp-label">Voltmeter</span>
                     </div>
                     <div
@@ -301,7 +312,8 @@
                       class="comp-btn active"
                       onclick="this.classList.toggle('active')"
                     >
-                      <span class="comp-icon"><i class="bx bx-bolt-circle"></i></span
+                      <span class="comp-icon"
+                        ><i class="bx bx-bolt-circle"></i></span
                       ><span class="comp-label">Capacitor</span>
                     </div>
                   </div>
@@ -387,7 +399,8 @@
                   <div class="sdot"></div>
                   <div class="sdot"></div>
                   <span class="sim-label"
-                    ><i class="bx bx-bolt-circle"></i> Electric Circuit Simulator - Realtime</span
+                    ><i class="bx bx-bolt-circle"></i> Electric Circuit
+                    Simulator - Realtime</span
                   >
                   <div
                     class="sim-running-badge"
@@ -422,7 +435,10 @@
                 </div>
                 <div class="oscillo-wrap">
                   <div class="oscillo-head">
-                    <span><i class="bx bx-bolt-circle" aria-hidden="true"></i> Oscilloscope — Voltage / Time</span>
+                    <span
+                      ><i class="bx bx-bolt-circle" aria-hidden="true"></i>
+                      Oscilloscope — Voltage / Time</span
+                    >
                     <span id="oscLabel">DC Signal</span>
                   </div>
                   <canvas id="oscilloCanvas"></canvas>
@@ -440,19 +456,25 @@
                   <div class="fm-desc">Current ∝ Voltage, ∝ 1/Resistance</div>
                 </div>
                 <div class="formula-mini">
-                  <span class="fm-icon"><i class="bx bx-bulb" aria-hidden="true"></i></span>
+                  <span class="fm-icon"
+                    ><i class="bx bx-bulb" aria-hidden="true"></i
+                  ></span>
                   <div class="fm-name">Power</div>
                   <div class="fm-eq">P = <span>VI</span></div>
                   <div class="fm-desc">Energy per unit time in Watts</div>
                 </div>
                 <div class="formula-mini">
-                  <span class="fm-icon"><i class="bx bx-plug" aria-hidden="true"></i></span>
+                  <span class="fm-icon"
+                    ><i class="bx bx-plug" aria-hidden="true"></i
+                  ></span>
                   <div class="fm-name">Series R</div>
                   <div class="fm-eq"><span>R</span>t = ΣR</div>
                   <div class="fm-desc">Resistors add up in series circuits</div>
                 </div>
                 <div class="formula-mini">
-                  <span class="fm-icon"><i class="bx bx-shuffle" aria-hidden="true"></i></span>
+                  <span class="fm-icon"
+                    ><i class="bx bx-shuffle" aria-hidden="true"></i
+                  ></span>
                   <div class="fm-name">Parallel R</div>
                   <div class="fm-eq">1/<span>R</span>t = Σ1/R</div>
                   <div class="fm-desc">
@@ -471,7 +493,9 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon"><i class="bx bx-bar-chart-alt-2" aria-hidden="true"></i></div>
+                  <div class="panel-header-icon">
+                    <i class="bx bx-bar-chart-alt-2" aria-hidden="true"></i>
+                  </div>
                   <span class="panel-header-title">Live Meters</span>
                   <span class="panel-header-badge">Realtime</span>
                 </div>
@@ -604,7 +628,9 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon"><i class="bx bx-clipboard" aria-hidden="true"></i></div>
+                  <div class="panel-header-icon">
+                    <i class="bx bx-clipboard" aria-hidden="true"></i>
+                  </div>
                   <span class="panel-header-title">Observations</span>
                   <span class="panel-header-badge">LIVE</span>
                 </div>
@@ -625,7 +651,9 @@
               -------------------------------------------------- -->
               <div class="panel-card">
                 <div class="panel-header">
-                  <div class="panel-header-icon"><i class="bx bx-pin" aria-hidden="true"></i></div>
+                  <div class="panel-header-icon">
+                    <i class="bx bx-pin" aria-hidden="true"></i>
+                  </div>
                   <span class="panel-header-title">Experiment Steps</span>
                 </div>
                 <div class="panel-body">

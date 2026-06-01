@@ -263,18 +263,22 @@ const ORGAN_DATA = {
 };
 
 let activeOrganId = null;
-let manualRotation = 0;
-let bodyParallax = { x: 0, y: 0 };
+const ANATOMY_ZOOM_MIN = 0.5;
+const ANATOMY_ZOOM_MAX = 2;
 
 (function ($) {
   "use strict";
 
   $(function () {
     const $simView = $("#simView");
+    const $bodyViewport = $(".body-viewport");
     const $bodyContainer = $("#bodyContainer");
     const $tooltip = $("#organTooltip");
     const $organInfo = $("#organInfo");
     const $organStatusPanel = $("#organStatusPanel");
+    const useDesktopPointerEffects = !window.matchMedia(
+      "(hover: none), (pointer: coarse), (max-width: 768px)"
+    ).matches;
 
     buildOrganIndex();
     initTypedStatus();
@@ -301,20 +305,22 @@ let bodyParallax = { x: 0, y: 0 };
           "aria-label": data.name,
         });
 
-        $group.on("mouseenter", function (event) {
-          $group.addClass("hovered");
-          $("#focusLabel").text(data.name.toUpperCase());
-          showTooltip(data, event);
-        });
+        if (useDesktopPointerEffects) {
+          $group.on("mouseenter", function (event) {
+            $group.addClass("hovered");
+            $("#focusLabel").text(data.name.toUpperCase());
+            showTooltip(data, event);
+          });
 
-        $group.on("mousemove", function (event) {
-          updateTooltipPos(event);
-        });
+          $group.on("mousemove", function (event) {
+            updateTooltipPos(event);
+          });
 
-        $group.on("mouseleave", function () {
-          $group.removeClass("hovered");
-          $tooltip.removeClass("visible");
-        });
+          $group.on("mouseleave", function () {
+            $group.removeClass("hovered");
+            $tooltip.removeClass("visible");
+          });
+        }
 
         $group.on("click keydown", function (event) {
           if (event.type === "keydown" && event.key !== "Enter" && event.key !== " ") return;
@@ -323,20 +329,22 @@ let bodyParallax = { x: 0, y: 0 };
         });
       });
 
-      $simView.on("mousemove", function (event) {
-        const rect = this.getBoundingClientRect();
-        const x = ((event.clientX - rect.left) / rect.width) * 100;
-        const y = ((event.clientY - rect.top) / rect.height) * 100;
-        bodyParallax.x = (x - 50) / 50;
-        bodyParallax.y = (y - 50) / 50;
-        $simView.css({ "--mx": x + "%", "--my": y + "%" });
-        applyBodyTransform();
-      });
+      // --------------------------------------------------
+      // Anatomy Viewer Pointer
+      // --------------------------------------------------
+      if (useDesktopPointerEffects) {
+        $simView.on("mouseenter", function (event) {
+          showScanCursor(event);
+        });
 
-      $simView.on("mouseleave", function () {
-        bodyParallax = { x: 0, y: 0 };
-        applyBodyTransform();
-      });
+        $simView.on("mousemove", function (event) {
+          showScanCursor(event);
+        });
+
+        $simView.on("mouseleave", function () {
+          hideScanCursor();
+        });
+      }
     }
 
     function bindControls() {
@@ -558,13 +566,11 @@ let bodyParallax = { x: 0, y: 0 };
 
     function resetView() {
       $("#opacitySlider").val(80);
-      $("#rotateSlider").val(0);
-      $("#zoomSlider").val(100);
+      $("#zoomSlider").val(1);
       $("#heatmapToggle, #guidedToggle").prop("checked", false);
-      manualRotation = 0;
-      bodyParallax = { x: 0, y: 0 };
       updateOpacity();
-      applyBodyTransform();
+      resetAnatomyZoom();
+      hideScanCursor();
       $simView.removeClass("heatmap-mode guided-mode");
       $("#deepScanResult").prop("hidden", true).removeClass("is-visible");
       $(".tab-btn").removeClass("active").filter(function () {
@@ -681,20 +687,71 @@ let bodyParallax = { x: 0, y: 0 };
       $(".organ-label, .label-line").css("opacity", Math.max(0.45, value));
     };
 
-    window.updateRotation = function () {
-      manualRotation = Number($("#rotateSlider").val() || 0);
-      applyBodyTransform();
+    window.updateZoom = function () {
+      handleAnatomyZoom();
     };
 
-    window.updateZoom = function () {
+    // --------------------------------------------------
+    // Anatomy Viewer Interaction Helpers
+    // --------------------------------------------------
+    function showScanCursor(event) {
+      const rect = $simView[0].getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      $simView
+        .addClass("scan-cursor-active")
+        .css({ "--mx": x + "%", "--my": y + "%" });
+    }
+
+    function hideScanCursor() {
+      $simView
+        .removeClass("scan-cursor-active")
+        .css({ "--mx": "50%", "--my": "50%" });
+    }
+
+    function handleAnatomyZoom() {
+      setAnatomyZoom(Number($("#zoomSlider").val() || 1));
+    }
+
+    function setAnatomyZoom(zoom) {
+      const safeZoom = Math.max(ANATOMY_ZOOM_MIN, Math.min(ANATOMY_ZOOM_MAX, zoom));
+      $("#zoomSlider").val(safeZoom);
+      enableZoomScroll(safeZoom > 1);
       applyBodyTransform();
-    };
+    }
+
+    function enableZoomScroll(isEnabled) {
+      const wasEnabled = $bodyViewport.hasClass("zoom-scroll-enabled");
+      $bodyViewport.toggleClass("zoom-scroll-enabled", isEnabled);
+
+      if (!isEnabled) {
+        centerAnatomyView(true);
+        return;
+      }
+
+      if (wasEnabled) {
+        centerAnatomyView(false);
+        return;
+      }
+
+      window.requestAnimationFrame(function () {
+        centerAnatomyView(true);
+      });
+    }
+
+    function centerAnatomyView(resetVerticalScroll) {
+      const viewport = $bodyViewport[0];
+      viewport.scrollLeft = 0;
+      if (resetVerticalScroll) viewport.scrollTop = 0;
+    }
+
+    function resetAnatomyZoom() {
+      setAnatomyZoom(1);
+    }
 
     function applyBodyTransform() {
-      const zoom = Number($("#zoomSlider").val() || 100) / 100;
-      const rotateY = manualRotation + bodyParallax.x * 9;
-      const rotateX = -bodyParallax.y * 5;
-      $bodyContainer.css("transform", "rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg) scale(" + zoom + ")");
+      const zoom = Number($("#zoomSlider").val() || 1);
+      $bodyContainer.css("transform", "scale(" + zoom + ")");
     }
 
     window.toggleLayer = function (layer, checked) {

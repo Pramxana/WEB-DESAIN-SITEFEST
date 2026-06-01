@@ -195,3 +195,63 @@ body {
 -------------------------------------------------- */
 @media (max-width:1200px) { .bottom-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width:900px)  { .lab-grid { grid-template-columns: 1fr; } .bottom-grid { grid-template-columns: 1fr; } .welcome-card { grid-template-columns: 1fr; } .welcome-visual { display: none; } }
+
+@media (max-width:600px) {
+  .welcome-card,
+  .lab-card,
+  .exp-item,
+  .sim-mini,
+  .progress-block {
+    min-width: 0;
+  }
+
+  .welcome-card { padding: 22px 18px; }
+
+  .welcome-title {
+    font-size: clamp(2rem, 12vw, 3.2rem);
+    overflow-wrap: anywhere;
+  }
+
+  .welcome-stats,
+  .sim-metrics {
+    flex-wrap: wrap;
+  }
+
+  .sim-metric-box { min-width: 72px; }
+
+  .exp-item {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+
+  .exp-continue {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .sim-run-btn { min-height: 44px; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .sim-slider,
+  .sim-slider::-webkit-slider-thumb,
+  .sim-run-btn {
+    cursor: pointer;
+  }
+
+  .sim-run-btn.running { animation-duration: 1s; }
+}
+
+@media (max-width:390px) {
+  .welcome-card { padding: 18px 14px; }
+
+  .welcome-stats { gap: 12px; }
+
+  .welcome-title { font-size: clamp(1.9rem, 11vw, 2.8rem); }
+
+  .sim-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

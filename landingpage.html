@@ -29,17 +29,27 @@
         </div>
         EKSPERIKA
       </a>
-      <ul class="nav-links">
+      <ul class="nav-links" id="landingNavigation">
         <li><a href="#hero">Home</a></li>
         <li><a href="#simulations">Simulations</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
       </ul>
-      <a href="dashboard.html" class="btn-nav">
+      <button
+        class="landing-menu-toggle"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-controls="landingNavigation"
+        aria-expanded="false"
+      >
+        <i class="bx bx-menu" aria-hidden="true"></i>
+      </button>
+      <a href="dashboard.html" class="btn-nav" aria-label="Start Experiment">
         <i class="bx bx-test-tube"></i>
-        Start Experiment</a
+        <span>Start Experiment</span></a
       >
     </nav>
+    <div class="landing-menu-overlay" aria-hidden="true"></div>
 
     <!-- --------------------------------------------------
         HERO
@@ -244,6 +254,79 @@
     </section>
 
     <!-- --------------------------------------------------
+        PROBLEM BACKGROUND
+    -------------------------------------------------- -->
+    <section class="problem-section" id="problems">
+      <div class="problem-inner">
+        <div class="problem-header reveal">
+          <div class="section-tag">
+            <i class="bx bx-error-circle"></i> The Problem
+          </div>
+          <h2 class="section-title">
+            WHY DOES EKSPERIKA<br /><span>MATTER?</span>
+          </h2>
+          <p class="section-desc">
+            Eksperika is a digital science-learning solution that helps schools
+            provide practical experiences that are visual, safe, and accessible.
+          </p>
+        </div>
+
+        <div class="problem-grid">
+          <article class="problem-card reveal">
+            <span class="problem-card-number">01</span>
+            <div class="problem-icon-wrap">
+              <i class="bx bx-building-house"></i>
+            </div>
+            <h3>Limited Laboratory Facilities</h3>
+            <p>
+              Many schools still lack complete laboratory facilities. As a
+              result, students rarely gain direct practical experience.
+            </p>
+            <span class="problem-accent"></span>
+          </article>
+
+          <article class="problem-card reveal">
+            <span class="problem-card-number">02</span>
+            <div class="problem-icon-wrap">
+              <i class="bx bx-book-reader"></i>
+            </div>
+            <h3>Science Learning Remains Too Theoretical</h3>
+            <p>
+              Physics, chemistry, and biology are often taught through theory
+              alone. Without visualization and experiments, abstract concepts
+              become harder to understand.
+            </p>
+            <span class="problem-accent"></span>
+          </article>
+
+          <article class="problem-card reveal">
+            <span class="problem-card-number">03</span>
+            <div class="problem-icon-wrap">
+              <i class="bx bx-laptop"></i>
+            </div>
+            <h3>Limited Interactive Learning Media</h3>
+            <p>
+              Lightweight, engaging, and accessible digital learning media
+              remain unevenly available. Students need more visual and
+              exploratory learning experiences.
+            </p>
+            <span class="problem-accent"></span>
+          </article>
+        </div>
+
+        <aside class="problem-highlight reveal">
+          <div class="problem-highlight-icon">
+            <i class="bx bx-bulb"></i>
+          </div>
+          <p>
+            Eksperika transforms theory-only science learning into an
+            interactive, safe, and accessible learning experience.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- --------------------------------------------------
         PHYSICS
     -------------------------------------------------- -->
     <section class="physics-section" id="physics">
@@ -411,7 +494,7 @@
                     stroke-width="1"
                   />
                   <path
-                    d="M62 90 Q58 100 58 140 L58 220 Q58 232 70 234 L90 234 L90 310 L110 310 L110 234 L130 234 Q142 232 142 220 L142 140 Q142 100 138 90 Q120 96 100 96 Q80 96 62 90Z"
+                    d="M62 90 Q58 100 58 140 L58 220 Q58 232 70 234 L130 234 Q142 232 142 220 L142 140 Q142 100 138 90 Q120 96 100 96 Q80 96 62 90Z"
                     fill="url(#bodyGrad)"
                     stroke="rgba(16,185,129,0.45)"
                     stroke-width="1.2"
@@ -591,23 +674,6 @@
                       attributeName="ry"
                       values="20;22;20"
                       dur="3.5s"
-                      repeatCount="indefinite"
-                    />
-                  </ellipse>
-                  <ellipse
-                    cx="100"
-                    cy="192"
-                    rx="18"
-                    ry="13"
-                    fill="rgba(16,185,129,0.08)"
-                    stroke="rgba(52,211,153,0.4)"
-                    stroke-width="0.8"
-                    stroke-dasharray="3,2"
-                  >
-                    <animate
-                      attributeName="opacity"
-                      values="0.4;0.8;0.4"
-                      dur="5s"
                       repeatCount="indefinite"
                     />
                   </ellipse>
@@ -1203,10 +1269,38 @@
             students, educators, and the curious.
           </p>
           <div class="footer-socials">
-            <a class="social-btn" href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="bx bxl-twitter"></i></a>
-            <a class="social-btn" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
-            <a class="social-btn" href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="bx bxl-facebook"></i></a>
-            <a class="social-btn" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bx bxl-instagram"></i></a>
+            <a
+              class="social-btn"
+              href="https://x.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              ><i class="bx bxl-twitter"></i
+            ></a>
+            <a
+              class="social-btn"
+              href="https://www.linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              ><i class="bx bxl-linkedin"></i
+            ></a>
+            <a
+              class="social-btn"
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              ><i class="bx bxl-facebook"></i
+            ></a>
+            <a
+              class="social-btn"
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              ><i class="bx bxl-instagram"></i
+            ></a>
           </div>
         </div>
         <div class="footer-col">
@@ -1214,9 +1308,7 @@
           <ul>
             <li><a href="#simulations">Simulations</a></li>
             <li><a href="#features">Features</a></li>
-            <li><a href="#cta">Pricing</a></li>
             <li><a href="#cta">For Schools</a></li>
-            <li><a href="#cta">API Access</a></li>
           </ul>
         </div>
         <div class="footer-col">
