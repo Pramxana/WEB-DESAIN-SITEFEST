@@ -248,18 +248,28 @@ section {
 .section-tag {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 6px;
+
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 10px;
+
   background: var(--yellow);
   color: var(--black);
   border: var(--border-strong);
   padding: 4px 14px;
+
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
+  line-height: 1.4;
+
   border-radius: var(--radius);
   box-shadow: 3px 3px 0 var(--black);
-  margin-bottom: 1.2rem;
+
+  white-space: nowrap;
 }
 .section-title {
   font-family: "Bebas Neue", sans-serif;

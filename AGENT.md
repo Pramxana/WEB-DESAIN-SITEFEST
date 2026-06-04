@@ -810,6 +810,394 @@ Contoh:
 
 ---
 
+
+## 15A. Viewport Fit, Anti-Terpotong, dan Anti-Overflow
+
+Bagian ini wajib diprioritaskan karena Eksperika memiliki banyak elemen visual besar seperti hero title, simulation window, canvas lab, floating badge, navbar, sidebar, dan panel kontrol. Semua elemen tersebut harus **fit ke layar** dan tidak boleh terpotong seperti visual yang melebar keluar viewport.
+
+### Prinsip Wajib Viewport Fit
+
+AI agent wajib memastikan setiap halaman memenuhi aturan berikut:
+
+1. **Tidak boleh ada horizontal scroll** pada desktop, tablet, maupun mobile.
+2. **Tidak boleh ada elemen utama yang keluar dari viewport**, termasuk hero visual, simulation panel, navbar, CTA button, canvas, card, dan floating badge.
+3. **Hero section tidak boleh menggunakan lebar tetap yang memaksa layout melebar.**
+4. **Simulation preview harus mengecil secara proporsional**, bukan tetap besar lalu terpotong.
+5. **Floating element harus tetap berada di dalam container**, bukan diposisikan terlalu jauh menggunakan `left`, `right`, atau `transform` fixed.
+6. **Gunakan `min()` / `max()` / `clamp()` / `fr` / `%` / `vw` secara aman**, bukan angka pixel besar yang kaku.
+7. **Viewport 100vw harus digunakan dengan hati-hati** karena bisa membuat overflow akibat scrollbar browser. Utamakan `width: 100%`.
+8. **Elemen absolute wajib punya parent `position: relative` dan batas yang jelas.**
+9. **Semua section wajib memiliki padding responsif**, bukan padding desktop besar yang tetap dipakai di layar kecil.
+10. **Setelah perubahan CSS, wajib cek ukuran 1366px, 1024px, 768px, 480px, dan 390px.**
+
+### Global Anti-Overflow Guard
+
+Tambahkan atau pastikan aturan ini ada di `global.css`:
+
+```css
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+img,
+svg,
+canvas,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+section,
+header,
+main,
+footer,
+.app,
+.page,
+.container,
+.content,
+.hero,
+.hero-section,
+.lab-panel,
+.simulation-panel,
+.canvas-wrap {
+  max-width: 100%;
+}
+```
+
+Catatan penting: `overflow-x: hidden` hanya pengaman terakhir. AI agent tetap wajib mencari penyebab overflow, seperti `width` fixed, `min-width` besar, `position:absolute` terlalu jauh, `transform: translateX(...)`, atau grid yang tidak bisa mengecil.
+
+### Container dan Section Width
+
+Gunakan container yang aman:
+
+```css
+.container,
+.section-inner {
+  width: min(100% - 32px, 1200px);
+  margin-inline: auto;
+}
+
+@media (max-width: 480px) {
+  .container,
+  .section-inner {
+    width: min(100% - 20px, 1200px);
+  }
+}
+```
+
+Hindari:
+
+```css
+.container {
+  width: 1200px;
+}
+```
+
+Karena akan membuat layout terpotong pada layar yang lebih kecil.
+
+### Hero Layout Agar Tidak Terpotong
+
+Hero landing page harus menggunakan grid yang fleksibel. Visual simulasi di kanan tidak boleh memaksa halaman melebar.
+
+```css
+.hero {
+  min-height: calc(100svh - var(--navbar-h, 72px));
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-inner {
+  width: min(100% - 32px, 1280px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+
+.hero-content,
+.hero-visual {
+  min-width: 0;
+}
+
+.hero-visual {
+  width: 100%;
+  max-width: 640px;
+  justify-self: end;
+}
+```
+
+Pada tablet dan mobile, hero wajib berubah menjadi satu kolom:
+
+```css
+@media (max-width: 1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-visual {
+    justify-self: center;
+    max-width: min(100%, 640px);
+  }
+}
+```
+
+### Heading Besar Wajib Memakai Clamp
+
+Judul besar seperti `INTERACTIVE CHEMISTRY REACTION LABORATORY` tidak boleh memakai font-size fixed yang menyebabkan teks keluar layar.
+
+```css
+.hero-title {
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 0.9;
+  max-width: 10ch;
+  overflow-wrap: break-word;
+}
+
+.hero-title .highlight {
+  display: inline-block;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(2.4rem, 16vw, 4.5rem);
+    max-width: 100%;
+  }
+}
+```
+
+Jika ada kata yang terlalu panjang, gunakan `overflow-wrap: break-word;` atau ubah layout teks agar turun baris dengan rapi.
+
+### Simulation Window / Preview Tidak Boleh Keluar Layar
+
+Panel simulasi seperti chemistry preview, physics canvas, biology viewer, dan challenge area wajib mengikuti ukuran container.
+
+```css
+.simulation-window,
+.lab-preview,
+.lab-canvas,
+.circuit-canvas,
+.anatomy-view {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.simulation-window {
+  aspect-ratio: 16 / 10;
+}
+
+@media (max-width: 768px) {
+  .simulation-window {
+    aspect-ratio: auto;
+    min-height: 420px;
+  }
+}
+```
+
+Jika ukuran visual terlalu besar, jangan memakai `scale(1.2)` pada parent yang menyebabkan elemen keluar layar. Gunakan `max-width` dan layout grid yang benar.
+
+### Floating Badge Harus Tetap di Dalam Panel
+
+Floating badge seperti `H2SO4 Reaction`, `Exothermic!`, atau `NaCl + H2O` tidak boleh keluar dari viewport. Gunakan posisi yang relatif terhadap panel dan batasi dengan `clamp()`.
+
+```css
+.floating-badge {
+  position: absolute;
+  max-width: min(220px, 42vw);
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.badge-top-left {
+  top: clamp(12px, 3vw, 28px);
+  left: clamp(12px, 3vw, 28px);
+}
+
+.badge-top-right {
+  top: clamp(12px, 3vw, 28px);
+  right: clamp(12px, 3vw, 28px);
+}
+
+@media (max-width: 768px) {
+  .floating-badge {
+    position: static;
+    display: inline-flex;
+    margin: 8px 8px 0 0;
+    white-space: normal;
+  }
+
+  .floating-badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+```
+
+Hindari posisi seperti ini jika membuat badge keluar layar:
+
+```css
+.floating-badge {
+  right: -80px;
+  transform: translateX(50%);
+}
+```
+
+### Navbar dan Header Tidak Boleh Melebar
+
+Navbar landing page dan topbar halaman internal wajib tetap fit.
+
+```css
+.navbar,
+.topbar {
+  width: 100%;
+  max-width: 100%;
+}
+
+.navbar-inner,
+.topbar-inner {
+  width: min(100% - 32px, 1280px);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.nav-menu {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.nav-actions {
+  flex-shrink: 0;
+}
+```
+
+Pada mobile, menu desktop harus disembunyikan atau diubah menjadi drawer/hamburger:
+
+```css
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+
+  .navbar-inner,
+  .topbar-inner {
+    width: min(100% - 20px, 1280px);
+  }
+}
+```
+
+### Canvas dan Lab Area Harus Punya Wrapper
+
+Jangan langsung memberi ukuran besar pada `canvas`. Bungkus dengan wrapper responsif.
+
+```css
+.canvas-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  border-radius: var(--radius);
+}
+
+.canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+```
+
+Jika simulasi membutuhkan ukuran internal tertentu, JS boleh mengatur resolusi canvas berdasarkan ukuran wrapper:
+
+```js
+const canvasWrap = document.querySelector(".canvas-wrap");
+const canvas = document.querySelector("canvas");
+
+if (canvasWrap && canvas) {
+  const resizeCanvas = () => {
+    const rect = canvasWrap.getBoundingClientRect();
+    canvas.width = Math.floor(rect.width);
+    canvas.height = Math.floor(Math.max(320, rect.width * 0.6));
+  };
+
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+}
+```
+
+### Larangan Khusus Penyebab Terpotong
+
+AI agent harus mencari dan memperbaiki pola CSS berikut jika menyebabkan overflow:
+
+```css
+width: 100vw;
+min-width: 900px;
+width: 1400px;
+left: 900px;
+right: -120px;
+transform: translateX(40%);
+position: absolute; /* tanpa parent yang membatasi */
+grid-template-columns: 700px 700px;
+```
+
+Ganti dengan pola aman:
+
+```css
+width: 100%;
+max-width: 100%;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+left: auto;
+right: clamp(12px, 3vw, 32px);
+```
+
+### Debug Wajib Sebelum Selesai
+
+AI agent wajib melakukan pengecekan berikut sebelum menyatakan selesai:
+
+```js
+console.log("Page scroll width:", document.documentElement.scrollWidth);
+console.log("Viewport width:", window.innerWidth);
+console.log(
+  "Has horizontal overflow:",
+  document.documentElement.scrollWidth > window.innerWidth
+);
+```
+
+Jika hasilnya `true`, cari elemen penyebab overflow dengan snippet ini:
+
+```js
+[...document.querySelectorAll("*")]
+  .filter((el) => el.getBoundingClientRect().right > window.innerWidth)
+  .map((el) => ({
+    element: el,
+    className: el.className,
+    right: el.getBoundingClientRect().right,
+    width: el.getBoundingClientRect().width,
+  }));
+```
+
+Perbaikan dianggap belum selesai selama masih ada horizontal overflow atau elemen utama yang terpotong.
+
 ## 16. Sidebar Mobile
 
 Pada layar kecil, sidebar desktop tidak boleh memakan lebar layar secara permanen.
@@ -1351,7 +1739,10 @@ Sebelum menyimpan atau mengirim perubahan, cek hal berikut.
 - [ ] Tablet rapi.
 - [ ] Mobile asli rapi.
 - [ ] Tidak ada horizontal scroll.
+- [ ] `document.documentElement.scrollWidth <= window.innerWidth` pada ukuran 1366px, 1024px, 768px, 480px, dan 390px.
 - [ ] Header tidak terpotong.
+- [ ] Hero section tidak terpotong.
+- [ ] Floating badge tidak keluar viewport.
 - [ ] Canvas/simulasi tidak keluar layar.
 - [ ] Sidebar mobile bisa dibuka/tutup.
 - [ ] Custom cursor hilang di mobile.
@@ -1412,8 +1803,8 @@ Gunakan prompt berikut saat meminta AI mengerjakan project:
 ```txt
 Baca dan ikuti seluruh aturan pada AGENT.md sebelum mengubah kode.
 Rapikan project Eksperika tanpa membuat ulang dari nol.
-Fokus pada konsistensi warna, icon Boxicons, sidebar, topbar, card, button, komentar kode, struktur CSS, struktur JavaScript, responsive layout, mobile compatibility asli, dan hubungan antarhalaman.
-Pastikan custom cursor hanya aktif di desktop dan hilang di mobile.
+Fokus pada konsistensi warna, icon Boxicons, sidebar, topbar, card, button, komentar kode, struktur CSS, struktur JavaScript, responsive layout, mobile compatibility asli, viewport fit, anti-terpotong, anti-horizontal-overflow, dan hubungan antarhalaman.
+Pastikan semua section fit ke layar, tidak ada elemen yang terpotong seperti hero visual/simulation window/floating badge, tidak ada horizontal scroll, dan custom cursor hanya aktif di desktop serta hilang di mobile.
 Pastikan Chemistry memakai accent-rgb, Physics memakai primary-rgb, dan Biology memakai secondary-rgb.
 Jangan menghapus fitur utama.
 Jangan mengganti konsep utama.
@@ -1431,7 +1822,8 @@ Sebuah perubahan dianggap selesai jika:
 - Tampilan tetap konsisten dengan Eksperika.
 - Fitur utama tetap berjalan.
 - Tidak ada error JavaScript.
-- Tidak ada horizontal scroll di mobile.
+- Tidak ada horizontal scroll di desktop, tablet, dan mobile.
+- Hero, navbar, simulation window, canvas, dan floating badge tidak terpotong.
 - Halaman bisa digunakan di desktop dan smartphone.
 - Sidebar/header berfungsi dengan baik.
 - Custom cursor hanya aktif di desktop.
@@ -1452,6 +1844,8 @@ Selalu jaga:
 
 - Konsistensi desain.
 - Responsivitas mobile asli.
+- Semua elemen fit ke layar dan tidak terpotong.
+- Tidak ada horizontal overflow.
 - Sidebar dan topbar yang seragam.
 - Warna lab sesuai aturan.
 - Icon dari Boxicons.
