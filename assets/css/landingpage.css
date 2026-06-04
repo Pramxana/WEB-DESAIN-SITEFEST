@@ -6,6 +6,12 @@
   --bg: var(--background-light);
   --black: var(--ink);
   --white: var(--surface-light);
+  --navbar-height: 64px;
+  --ticker-height: -10px;
+  --section-max-width: 1360px;
+  --landing-section-padding-x: 5%;
+  --section-padding-x: clamp(1rem, 5vw, 5rem);
+  --section-padding-y: clamp(3rem, 7vw, 6rem);
   --shadow: 6px 6px 0px var(--ink);
   --shadow-lg: 10px 10px 0px var(--ink);
   --glow-blue:
@@ -247,7 +253,7 @@ section {
   height: auto;
   min-height: auto;
   overflow: visible;
-  padding: 100px 5%;
+  padding: 100px var(--landing-section-padding-x);
 }
 .section-tag {
   display: inline-flex;
@@ -294,12 +300,12 @@ section {
 -------------------------------------------------- */
 .hero {
   width: 100%;
-  min-height: calc(100svh - 64px);
+  min-height: calc(100svh - var(--navbar-height) - var(--ticker-height));
   height: auto;
-  padding: 110px 5% 60px;
+  padding: calc(var(--navbar-height) + clamp(1rem, 2.6vh, 2.5rem)) 5% clamp(1.6rem, 4vh, 3.5rem);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.95fr);
-  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.88fr);
+  gap: clamp(1.5rem, 3.6vw, 3.5rem);
   align-items: center;
   border-bottom: var(--border-strong);
   position: relative;
@@ -363,7 +369,7 @@ section {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-bottom: 1.8rem;
+  margin-bottom: clamp(1rem, 2.4vh, 1.55rem);
   color: var(--green);
   box-shadow: 0 0 15px rgba(var(--secondary-rgb), 0.2);
 }
@@ -377,10 +383,10 @@ section {
 }
 .hero h1 {
   font-family: "Bebas Neue", sans-serif;
-  font-size: clamp(3.2rem, 6.5vw, 6rem);
-  line-height: 0.92;
+  font-size: clamp(3.7rem, 5.8vw, 6.4rem);
+  line-height: 0.9;
   letter-spacing: 4px;
-  margin-bottom: 1.8rem;
+  margin-bottom: clamp(1rem, 2.6vh, 1.55rem);
   color: var(--white);
 }
 .hero h1 .line-highlight {
@@ -412,15 +418,15 @@ section {
   transform: skewX(-5deg);
 }
 .hero p {
-  font-size: 1.05rem;
-  line-height: 1.8;
+  font-size: clamp(0.95rem, 1vw, 1.08rem);
+  line-height: 1.6;
   color: rgba(var(--text-main-rgb), 0.65);
-  max-width: 460px;
-  margin-bottom: 2.5rem;
+  max-width: 540px;
+  margin-bottom: clamp(1.2rem, 3vh, 2rem);
 }
 .hero-btns {
   display: flex;
-  gap: 1rem;
+  gap: clamp(0.75rem, 1.8vw, 1rem);
   flex-wrap: wrap;
 }
 
@@ -435,10 +441,12 @@ section {
   justify-content: center;
   min-width: 0;
   max-width: 100%;
+  overflow: hidden;
+  padding: 22px;
 }
 .chem-lab-frame {
-  width: 100%;
-  max-width: 480px;
+  width: min(100%, 520px);
+  max-width: 100%;
   background: var(--surface-frame);
   border: 3px solid rgba(var(--primary-rgb), 0.5);
   border-radius: 8px;
@@ -492,13 +500,13 @@ section {
   letter-spacing: 1px;
 }
 .chem-lab-body {
-  padding: 24px;
+  padding: clamp(18px, 2vw, 24px);
   background: radial-gradient(
     ellipse at 50% 0%,
     rgba(var(--primary-rgb), 0.06) 0%,
     transparent 60%
   );
-  min-height: 380px;
+  min-height: clamp(320px, 45vh, 380px);
   position: relative;
   overflow: hidden;
 }
@@ -515,8 +523,8 @@ section {
 .tubes-row {
   display: flex;
   justify-content: center;
-  gap: 30px;
-  margin-bottom: 24px;
+  gap: clamp(18px, 2.3vw, 30px);
+  margin-bottom: clamp(16px, 2.4vh, 24px);
   position: relative;
   z-index: 2;
 }
@@ -536,7 +544,7 @@ section {
 }
 .tube {
   width: 38px;
-  height: 120px;
+  height: clamp(96px, 15vh, 120px);
   background: rgba(var(--text-main-rgb), 0.04);
   border: 1.5px solid rgba(var(--text-main-rgb), 0.2);
   border-radius: 0 0 22px 22px;
@@ -620,7 +628,7 @@ section {
 }
 .beaker {
   width: 100px;
-  height: 100px;
+  height: clamp(86px, 13vh, 100px);
   position: relative;
   cursor: pointer;
 }
@@ -709,7 +717,7 @@ section {
 .chem-controls {
   background: rgba(var(--ink-rgb), 0.4);
   border-top: 1px solid rgba(var(--primary-rgb), 0.15);
-  padding: 14px 20px;
+  padding: clamp(10px, 1.7vh, 14px) 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
@@ -803,23 +811,24 @@ section {
   gap: 6px;
   animation: floatY 3s ease-in-out infinite;
   z-index: 10;
+  max-width: calc(100% - 24px);
 }
 .float-chem-card.c1 {
-  top: -22px;
-  left: -50px;
+  top: 10px;
+  left: 10px;
   animation-delay: 0s;
   background: var(--yellow);
 }
 .float-chem-card.c2 {
-  bottom: 70px;
-  left: -55px;
+  bottom: 64px;
+  left: 12px;
   animation-delay: 1.2s;
   background: var(--green);
   color: var(--white);
 }
 .float-chem-card.c3 {
-  top: 40px;
-  right: -40px;
+  top: 38px;
+  right: 10px;
   animation-delay: 0.6s;
   background: var(--cyan);
   color: var(--black);
@@ -898,6 +907,10 @@ section {
    PROBLEM BACKGROUND
 -------------------------------------------------- */
 .problem-section {
+  width: 100%;
+  height: auto;
+  padding-block: var(--section-padding-y);
+  padding-inline: 0;
   background:
     linear-gradient(rgba(var(--primary-rgb), 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(var(--primary-rgb), 0.045) 1px, transparent 1px),
@@ -908,20 +921,30 @@ section {
 }
 
 .problem-inner {
-  max-width: 1240px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+  padding-inline: var(--landing-section-padding-x);
 }
 
 .problem-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
-  column-gap: 3rem;
+  column-gap: clamp(1.5rem, 4vw, 4rem);
+  row-gap: 14px;
   align-items: end;
   margin-bottom: 42px;
 }
 
+.problem-header,
+.problem-grid,
+.problem-highlight {
+  width: 100%;
+}
+
 .problem-header .section-tag {
   grid-column: 1 / -1;
+  margin-bottom: 0;
 }
 
 .problem-header .section-title {
@@ -1037,10 +1060,9 @@ section {
   margin-top: 34px;
   padding: 20px 22px;
   border: var(--border-strong);
-  border-left: 6px solid var(--secondary);
   border-radius: var(--radius);
   background: rgba(var(--secondary-rgb), 0.1);
-  box-shadow: 6px 6px 0 var(--secondary);
+  box-shadow: 8px 6px 0 var(--secondary);
   color: var(--white);
 }
 
@@ -1157,6 +1179,10 @@ section {
    PHYSICS SECTION
 -------------------------------------------------- */
 .physics-section {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  scroll-margin-top: var(--navbar-height);
   background: var(--surface-dark);
   border-bottom: 3px solid rgba(var(--primary-rgb), 0.3);
   position: relative;
@@ -1172,12 +1198,27 @@ section {
   background-size: 40px 40px;
 }
 .physics-inner {
+  width: 100%;
+  min-width: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
+  grid-template-columns: minmax(0, 0.9fr) minmax(380px, 1.1fr);
+  gap: clamp(3rem, 4.5vw, 4.5rem);
   align-items: center;
   position: relative;
 }
+
+.physics-content {
+  max-width: 560px;
+}
+
+.physics-visual {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .physics-section .section-title {
   color: var(--white);
 }
@@ -1185,6 +1226,9 @@ section {
   color: rgba(var(--text-main-rgb), 0.55);
 }
 .elec-frame {
+  width: min(100%, 660px);
+  max-width: 100%;
+  margin-inline: auto;
   background: var(--surface-frame);
   border: 3px solid rgba(var(--primary-rgb), 0.4);
   border-radius: 8px;
@@ -1218,9 +1262,13 @@ section {
 }
 .elec-canvas-wrap {
   position: relative;
-  height: 280px;
+  width: 100%;
+  aspect-ratio: 450 / 280;
+  overflow: hidden;
 }
 #elecCanvas {
+  width: 100%;
+  height: 100%;
   display: block;
 }
 .elec-controls {
@@ -2396,12 +2444,69 @@ footer::before {
 /* --------------------------------------------------
    RESPONSIVE
 -------------------------------------------------- */
+@media (max-height: 820px) and (min-width: 1025px) {
+  .hero {
+    padding-top: calc(var(--navbar-height) + 1.2rem);
+    padding-bottom: 1.5rem;
+    gap: clamp(1.25rem, 3vw, 2.6rem);
+  }
+
+  .hero-badge {
+    margin-bottom: 0.85rem;
+    padding: 6px 12px;
+    font-size: 0.68rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.45rem, 5vw, 5rem);
+    line-height: 0.9;
+    margin-bottom: 0.9rem;
+  }
+
+  .hero p {
+    max-width: 500px;
+    font-size: 0.95rem;
+    line-height: 1.52;
+    margin-bottom: 1.15rem;
+  }
+
+  .hero-btns .btn {
+    padding: 12px 22px;
+    min-height: 44px;
+  }
+
+  .hero-visual {
+    padding: 16px;
+  }
+
+  .chem-lab-frame {
+    width: min(100%, 450px);
+  }
+
+  .chem-lab-body {
+    min-height: 300px;
+  }
+
+  .tube {
+    height: 92px;
+  }
+
+  .beaker {
+    height: 84px;
+  }
+
+  .float-chem-card {
+    padding: 8px 12px;
+    font-size: 0.68rem;
+  }
+}
+
 @media (max-width: 1024px) {
   .hero {
     grid-template-columns: 1fr;
     background: var(--surface-dark);
     min-height: auto;
-    padding-top: 96px;
+    padding-top: calc(var(--navbar-height) + 2rem);
   }
 
   .hero-content {
@@ -2411,9 +2516,9 @@ footer::before {
   .hero-visual {
     display: flex;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
     overflow: hidden;
-    padding: 18px 0 8px;
+    padding: 18px;
   }
 
   .chem-lab-frame {
@@ -2421,6 +2526,10 @@ footer::before {
   }
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .physics-section {
+    min-height: auto;
+    display: block;
   }
   .physics-inner,
   .bio-inner,
@@ -2435,7 +2544,7 @@ footer::before {
   }
   .problem-header {
     grid-template-columns: 1fr;
-    row-gap: 18px;
+    row-gap: 12px;
   }
   .features-grid {
     grid-template-columns: 1fr 1fr;
@@ -2448,11 +2557,25 @@ footer::before {
   }
 }
 @media (max-width: 768px) {
+  :root {
+    --navbar-height: 60px;
+    --landing-section-padding-x: 4%;
+  }
+
   .nav-links {
     display: none;
   }
   section {
-    padding: 70px 4%;
+    padding: 70px var(--landing-section-padding-x);
+  }
+  .problem-section {
+    padding-block: 70px;
+  }
+  .problem-inner {
+    padding-inline: var(--landing-section-padding-x);
+  }
+  .problem-header {
+    align-items: start;
   }
   .features-grid {
     grid-template-columns: 1fr;
@@ -2587,8 +2710,8 @@ footer::before {
 
   .hero {
     min-height: auto;
-    padding: 92px 4% 58px;
-    gap: 2.4rem;
+    padding: calc(var(--navbar-height) + 1.75rem) 4% 3rem;
+    gap: 2rem;
   }
 
   .hero-badge {
@@ -2603,7 +2726,7 @@ footer::before {
 
   .hero-visual {
     justify-content: center;
-    padding-top: 4px;
+    padding: 12px 4px 4px;
   }
 
   .chem-lab-frame {
@@ -2611,8 +2734,13 @@ footer::before {
     max-width: 430px;
   }
 
+  .float-chem-card {
+    display: none;
+  }
+
   .hero h1 {
-    font-size: clamp(3.4rem, 17vw, 5.4rem);
+    font-size: clamp(3rem, 14vw, 4.8rem);
+    line-height: 0.92;
   }
 
   .hero p {
@@ -2704,7 +2832,7 @@ footer::before {
 }
 
 @media (max-width: 480px) {
-  section { padding: 56px 4%; }
+  section { padding: 56px var(--landing-section-padding-x); }
 
   .section-tag {
     white-space: normal;

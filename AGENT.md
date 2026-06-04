@@ -1837,3 +1837,175 @@ Jangan menghapus fitur lama.
 Pastikan UI tetap konsisten, responsif, memakai Boxicons, dan tidak ada konten terpotong.
 ```
 
+---
+
+## 37. Section Alignment dan Konsistensi Padding Antarsection
+
+Bagian ini wajib diikuti agar semua section landing page dan halaman internal memiliki garis awal konten yang sejajar. Jangan membuat setiap section memakai padding kiri/kanan sendiri-sendiri yang berbeda, karena akan membuat layout terlihat tidak konsisten, misalnya section Problem lebih masuk atau lebih keluar dibanding Hero, Features, Physics, Biology, Tutorial, dan CTA.
+
+### Prinsip Utama Alignment
+
+Semua section utama harus memakai sistem container yang sama.
+
+Gunakan satu standar container global untuk seluruh section:
+
+```css
+:root {
+  --section-max-width: 1360px;
+  --section-padding-x: clamp(1rem, 5vw, 5rem);
+  --section-padding-y: clamp(3rem, 7vw, 6rem);
+}
+
+.section-container,
+.hero-content,
+.problem-inner,
+.physics-inner,
+.bio-inner,
+.features-header,
+.features-grid,
+.hiw-section > div,
+.steps-grid,
+.sim-inner,
+.testi-grid,
+.footer-grid {
+  width: min(100%, var(--section-max-width));
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+}
+```
+
+Jika nama class berbeda, sesuaikan tanpa mengubah struktur besar. Intinya semua konten section harus memiliki `max-width`, `margin-inline: auto`, dan `padding-inline` yang sama.
+
+### Aturan Khusus Problem Section
+
+Problem section sering terlihat tidak sejajar jika `.problem-inner` memiliki padding kiri/kanan yang berbeda dari section lain. Pastikan `.problem-inner` memakai standar container yang sama.
+
+Contoh yang benar:
+
+```css
+.problem-section {
+  width: 100%;
+  height: auto;
+  padding-block: var(--section-padding-y);
+}
+
+.problem-inner {
+  width: min(100%, var(--section-max-width));
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+}
+```
+
+Hindari:
+
+```css
+.problem-inner {
+  padding-left: 9rem;
+  padding-right: 4rem;
+}
+```
+
+atau:
+
+```css
+.problem-section {
+  padding-left: 10rem;
+}
+```
+
+Karena nilai tersebut akan membuat Problem section tidak sejajar dengan section lain.
+
+### Header Section yang Memiliki Dua Kolom
+
+Jika section header memiliki judul di kiri dan deskripsi di kanan, gunakan grid di dalam container, bukan menggeser dengan padding/margin manual.
+
+```css
+.problem-header,
+.features-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
+  align-items: end;
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+```
+
+Pada mobile, ubah menjadi satu kolom:
+
+```css
+@media (max-width: 768px) {
+  .problem-header,
+  .features-header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+```
+
+### Grid Card Harus Mengikuti Container
+
+Card di Problem section, Features, Lab Preview, dan Testimonials harus dimulai dari garis kiri container yang sama.
+
+```css
+.problem-grid,
+.features-grid,
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  width: 100%;
+}
+```
+
+Jangan memberi `margin-left`, `transform`, atau `position: relative; left: ...` untuk menyamakan posisi secara manual.
+
+### Section Tag Fit Content Tetap Sejajar
+
+`.section-tag` boleh mengikuti panjang teks, tetapi posisinya tetap harus mengikuti container section.
+
+```css
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
+}
+```
+
+Jangan membuat `.section-tag` menjadi `width: 100%` hanya untuk mengikuti garis section. Yang harus sejajar adalah parent container-nya, bukan lebar tag-nya.
+
+### Audit Alignment
+
+Sebelum selesai, cek semua section landing page:
+
+- [ ] Hero content sejajar dengan section Problem.
+- [ ] Problem section tidak lebih masuk atau lebih keluar dari Features.
+- [ ] Physics section memakai padding container yang sama.
+- [ ] Biology section memakai padding container yang sama.
+- [ ] Tutorial / How It Works memakai padding container yang sama.
+- [ ] Simulation Preview memakai padding container yang sama.
+- [ ] Testimonials memakai padding container yang sama.
+- [ ] Footer grid memakai padding container yang sama.
+- [ ] Tidak ada section utama yang memakai `padding-left` hard-coded besar.
+- [ ] Tidak ada perbaikan alignment memakai `left`, `margin-left` negatif, atau `transform`.
+- [ ] Mobile tetap memiliki padding aman, minimal `1rem`.
+
+### Prompt Singkat untuk Memperbaiki Alignment Problem Section
+
+Gunakan prompt berikut saat meminta AI agent memperbaiki padding section yang tidak sejajar:
+
+```txt
+Baca dan ikuti seluruh aturan pada AGENT.md sebelum mengubah kode.
+Perbaiki alignment dan padding kiri-kanan pada Problem section landing page agar sejajar dengan section lain seperti Hero, Features, Physics, Biology, Simulation Preview, Testimonials, dan Footer.
+Jangan membuat ulang project dari nol dan jangan menghapus fitur yang sudah berjalan.
+Fokus pada CSS landingpage.css dan global.css jika diperlukan.
+Gunakan satu sistem container global dengan variable seperti --section-max-width, --section-padding-x, dan --section-padding-y.
+Pastikan .problem-inner memakai width: min(100%, var(--section-max-width)), margin-inline: auto, dan padding-inline: var(--section-padding-x).
+Hapus atau ganti padding-left, padding-right, margin-left, left, transform, atau width fixed yang membuat Problem section tidak sejajar.
+Pastikan .section-tag tetap fit-content, tetapi posisinya mengikuti container parent.
+Pastikan .problem-header dan .problem-grid berada dalam garis container yang sama.
+Pada mobile, gunakan padding-inline minimal 1rem dan ubah header/grid menjadi satu kolom.
+Setelah selesai, cek alignment semua section secara visual di desktop, laptop 1366x768, tablet, dan mobile.
+```
+
