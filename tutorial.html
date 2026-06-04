@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="assets/css/boxicons.min.css" />
     <link rel="stylesheet" href="assets/css/global.css" />
     <link rel="stylesheet" href="assets/css/tutorial.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="cursor" id="cursor"></div>
@@ -18,17 +21,34 @@
       <!-- SIDEBAR -->
       <aside class="sidebar">
         <a href="dashboard.html" class="sidebar-logo">
-          <div class="sidebar-logo-icon"><i class="bx bx-test-tube nav-icon"></i></div>
+          <div class="sidebar-logo-icon">
+            <i class="bx bx-test-tube nav-icon"></i>
+          </div>
           <div class="sidebar-logo-text">EKSPERIKA<span>Lab OS</span></div>
         </a>
         <div class="sidebar-section-label">Navigation</div>
         <nav class="sidebar-nav">
-          <a href="dashboard.html" class="nav-item"><i class="bx bx-home nav-icon"></i><span>Home</span></a>
-          <a href="chemistry.html" class="nav-item"><i class="bx bx-test-tube nav-icon"></i><span>Chemistry Lab</span></a>
-          <a href="physic.html" class="nav-item"><i class="bx bx-bolt-circle nav-icon"></i><span>Physics Lab</span></a>
-          <a href="biology.html" class="nav-item"><i class="bx bx-dna nav-icon"></i><span>Biology Lab</span></a>
-          <a class="nav-item active" aria-current="page"><i class="bx bx-help-circle nav-icon"></i><span>Tutorial</span></a>
-          <a href="challenge.html" class="nav-item"><i class="bx bx-book-open nav-icon"></i><span>Challenge</span></a>
+          <a href="dashboard.html" class="nav-item"
+            ><i class="bx bx-home nav-icon"></i><span>Home</span></a
+          >
+          <a href="tutorial.html" class="nav-item">
+            <i class="bx bx-help-circle nav-icon"></i>
+            <span>Tutorial</span>
+          </a>
+          <a href="chemistry.html" class="nav-item"
+            ><i class="bx bx-test-tube nav-icon"></i
+            ><span>Chemistry Lab</span></a
+          >
+          <a href="physic.html" class="nav-item"
+            ><i class="bx bx-bolt-circle nav-icon"></i
+            ><span>Physics Lab</span></a
+          >
+          <a href="biology.html" class="nav-item"
+            ><i class="bx bx-dna nav-icon"></i><span>Biology Lab</span></a
+          >
+          <a href="challenge.html" class="nav-item"
+            ><i class="bx bx-book-open nav-icon"></i><span>Challenge</span></a
+          >
         </nav>
       </aside>
 
@@ -64,64 +84,172 @@
           <div class="tutorial-content">
             <!-- Intro & Basic Controls -->
             <div class="tut-card">
-              <div class="tut-card-head" style="color: var(--white);"><i class="bx bx-info-circle"></i> Introduction & Basic Controls</div>
-              <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 16px;">Eksperika is an interactive virtual science laboratory that helps students learn science through visual simulations, guided missions, and experiment feedback. Use the sidebar to navigate between different scientific disciplines.</p>
+              <div class="tut-card-head" style="color: var(--white)">
+                <i class="bx bx-info-circle"></i> Introduction & Basic Controls
+              </div>
+              <p
+                style="
+                  color: rgba(255, 255, 255, 0.7);
+                  line-height: 1.6;
+                  margin-bottom: 16px;
+                "
+              >
+                Eksperika is an interactive virtual science laboratory that
+                helps students learn science through visual simulations, guided
+                missions, and experiment feedback. Use the sidebar to navigate
+                between different scientific disciplines.
+              </p>
               <ul class="tut-list">
-                <li><div class="tut-step-num"><i class="bx bx-play"></i></div> <strong>Start Experiment:</strong> Open the selected lab or begin an activity from the dashboard.</li>
-                <li><div class="tut-step-num"><i class="bx bx-refresh"></i></div> <strong>Reset:</strong> Return the simulation to its initial state to try again.</li>
-                <li><div class="tut-step-num"><i class="bx bxs-trophy"></i></div> <strong>Challenge:</strong> Start a mission-based learning task and earn scores.</li>
+                <li>
+                  <div class="tut-step-num"><i class="bx bx-play"></i></div>
+                  <strong>Start Experiment:</strong> Open the selected lab or
+                  begin an activity from the dashboard.
+                </li>
+                <li>
+                  <div class="tut-step-num"><i class="bx bx-refresh"></i></div>
+                  <strong>Reset:</strong> Return the simulation to its initial
+                  state to try again.
+                </li>
+                <li>
+                  <div class="tut-step-num"><i class="bx bxs-trophy"></i></div>
+                  <strong>Challenge:</strong> Start a mission-based learning
+                  task and earn scores.
+                </li>
               </ul>
             </div>
 
             <!-- Chemistry -->
             <div class="tut-card chem" id="tut-chem">
-              <div class="tut-card-head"><i class="bx bx-test-tube"></i> Chemistry Tutorial</div>
-              <p style="color: rgba(255,255,255,0.7); margin-bottom: 16px;">In Chemistry Lab, users can mix virtual substances and observe how the reaction changes the liquid color, status, and equation safely without using real laboratory materials.</p>
+              <div class="tut-card-head">
+                <i class="bx bx-test-tube"></i> Chemistry Tutorial
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 16px">
+                In Chemistry Lab, users can mix virtual substances and observe
+                how the reaction changes the liquid color, status, and equation
+                safely without using real laboratory materials.
+              </p>
               <ul class="tut-list">
-                <li><div class="tut-step-num">1</div> Choose a chemical tube from the available options.</li>
-                <li><div class="tut-step-num">2</div> Add or select the material into the pending mix queue.</li>
-                <li><div class="tut-step-num">3</div> Press <strong>React & Mix</strong> to execute the chemical combination.</li>
-                <li><div class="tut-step-num">4</div> Observe the liquid color, bubbles, temperature changes, reaction status, and equation in the analysis panel.</li>
+                <li>
+                  <div class="tut-step-num">1</div>
+                  Choose a chemical tube from the available options.
+                </li>
+                <li>
+                  <div class="tut-step-num">2</div>
+                  Add or select the material into the pending mix queue.
+                </li>
+                <li>
+                  <div class="tut-step-num">3</div>
+                  Press <strong>React & Mix</strong> to execute the chemical
+                  combination.
+                </li>
+                <li>
+                  <div class="tut-step-num">4</div>
+                  Observe the liquid color, bubbles, temperature changes,
+                  reaction status, and equation in the analysis panel.
+                </li>
               </ul>
             </div>
 
             <!-- Physics -->
             <div class="tut-card phys" id="tut-phys">
-              <div class="tut-card-head"><i class="bx bx-bolt-circle"></i> Physics Tutorial</div>
-              <p style="color: rgba(255,255,255,0.7); margin-bottom: 16px;">Physics Lab focuses on electrical current flows and electronic parts behavior based on Ohm's law.</p>
+              <div class="tut-card-head">
+                <i class="bx bx-bolt-circle"></i> Physics Tutorial
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 16px">
+                Physics Lab focuses on electrical current flows and electronic
+                parts behavior based on Ohm's law.
+              </p>
               <ul class="tut-list">
-                <li><div class="tut-step-num">1</div> Choose a circuit type: series, parallel, or mixed.</li>
-                <li><div class="tut-step-num">2</div> Add components such as battery, bulb, resistor, switch, voltmeter, or ammeter to the grid.</li>
-                <li><div class="tut-step-num">3</div> Adjust the voltage or resistance using the provided sliders.</li>
-                <li><div class="tut-step-num">4</div> Observe the current measurement, lamp brightness, oscilloscope waveform, and circuit behavior.</li>
+                <li>
+                  <div class="tut-step-num">1</div>
+                  Choose a circuit type: series, parallel, or mixed.
+                </li>
+                <li>
+                  <div class="tut-step-num">2</div>
+                  Add components such as battery, bulb, resistor, switch,
+                  voltmeter, or ammeter to the grid.
+                </li>
+                <li>
+                  <div class="tut-step-num">3</div>
+                  Adjust the voltage or resistance using the provided sliders.
+                </li>
+                <li>
+                  <div class="tut-step-num">4</div>
+                  Observe the current measurement, lamp brightness, oscilloscope
+                  waveform, and circuit behavior.
+                </li>
               </ul>
             </div>
 
             <!-- Biology -->
             <div class="tut-card bio" id="tut-bio">
-              <div class="tut-card-head"><i class="bx bx-dna"></i> Biology Tutorial</div>
-              <p style="color: rgba(255,255,255,0.7); margin-bottom: 16px;">Explore human body systems interactively with detailed observation data.</p>
+              <div class="tut-card-head">
+                <i class="bx bx-dna"></i> Biology Tutorial
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 16px">
+                Explore human body systems interactively with detailed
+                observation data.
+              </p>
               <ul class="tut-list">
-                <li><div class="tut-step-num">1</div> Select a body part, organ, or physiological system from the view.</li>
-                <li><div class="tut-step-num">2</div> Activate the <strong>Scan Tool</strong> to enter diagnosis/observation mode.</li>
-                <li><div class="tut-step-num">3</div> Read the information panel regarding vitals and system interactions.</li>
-                <li><div class="tut-step-num">4</div> Complete the observation or diagnosis tasks based on provided clinical data.</li>
+                <li>
+                  <div class="tut-step-num">1</div>
+                  Select a body part, organ, or physiological system from the
+                  view.
+                </li>
+                <li>
+                  <div class="tut-step-num">2</div>
+                  Activate the <strong>Scan Tool</strong> to enter
+                  diagnosis/observation mode.
+                </li>
+                <li>
+                  <div class="tut-step-num">3</div>
+                  Read the information panel regarding vitals and system
+                  interactions.
+                </li>
+                <li>
+                  <div class="tut-step-num">4</div>
+                  Complete the observation or diagnosis tasks based on provided
+                  clinical data.
+                </li>
               </ul>
             </div>
 
             <!-- Challenge Mode -->
             <div class="tut-card chal">
-              <div class="tut-card-head"><i class="bx bx-book-open"></i> Challenge Mode Rules</div>
-              <p style="color: rgba(255,255,255,0.7); margin-bottom: 16px;">Test your knowledge in constrained environments. Validation strictly follows these sequences:</p>
+              <div class="tut-card-head">
+                <i class="bx bx-book-open"></i> Challenge Mode Rules
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 16px">
+                Test your knowledge in constrained environments. Validation
+                strictly follows these sequences:
+              </p>
               <ul class="tut-list">
-                <li><div class="tut-step-num">1</div> You must press <strong>Start Challenge</strong> first. The timer and mission validation will not work otherwise.</li>
-                <li><div class="tut-step-num">2</div> Read the mission objective displayed on the screen.</li>
-                <li><div class="tut-step-num">3</div> Complete the required interactions (mixing, circuit building, or scanning) before the timer runs out.</li>
-                <li><div class="tut-step-num">4</div> Submit or activate the result button.</li>
-                <li><div class="tut-step-num">5</div> Read the <strong>Mission Complete</strong> or <strong>Mission Failed</strong> feedback popup to understand your score.</li>
+                <li>
+                  <div class="tut-step-num">1</div>
+                  You must press <strong>Start Challenge</strong> first. The
+                  timer and mission validation will not work otherwise.
+                </li>
+                <li>
+                  <div class="tut-step-num">2</div>
+                  Read the mission objective displayed on the screen.
+                </li>
+                <li>
+                  <div class="tut-step-num">3</div>
+                  Complete the required interactions (mixing, circuit building,
+                  or scanning) before the timer runs out.
+                </li>
+                <li>
+                  <div class="tut-step-num">4</div>
+                  Submit or activate the result button.
+                </li>
+                <li>
+                  <div class="tut-step-num">5</div>
+                  Read the <strong>Mission Complete</strong> or
+                  <strong>Mission Failed</strong> feedback popup to understand
+                  your score.
+                </li>
               </ul>
             </div>
-
           </div>
         </div>
       </div>
