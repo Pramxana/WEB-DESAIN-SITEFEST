@@ -20,6 +20,9 @@
     0 0 20px rgba(var(--secondary-rgb), 0.4), 0 0 40px rgba(var(--secondary-rgb), 0.15);
   --glow-cyan:
     0 0 20px rgba(var(--accent-rgb), 0.4), 0 0 40px rgba(var(--accent-rgb), 0.15);
+    --section-max-width: 1360px;
+  --section-padding-x: clamp(1rem, 5vw, 5rem);
+  --section-padding-y: clamp(3rem, 7vw, 6rem);
 }
 
 body {
