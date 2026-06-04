@@ -130,6 +130,35 @@ video {
 }
 
 /* --------------------------------------------------
+   FIT CONTENT SECTION BASE
+-------------------------------------------------- */
+section,
+.section {
+  width: 100%;
+  height: auto;
+  min-height: auto;
+  overflow: visible;
+}
+
+.section-container,
+.hero-container {
+  width: min(100%, 1360px);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 5vw, 5rem);
+}
+
+.lab-window,
+.simulation-preview,
+.canvas-wrapper,
+.canvas-wrap,
+.card,
+.panel,
+.panel-card,
+.panel-body {
+  max-width: 100%;
+  min-width: 0;
+}
+/* --------------------------------------------------
    CUSTOM CURSOR
 -------------------------------------------------- */
 .cursor {
@@ -855,6 +884,31 @@ button > .bx,
     align-items: flex-start;
   }
 
+
+  .grid,
+  .features-grid,
+  .lab-grid,
+  .dashboard-grid,
+  .challenge-layout,
+  .chemistry-layout,
+  .physics-layout,
+  .biology-layout,
+  .lab-layout,
+  .sim-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .canvas-wrapper,
+  .canvas-wrap,
+  .simulation-preview,
+  .lab-window,
+  .chem-lab-frame,
+  .panel-card,
+  .panel-body {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
   .panel-header-title,
   .panel-header-badge {
     line-height: 1.4;

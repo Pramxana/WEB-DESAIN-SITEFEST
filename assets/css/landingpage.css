@@ -243,6 +243,10 @@ nav::after {
    SECTIONS
 -------------------------------------------------- */
 section {
+  width: 100%;
+  height: auto;
+  min-height: auto;
+  overflow: visible;
   padding: 100px 5%;
 }
 .section-tag {
@@ -253,7 +257,7 @@ section {
 
   width: fit-content;
   max-width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 
   background: var(--yellow);
   color: var(--black);
@@ -289,15 +293,18 @@ section {
    HERO
 -------------------------------------------------- */
 .hero {
-  min-height: 100vh;
+  width: 100%;
+  min-height: calc(100svh - 64px);
+  height: auto;
   padding: 110px 5% 60px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.95fr);
+  gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
   border-bottom: var(--border-strong);
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   background: var(--surface-dark);
 }
 .hero::before {
@@ -323,8 +330,8 @@ section {
   position: absolute;
   top: 10%;
   left: 5%;
-  width: 600px;
-  height: 600px;
+  width: min(600px, 85vw);
+  height: min(600px, 85vw);
   background: radial-gradient(
     ellipse at center,
     rgba(var(--primary-rgb), 0.12) 0%,
@@ -342,6 +349,7 @@ section {
 .hero-content {
   position: relative;
   z-index: 2;
+  min-width: 0;
 }
 .hero-badge {
   display: inline-flex;
@@ -425,6 +433,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
+  max-width: 100%;
 }
 .chem-lab-frame {
   width: 100%;
@@ -2144,8 +2154,8 @@ section {
   top: -100px;
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
-  height: 600px;
+  width: min(600px, 85vw);
+  height: min(600px, 85vw);
   background: radial-gradient(
     ellipse,
     rgba(var(--primary-rgb), 0.1) 0%,
@@ -2390,9 +2400,24 @@ footer::before {
   .hero {
     grid-template-columns: 1fr;
     background: var(--surface-dark);
+    min-height: auto;
+    padding-top: 96px;
   }
+
+  .hero-content {
+    max-width: 720px;
+  }
+
   .hero-visual {
-    display: none;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 18px 0 8px;
+  }
+
+  .chem-lab-frame {
+    max-width: 520px;
   }
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -2563,6 +2588,27 @@ footer::before {
   .hero {
     min-height: auto;
     padding: 92px 4% 58px;
+    gap: 2.4rem;
+  }
+
+  .hero-badge {
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.64rem;
+    line-height: 1.35;
+    letter-spacing: 1.4px;
+    padding: 7px 12px;
+  }
+
+  .hero-visual {
+    justify-content: center;
+    padding-top: 4px;
+  }
+
+  .chem-lab-frame {
+    width: 100%;
+    max-width: 430px;
   }
 
   .hero h1 {
@@ -2659,6 +2705,11 @@ footer::before {
 
 @media (max-width: 480px) {
   section { padding: 56px 4%; }
+
+  .section-tag {
+    white-space: normal;
+    line-height: 1.4;
+  }
 
   .stats-grid { grid-template-columns: 1fr; }
 
